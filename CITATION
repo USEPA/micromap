@@ -1,0 +1,14 @@
+citHeader("To cite the micromap package in publications use:")
+
+citEntry(
+   entry="Manual",
+   title="micromap: Linked Micromap Plots",
+   author="Quinn Payton and Anthony R. Olsen",
+   year=2014,
+   note="R package version 1.9",
+   url="http://www.epa.gov/nheerl/arm/",
+   textVersion=paste("Payton, Q. and Olsen, A. R. (2014).",
+                      "micromap: Linked Micromap Plots.",
+                      "R package version 1.9.",
+                      "URL: http://www.epa.gov/nheerl/arm/.")
+)
