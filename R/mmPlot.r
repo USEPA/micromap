@@ -14,7 +14,7 @@ mmplot <- function(stat.data, map.data=NULL, 	# Required -- statistical data; ma
   vertical.align='top',
 
   median.color=gray(.5),
-  median.text.color='blue',
+  median.text.color='black',
   median.text.size=1,
   median.text.label='Median',
 	
