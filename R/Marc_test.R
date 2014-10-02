@@ -2,5 +2,5 @@
 data(iris)
 head(iris)
 library(ggplot2)
-p <- ggplot(iris, aes(Sepal.Length, Sepal.Width))
+p <- ggplot(iris, aes(Petal.Length,Petal.Width))
 p + geom_point()
