@@ -13,8 +13,8 @@ mmplot <- function(stat.data, map.data=NULL, 	# Required -- statistical data; ma
 							# 	by a single group of 2	
   vertical.align='top',
 
-  median.color=gray(.5),
-  median.text.color='black',
+  median.color=blue(.5),
+  median.text.color='blue',
   median.text.size=1,
   median.text.label='Median',
 	
