@@ -2,5 +2,5 @@
 data(iris)
 head(iris)
 library(ggplot2)
-p <- ggplot(iris, aes(Sepal.Length, Sepal.Width))
+p <- ggplot(iris, aes(Species, Sepal.Width))
 p + geom_point()
