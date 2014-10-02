@@ -1,4 +1,6 @@
 # Comment 1 from Juergen on 10/1/14 in Master branch
+# Comment 3 from Juergen on 10/1/14 in Master branch
+
 
 create_map_table <- function (tmp.map, IDcolumn = NA, poly.thresh=.0001) 
 {
