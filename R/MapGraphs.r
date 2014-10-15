@@ -1,3 +1,5 @@
+# TEST 002
+
 RankMaps <- function(pl, p, mapDF, att){
 	# att=a
 	bgcolor 	<- ifelse(!is.na(att[[p]]$panel.bgcolor), att[[p]]$panel.bgcolor, 'white')
