@@ -1,5 +1,3 @@
-### Additional comments by Juergen 9/15/2014
-
 #*** standard attributes used by most panels
 #*** these can be altered after being added to the
 #*** current panel's attribute list
