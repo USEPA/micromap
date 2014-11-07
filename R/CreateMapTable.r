@@ -11,7 +11,7 @@ create_map_table <- function (tmp.map, IDcolumn = NA, poly.thresh=.0001)
         lPoly[[i]] <- lapply(1:length(tmp@Polygons), function(j) cbind(i, 
             j, tmp@Polygons[[j]]@labpt[1], tmp@Polygons[[j]]@labpt[2], 
             tmp@Polygons[[j]]@coords, tmp@Polygons[[j]]@hole, 
-            tmp@Polygons[[j]]@area))
+            tmp@Polygons[[j]]@area,tmp@plotOrder[[j]]))
 	
 	  tot.area <- tot.area + tmp@area
     }
@@ -34,7 +34,7 @@ create_map_table <- function (tmp.map, IDcolumn = NA, poly.thresh=.0001)
 
 
     dPoly2 <- data.frame(tmp.map@data$ID[dPoly[, 1]], dPoly)
-    names(dPoly2) <- c("ID", "region", "poly", "lab.x", "lab.y", "coordsx", "coordsy", "hole", "area")
+    names(dPoly2) <- c("ID", "region", "poly", "lab.x", "lab.y", "coordsx", "coordsy", "hole", "area", "plotorder")
     dPoly2 <- transform(dPoly2, poly = (region - 1) * max(dPoly2$poly) + poly)
 
     tholes <- unique(subset(dPoly2, hole == 1)[, c("poly", "lab.x", "lab.y", "area")])
