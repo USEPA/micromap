@@ -1,14 +1,23 @@
 citHeader("To cite the micromap package in publications use:")
 
 citEntry(
-   entry="Manual",
-   title="micromap: Linked Micromap Plots",
-   author="Quinn Payton and Anthony R. Olsen",
-   year=2014,
-   note="R package version 1.9",
-   url="http://www.epa.gov/nheerl/arm/",
-   textVersion=paste("Payton, Q. and Olsen, A. R. (2014).",
-                      "micromap: Linked Micromap Plots.",
-                      "R package version 1.9.",
-                      "URL: http://www.epa.gov/nheerl/arm/.")
-)
+  entry = "Article",
+  title = "{micromap}: A Package for Linked Micromaps",
+  author = personList(
+             as.person("Quinn C. Payton"),
+             as.person("Michael G. McManus"),
+             as.person("Marc H. Weber"),
+             as.person("Anthony R. Olsen"),
+             as.person("Thomas M. Kincaid")),
+  journal = "Journal of Statistical Software",
+  year = "2015",
+  volume = "63",
+  number = "2",
+  pages = "1--16",
+  url = "http://www.jstatsoft.org/v63/i02/",
+  textVersion = paste(
+    "Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R. Olsen, and
+     Thomas M. Kincaid (2015).", "micromap: A Package for Linked Micromaps.",
+     "Journal of Statistical Software, 63(2), 1-16.",
+     "URL http://www.jstatsoft.org/v63/i02/.")
+)	
