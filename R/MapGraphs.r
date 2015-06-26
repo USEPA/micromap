@@ -169,7 +169,7 @@ RankMaps <- function(pl, p, mapDF, att){
 			colour=att[[p]]$active.border.color, 
 			size=att[[p]]$active.border.size/2, 
 			data=subset(mapDF, hole==0)) + 				
-		facet_grid(pGrp~., scales="free_y", space="free") +
+		facet_grid(pGrp~., space="free") +
 		scale_fill_manual(values=c(att$colors), guide='none') +
 		coord_equal() 
 
@@ -190,7 +190,7 @@ RankMaps <- function(pl, p, mapDF, att){
 			geom_polygon(fill='white', colour='white', data=mapDF.median) + 
 				geom_text(aes(x=textx, y=texty, label=tmp.label, hjust=.5, vjust=.4),
 						colour=att$median.text.color, size=5*att$median.text.size, data=mapDF.median) +
-				facet_grid(pGrp~., scales="free_y", space="free")
+				facet_grid(pGrp~., space="free")
 
 	  #################################
 	  #################################
@@ -276,7 +276,7 @@ CatMaps <- function(pl, p, mapDF, att){
 		geom_polygon(fill=att$map.color, colour='black', data=subset(mapDF, hole==0)) + 				
 		geom_polygon(fill='white', colour='black', data=subset(mapDF, hole==1)) +
 		geom_polygon(fill='transparent', colour='black', data=subset(transform(mapDF, pGrp=NULL), hole==1)) +
-		facet_grid(pGrp~., scales="free_y", space="free") +
+		facet_grid(pGrp~., space="free") +
 		coord_equal() 
 
 
