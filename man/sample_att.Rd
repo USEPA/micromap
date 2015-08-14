@@ -1,0 +1,36 @@
+\name{sample_att}
+\alias{sample_att}
+\title{
+  Sample Attribute List Creator
+}
+\description{
+  Creates a sample attribute list for use in the creation of new panel types.
+}
+\usage{
+sample_att(size=1, type=rep("standard", size), ord.by=NA, grouping=5,
+  colors=brewer.pal(max(grouping), "Spectral"), plot.pGrp.spacing=0.05,
+  plot.panel.margins=c(0,1,0,0), panel.data=list(NA), median.row=FALSE,
+  show=FALSE)
+}
+\arguments{
+  \item{size}{specify the number of attibutes lists to be created.}
+  \item{type}{match the attributes to which type of default panel.}
+  \item{ord.by}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{grouping}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{colors}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{plot.pGrp.spacing}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{plot.panel.margins}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{panel.data}{argument inhereted from lmplot/lmGroupedplot.}
+  \item{median.row}{argument inhereted from lmplot/lmGroupedplot.  }
+  \item{show}{controls whether to print the resulting attribute list.  }
+}
+\value{
+A list of attributes to be used in the creation of a panel
+  }
+\note{
+  See the Introduction Guide for a full list of the options available for
+  altering micromaps.
+}
+\author{
+  Quinn Payton \email{Payton.Quinn@epa.gov}
+}
