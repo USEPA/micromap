@@ -336,6 +336,3 @@ CatMaps <- function(pl, p, mapDF, att){
 }
 
 
-
-
-
