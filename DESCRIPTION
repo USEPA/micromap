@@ -25,4 +25,8 @@ Author: Quinn Payton [aut],
   Michael McManus [ctb],
   Tom Kincaid [cre, ctb]
 Maintainer: Tom Kincaid <Kincaid.Tom@epa.gov>
-Built: R 3.1.2; ; 2015-02-06 16:57:40 UTC; windows
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2015-02-06 21:22:27
+Suggests: knitr
+VignetteBuilder: knitr

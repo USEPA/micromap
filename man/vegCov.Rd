@@ -1,0 +1,36 @@
+\name{vegCov}
+\alias{vegCov}
+\docType{data}
+\title{Example Dataset: Vegetation Coverage Percentages}
+\description{
+ A subset of a larger vegetation coverage analysis dataset.
+}
+\usage{data(vegCov)}
+\format{
+  A data frame with 12 rows and the following 13 columns:
+  \describe{
+    \item{Type}{the population name.}
+    \item{Subpopulation}{the subpopulation name, either national or level 3 ecoregion.}
+    \item{Indicator}{the ecological variable (indicator)}
+    \item{Category}{category of disturbance.}
+    \item{NResp}{sample size.}
+    \item{Estimate.P}{estimated percentage of vegetation coverage with a given classification.}
+    \item{StdError.P}{standard error of the percentage estimate.}
+    \item{LCB95Pct.P}{lower bound of a 95 percent confidence interval for the estimated percentage.}
+    \item{UCB95Pct.P}{upper bound of a 95 percent confidence interval for the estimated percentage.}
+    \item{Estimate.U}{estimated area of vegetation coverage with a given classification.}
+    \item{StdError.U}{standard error of the area estimate.}
+    \item{LCB95Pct.U}{lower bound of a 95 percent confidence interval for the estimated area.}
+    \item{UCB95Pct.U}{upper bound of a 95 percent confidence interval for the estimated area.}
+  }
+}
+\note{
+  This is just an example data set.
+}
+\examples{
+data(vegCov)
+head(vegCov)
+}
+\keyword{datasets}
+
+

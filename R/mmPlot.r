@@ -313,10 +313,10 @@ print.mm <- function(x, name=NULL, res=300, ...){
   recognized.print.type <- FALSE
   if(!is.null(name)) recognized.print.type <- right(print.file,3) %in% right(c('.pdf','.tiff','.tif','.jpeg','.jpg','.png','.ps'),3)
 
-  if(!recognized.print.type) {
-    if(.Platform$OS.type == "windows") options(device="windows")
-    dev.new(width = plobject$plot.width, height = plobject$plot.height)
-  }
+#   if(!recognized.print.type) {
+#     if(.Platform$OS.type == "windows") options(device="windows")
+#     dev.new(width = plobject$plot.width, height = plobject$plot.height)
+#   }
 
   if(!is.null(name)){
 	if(right(print.file,4)=='.pdf') 	pdf(print.file, width = plobject$plot.width, height = plobject$plot.height)
