@@ -3,9 +3,9 @@
 
 CRAN: [![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap)
 
-Linux: [![Travis-CI Build Status](https://travis-ci.org/fawda123/R-micromap-package-development.svg?branch=master)](https://travis-ci.org/fawda123/R-micromap-package-development)
+Linux: [![Travis-CI Build Status](https://travis-ci.org/fawda123/R-micromap-package-development.svg?branch=development)](https://travis-ci.org/fawda123/R-micromap-package-development) (builds are from forked repo [here](https://github.com/fawda123/R-micromap-package-development/tree/development))
 
-Windows: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/fawda123/R-micromap-package-development?branch=master)](https://ci.appveyor.com/project/fawda123/R-micromap-package-development)
+Windows: [![AppVeyor Build Status](http://ci.appveyor.com/api/projects/status/github/fawda123/R-micromap-package-development?branch=development)](http://ci.appveyor.com/project/fawda123/R-micromap-package-development) (builds are from forked repo [here](https://github.com/fawda123/R-micromap-package-development/tree/development))
 
 This repository is for development of the USEPA R micromap package.   If you would like to contribute to this repository please follow the guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
