@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^appveyor\.yml$
+^\.travis\.yml$
+^README\.md$
+^README\.Rmd$
+^README\.html$
+^README_files/.*
+^CONTRIBUTING\.md*
