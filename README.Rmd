@@ -1,3 +1,12 @@
+---
+output:
+  html_document:
+    keep_md: yes
+    toc: no
+    self_contained: no
+  pdf_document:
+    toc: yes
+---
 
 # R-micromap-package-development
 
@@ -13,8 +22,7 @@ This repository is for development of the USEPA R micromap package.   If you wou
 
 Version 1.9.2 is the stable version on CRAN and can be installed as follows.
 
-
-```r
+```{r eval = F}
 # install from CRAN
 install.packages('micromap')
 library(micromap)
@@ -22,8 +30,7 @@ library(micromap)
 
 The development version can be installed from the development branch on the repository.
 
-
-```r
+```{r eval = F}
 # requires devools to install
 install.packages('devtools')
 library(devtools)
@@ -35,32 +42,8 @@ library(micromap)
 
 ### Citation
 
-
-```r
+```{r}
 citation(package = 'micromap')
-```
-
-```
-## 
-## To cite the micromap package in publications use:
-## 
-##   Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R.
-##   Olsen, and Thomas M. Kincaid (2015). micromap: A Package for
-##   Linked Micromaps. Journal of Statistical Software, 63(2), 1-16.
-##   URL http://www.jstatsoft.org/v63/i02/.
-## 
-## A BibTeX entry for LaTeX users is
-## 
-##   @Article{,
-##     title = {{micromap}: A Package for Linked Micromaps},
-##     author = {Quinn C. Payton and Michael G. McManus and Marc H. Weber and Anthony R. Olsen and Thomas M. Kincaid},
-##     journal = {Journal of Statistical Software},
-##     year = {2015},
-##     volume = {63},
-##     number = {2},
-##     pages = {1--16},
-##     url = {http://www.jstatsoft.org/v63/i02/},
-##   }
 ```
 
 ### Using the functions
