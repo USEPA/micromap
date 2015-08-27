@@ -43,6 +43,9 @@ mmgroupedplot <- function(stat.data, map.data, 		# Required -- statistical data;
 dStats <- stat.data
 dMap <- map.data
 
+# create continous color vecor based on cat
+ncol <- length(unique(stat.data[, cat]))
+colors <- colorRampPalette(colors)(ncol)
 
 tPlot.header=plot.header
 iPlot.header.size=plot.header.size

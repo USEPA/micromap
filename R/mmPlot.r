@@ -17,7 +17,6 @@ mmplot <- function(stat.data, map.data=NULL, 	# Required -- statistical data; ma
   median.text.color='black',
   median.text.size=1,
   median.text.label='Median',
-	
   colors=brewer.pal(max(grouping), "Spectral"),	
 
   ## These 3 are legacy arguements that should now 
@@ -55,7 +54,8 @@ dStats <- stat.data
 dMap <- map.data
 
 
-colors=colors[1:max(grouping)]	# errors can occur with a color list that is too long so we truncate 
+colors = colorRampPalette(colors)(grouping)
+# colors=colors[1:max(grouping)]	# errors can occur with a color list that is too long so we truncate 
 						 #	it to only the number of colors needed for this plot
 if(median.row) colors <- c(colors, median.color) # we add a color to be the color of the median polygon
 						 # 	this should probably be user specified in the future

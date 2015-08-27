@@ -111,9 +111,11 @@ lmgroupedplot(stat.data, map.data, panel.types, panel.data, map.link=NULL,
   category column within stats table for a categorization type lmplot.
   }
   \item{colors}{
-  a vector of colors for each perceptual group.  The default is
+  a vector of colors for the perceptual groups.  The default is
   brewer.pal(max(grouping), 'Spectral') for lmplot and brewer.pal(10,
-  'Spectral') for lmgroupedplot).
+  'Spectral') for lmgroupedplot).  The colors are passed to
+  \code{\link[grDevices]{colorRampPalette}} to create a continuous color 
+  vector equal in length to the groupings. 
   }
   \item{map.color}{
   the color to fill in previously displayed polygons.
