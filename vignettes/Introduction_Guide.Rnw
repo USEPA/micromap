@@ -1,11 +1,6 @@
-%\VignetteDepends{}
-%\VignetteSuggests{}
-%\VignetteImports{}
-%\VignettePackage{}
 \documentclass{article}
 
 \usepackage{hyperref}
-\VignetteIndexEntry{Introduction to the micromap package}
 
 % knitr and global options
 <<setup, echo = F, cache = F>>=
@@ -18,10 +13,11 @@ options(replace.assign=TRUE,width=60)
 \newcommand{\R}{{\normalfont\textsf{R }}{}}
 \newcommand{\NA}{{\normalfont\textsf{NA }}{}}
 
+%\VignetteIndexEntry{Introduction to the micromap package}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 
+\SweaveOpts{concordance=TRUE}
 
 \title{Linked Micromaps}
 
