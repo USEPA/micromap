@@ -28,4 +28,5 @@ Maintainer: Tom Kincaid <Kincaid.Tom@epa.gov>
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2015-02-06 21:22:27
-
+Suggests: knitr, rgeos
+VignetteBuilder: knitr
