@@ -5,6 +5,8 @@
 \alias{lmplot}
 \alias{mmgroupedplot}
 \alias{mmplot}
+\alias{mmplot.SpatialPolygonsDataFrame}
+\alias{mmplot.default}
 \title{Linked Micromaps}
 \usage{
 lmgroupedplot(stat.data, map.data, panel.types, panel.data, map.link = NULL,
@@ -38,7 +40,11 @@ mmgroupedplot(stat.data, map.data, panel.types, panel.data, map.link = NULL,
   plot.grp.spacing = 1, plot.panel.spacing = 1, plot.panel.margins = c(0,
   0, 1, 0))
 
-mmplot(stat.data, map.data = NULL, panel.types, panel.data, map.link = NULL,
+mmplot(map.data, ...)
+
+\method{mmplot}{SpatialPolygonsDataFrame}(map.data, ...)
+
+\method{mmplot}{default}(map.data, stat.data, panel.types, panel.data, map.link,
   nPanels = length(panel.types), ord.by, rev.ord = FALSE, grouping,
   median.row = FALSE, vertical.align = "top", median.color = gray(0.5),
   median.text.color = "black", median.text.size = 1,
@@ -72,7 +78,7 @@ mmplot(stat.data, map.data = NULL, panel.types, panel.data, map.link = NULL,
 
 \item{map.color}{the color to fill in previously displayed polygons.}
 
-\item{map.all}{by default, lmplot will only plot the polygons associated with data in the stats table; map.all=TRUE will show all the polygons in the polygon table regardless of whether they are actively referred to.}
+\item{map.all}{by default, lmplot will only plot the polygons associated with data in the stats table; map.all = TRUE will show all the polygons in the polygon table regardless of whether they are actively referred to.}
 
 \item{print.file}{name of the file being created. The extension (.pdf, .tiff, .jpeg, .png) tells lmplot which image creation tool to use.}
 
@@ -104,7 +110,7 @@ mmplot(stat.data, map.data = NULL, panel.types, panel.data, map.link = NULL,
 
 \item{plot.panel.margins}{the horizontal spacing between panels measured in lines. THIS IS LEGACY CODE AND SHOULD NOT BE USED.}
 
-\item{...}{Additional arguments.  (Currently ignored.)}
+\item{...}{Additional arguments passed to or from other methods.}
 
 \item{ord.by}{The column name from stat.data with which to order the lines of the output graphic for a standard lmPLot or identifier column on which to group the categorized lmPLot.}
 
@@ -151,115 +157,115 @@ head(statePolys)
 data("edPov")
 
 # basic figure 1
-lmplot(stat.data=edPov,
-  	map.data=statePolys,
-	panel.types=c('labels', 'dot', 'dot','map'),
-	panel.data=list('state','pov','ed', NA),
-	ord.by='pov',
-	grouping=5, median.row=TRUE,
-	map.link=c('StateAb','ID'))
+lmplot(stat.data = edPov,
+  	map.data = statePolys,
+	panel.types = c('labels', 'dot', 'dot','map'),
+	panel.data = list('state','pov','ed', NA),
+	ord.by = 'pov',
+	grouping = 5, median.row = TRUE,
+	map.link = c('StateAb','ID'))
 
 # publication figure 1a
-lmplot(stat.data=edPov,  map.data=statePolys ,
-	panel.types=c('labels', 'dot', 'dot','map'),
-	panel.data=list('state','pov','ed', NA),
-	ord.by='pov',
-	grouping=5,
-  	median.row=TRUE,
-	map.link=c('StateAb','ID'),
+lmplot(stat.data = edPov,  map.data = statePolys ,
+	panel.types = c('labels', 'dot', 'dot','map'),
+	panel.data = list('state','pov','ed', NA),
+	ord.by = 'pov',
+	grouping = 5,
+  	median.row = TRUE,
+	map.link = c('StateAb','ID'),
 
-  	plot.height=9,
-	colors=c('red','orange','green','blue','purple'),
-	map.color2='lightgray',
+  	plot.height = 9,
+	colors = c('red','orange','green','blue','purple'),
+	map.color2 = 'lightgray',
 
-	panel.att=list(list(1, header='States', panel.width=.8, align='left', text.size=.9),
-			list(2, header='Percent Living Below \\n Poverty Level',
-				graph.bgcolor='lightgray', point.size=1.5,
-				xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
-				xaxis.title='Percent'),
-			list(3, header='Percent Adults With\\n4+ Years of College',
-				graph.bgcolor='lightgray', point.size=1.5,
-				xaxis.ticks=list(0,20,30,40), xaxis.labels=list(0,20,30,40),
-				xaxis.title='Percent'),
-			list(4, header='Light Gray Means\\nHighlighted Above',
-				inactive.border.color=gray(.7), inactive.border.size=2,
-				panel.width=.8)))
+	panel.att = list(list(1, header = 'States', panel.width = .8, align = 'left', text.size = .9),
+			list(2, header = 'Percent Living Below \\n Poverty Level',
+				graph.bgcolor = 'lightgray', point.size = 1.5,
+				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
+				xaxis.title = 'Percent'),
+			list(3, header = 'Percent Adults With\\n4+ Years of College',
+				graph.bgcolor = 'lightgray', point.size = 1.5,
+				xaxis.ticks = list(0,20,30,40), xaxis.labels = list(0,20,30,40),
+				xaxis.title = 'Percent'),
+			list(4, header = 'Light Gray Means\\nHighlighted Above',
+				inactive.border.color = gray(.7), inactive.border.size = 2,
+				panel.width = .8)))
 
 edPov$points <- 0
 
 # publication figure 1b
-lmplot (stat.data=edPov, map.data=statePolys,
-	panel.types=c('dot',  'labels', 'dot', 'dot', 'map'),
-	panel.data=list('points', 'state', 'pov', 'ed', NA),
-	map.link=c('StateAb','ID'),
-	ord.by='pov',
-	grouping=5,
-	median.row=TRUE,
+lmplot (stat.data = edPov, map.data = statePolys,
+	panel.types = c('dot',  'labels', 'dot', 'dot', 'map'),
+	panel.data = list('points', 'state', 'pov', 'ed', NA),
+	map.link = c('StateAb','ID'),
+	ord.by = 'pov',
+	grouping = 5,
+	median.row = TRUE,
 
-	plot.height=9,
+	plot.height = 9,
 
-	colors=c('red','orange','green','blue','purple'),
-	map.color2='lightgray',
+	colors = c('red','orange','green','blue','purple'),
+	map.color2 = 'lightgray',
 
-	panel.att=list(list(1, panel.width=.15, point.type=20,
-					graph.border.color='white',
-					xaxis.text.display=FALSE, xaxis.line.display=FALSE,
-					graph.grid.major=FALSE),
+	panel.att = list(list(1, panel.width = .15, point.type = 20,
+					graph.border.color = 'white',
+					xaxis.text.display = FALSE, xaxis.line.display = FALSE,
+					graph.grid.major = FALSE),
 
-				list(2, header='States', panel.width=.8,
-					align='left', text.size=.9),
+				list(2, header = 'States', panel.width = .8,
+					align = 'left', text.size = .9),
 
-				list(3, header='Percent Living Below\\nPoverty Level',
-					graph.bgcolor='lightgray', point.size=1.5,
-					xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
-					xaxis.title='Percent'),
+				list(3, header = 'Percent Living Below\\nPoverty Level',
+					graph.bgcolor = 'lightgray', point.size = 1.5,
+					xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
+					xaxis.title = 'Percent'),
 
-				list(4, header='Percent Adults With\\n4+ Years of College',
-					graph.bgcolor='lightgray', point.size=1.5,
-					xaxis.ticks=list(20,30,40), xaxis.labels=list(20,30,40),
-					xaxis.title='Percent'),
+				list(4, header = 'Percent Adults With\\n4+ Years of College',
+					graph.bgcolor = 'lightgray', point.size = 1.5,
+					xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40),
+					xaxis.title = 'Percent'),
 
-				list(5, header='Light Gray Means\\nHighlighted Above',
-					inactive.border.color=gray(.7), inactive.border.size=2,
-					panel.width=.8)))
+				list(5, header = 'Light Gray Means\\nHighlighted Above',
+					inactive.border.color = gray(.7), inactive.border.size = 2,
+					panel.width = .8)))
 
 # publication figure 1c
-myPlot <- lmplot(stat.data=edPov, map.data=statePolys,
-	panel.types=c('map', 'dot',  'labels', 'dot', 'dot'),
-	panel.data=list(NA, 'points', 'state', 'pov', 'ed'),
-	map.link=c('StateAb','ID'),
-	ord.by='pov',
-	grouping=5,
-	median.row=TRUE,
+myPlot <- lmplot(stat.data = edPov, map.data = statePolys,
+	panel.types = c('map', 'dot',  'labels', 'dot', 'dot'),
+	panel.data = list(NA, 'points', 'state', 'pov', 'ed'),
+	map.link = c('StateAb','ID'),
+	ord.by = 'pov',
+	grouping = 5,
+	median.row = TRUE,
 
-	plot.height=9,
+	plot.height = 9,
 
-	colors=c('red','orange','green','blue','purple'),
-	map.color2='lightgray',
+	colors = c('red','orange','green','blue','purple'),
+	map.color2 = 'lightgray',
 
-	panel.att=list(list(2, panel.width=.15, point.type=20,
-				graph.border.color='white',
-				xaxis.text.display=FALSE, xaxis.line.display=FALSE,
-				graph.grid.major=FALSE),
+	panel.att = list(list(2, panel.width = .15, point.type = 20,
+				graph.border.color = 'white',
+				xaxis.text.display = FALSE, xaxis.line.display = FALSE,
+				graph.grid.major = FALSE),
 
-			list(3, header='States', panel.width=.8,
-				align='left', text.size=.9),
+			list(3, header = 'States', panel.width = .8,
+				align = 'left', text.size = .9),
 
-			list(4, header='Percent Living Below\\nPoverty Level',
-				graph.bgcolor='lightgray', point.size=1.5,
-				xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
-				xaxis.title='Percent'),
+			list(4, header = 'Percent Living Below\\nPoverty Level',
+				graph.bgcolor = 'lightgray', point.size = 1.5,
+				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
+				xaxis.title = 'Percent'),
 
-			list(5, header='Percent Adults With\\n4+ Years of College',
-				graph.bgcolor='lightgray', point.size=1.5,
-				xaxis.ticks=list(20,30,40), xaxis.labels=list(20,30,40),
-				xaxis.title='Percent'),
+			list(5, header = 'Percent Adults With\\n4+ Years of College',
+				graph.bgcolor = 'lightgray', point.size = 1.5,
+				xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40),
+				xaxis.title = 'Percent'),
 
-			list(1, header='Light Gray Means\\nHighlighted Above',
-				inactive.border.color=gray(.7), inactive.border.size=2,
-				panel.width=.8)))
+			list(1, header = 'Light Gray Means\\nHighlighted Above',
+				inactive.border.color = gray(.7), inactive.border.size = 2,
+				panel.width = .8)))
 
-print(myPlot, name='myExhibit.tiff', res=300)
+print(myPlot, name = 'myExhibit.tiff', res = 300)
 }
 }
 \author{
