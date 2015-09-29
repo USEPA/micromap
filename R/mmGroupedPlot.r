@@ -3,7 +3,7 @@
 # *** 't*' for a text variable, 'i*' for a variable containing integers (although this is used for numeric entries in general)
 # *** 'b*' for boolean, 'l*' for lists of text or numeric strings
 # ***************************************** #
-
+#' @rdname mmplot
 mmgroupedplot <- function(stat.data, map.data, 		# Required -- statistical data; map data
   panel.types, panel.data, 				# Required -- panel types (e.g. 'map', 'labels', 'dot.cl', etc.);
 								# 	which columns in dStats to get the data from
