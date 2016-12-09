@@ -12,21 +12,31 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "McManus.Michael@epa.gov"),
              person("Tom", "Kincaid", role=c("cre", "ctb"),
                     email = "Kincaid.Tom@epa.gov"))
-Depends: R (>= 2.10), maptools, RColorBrewer, rgdal, sp
-Imports: ggplot2, grid
+Depends:
+    R (>= 2.10),
+    maptools,
+    RColorBrewer,
+    rgdal,
+    sp
+Imports:
+    ggplot2,
+    grid
 Description: This group of functions simplifies the creation of linked micromap
     plots.
 License: GPL (>= 2)
 URL: http://www.jstatsoft.org/v63/i02/
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
-  Tony Olsen [aut],
-  Marc Weber [ctb],
-  Michael McManus [ctb],
-  Tom Kincaid [cre, ctb]
+    Tony Olsen [aut],
+    Marc Weber [ctb],
+    Michael McManus [ctb],
+    Tom Kincaid [cre, ctb]
 Maintainer: Tom Kincaid <Kincaid.Tom@epa.gov>
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2015-02-06 21:22:27
-Suggests: knitr, rgeos
+Suggests:
+    knitr,
+    rgeos
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
