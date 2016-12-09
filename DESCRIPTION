@@ -19,7 +19,7 @@ Depends:
     rgdal,
     sp
 Imports:
-    ggplot2,
+    ggplot2 (>= 2.0.0),
     grid
 Description: This group of functions simplifies the creation of linked micromap
     plots.

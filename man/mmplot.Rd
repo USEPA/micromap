@@ -136,7 +136,7 @@ mmplot(map.data, ...)
 
 \item{median.text.label}{specifies the label for text in the median row.}
 
-\item{trans}{chr string for axis transformations, passed to \code{\link[ggplot2]{scale_x_continuous}}.  Acceptable values are "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p", "log2", "logit", "probability", "probit", "reciprocal", "reverse" or "sqrt".  One value will be recycled to all plots as needed, otherwise one per plot can be used in a combined string.}
+\item{trans}{chr string for axis transformations, passed to \code{\link[ggplot2]{scale_x_continuous}}.  Acceptable values are "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p", "log2", "logit", "probability", "probit", "reciprocal", "reverse" or "sqrt".  One value will be recycled to all panels as needed, otherwise one per panel can be used in a combined string. Applies only to panels with axes.}
 }
 \value{
 A list of ggplot2 objects with entries for each individual panel.
