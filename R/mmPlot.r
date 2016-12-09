@@ -23,6 +23,7 @@
 #' @param map.color the color to fill in previously displayed polygons.
 #' @param map.all by default, lmplot will only plot the polygons associated with data in the stats table; map.all = TRUE will show all the polygons in the polygon table regardless of whether they are actively referred to.
 #' @param map.color2 the color to fill in previously displayed polygons.
+#' @param trans chr string for axis transformations, passed to \code{\link[ggplot2]{scale_x_continuous}}.  Acceptable values are "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p", "log2", "logit", "probability", "probit", "reciprocal", "reverse" or "sqrt".  One value will be recycled to all panels as needed, otherwise one per panel can be used in a combined string. Applies only to panels with axes.
 #' @param two.ended.maps the resulting micromaps will highlight previously referenced polygons (see map.color2) up to the median perceptual group then switch to highlighting all polygons that are still to be referenced later.
 #' @param print.file name of the file being created. The extension (.pdf, .tiff, .jpeg, .png) tells lmplot which image creation tool to use.
 #' @param print.res the resolution of the image to use.
@@ -216,6 +217,7 @@ mmplot.default <- function(map.data,
   map.all = FALSE, 
   map.color2 = 'lightgray',
   two.ended.maps = FALSE,
+  trans = 'identity', 
   print.file = 'no', print.res = 300,
   panel.att = vector("list", nPanels),
   plot.header = NA,
@@ -276,6 +278,16 @@ mmplot.default <- function(map.data,
   
   a <- append(a, plot.atts)
   
+  # check trans argument, recycle trans if only one value
+  withax <- which(!panel.types %in% c('dot_legend', 'map', 'labels'))
+  if(length(trans) == 1) 
+    trans <- rep(trans, length(withax))
+  if(length(trans) != length(withax))
+    stop('trans argument must have length equal to 1 or number of plots with axes')
+  
+  # assign trans to the attributes  
+  for(ax in seq_along(withax)) a[[withax[ax]]]$trans <- paste0('"', trans[ax], '"')
+
   # panel data must be specified for every panel type so 
   #	we include it in our attribute list here
   for(j in 1:length(panel.types)) a[[j]] <- append(a[[j]], list(panel.data = unlist(panel.data[[j]])))
@@ -403,7 +415,7 @@ mmplot.default <- function(map.data,
     plot.h2w.ratio <- (mapPanelHeight/totalUnitHeight * adj.plot.height) / (mapPanelWidth/totalUnitWidth * plot.width)
   
   
-      # change coordinates to align properly with other panels
+    # change coordinates to align properly with other panels
     nYrows <- diff(range(mapDF$pGrpOrd[!is.na(mapDF$pGrpOrd)]) + c(-1,1) * .5)  
     nXcols <- nYrows/plot.h2w.ratio		# *mapPanelWidth  
   
@@ -431,7 +443,6 @@ mmplot.default <- function(map.data,
     # set up a list to store plot objects to be created later
     # 	note: each panel in the plot is a "ggplot object" 
   plots <- vector("list", nPanels)
-  
   
   ###############################
   ##### create plot objects #####

@@ -53,7 +53,9 @@ standard_att <- function(show=FALSE) list(
 
   yaxis.title=NA,
   yaxis.ticks=NA,
-  yaxis.labels=NA
+  yaxis.labels=NA,
+  
+  trans = NULL
 ) 
 
 
