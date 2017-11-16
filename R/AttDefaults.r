@@ -6,7 +6,7 @@ standard_att <- function(show=FALSE) list(
   	panel.header.size=1,
 	panel.header.color='black',
 	panel.header.face='plain',
-	panel.header.font=NA,
+	panel.header.font='sans',
 	panel.header.lineheight=1,
 
 
@@ -15,7 +15,7 @@ standard_att <- function(show=FALSE) list(
 
   left.margin=NA,
   right.margin=NA,
-  panel.margins=c(1, -.25, 1, -1.5),
+  panel.margins=c(1, 0, 1, 0),
 
 
   graph.grid.major=as.logical(TRUE),
@@ -42,7 +42,7 @@ standard_att <- function(show=FALSE) list(
   	xaxis.title.size=1,
 	xaxis.title.color='black',
 	xaxis.title.face='plain',
-	xaxis.title.font=NA,
+	xaxis.title.font='sans',
 	xaxis.title.lineheight=1,	
     
 
@@ -53,7 +53,9 @@ standard_att <- function(show=FALSE) list(
 
   yaxis.title=NA,
   yaxis.ticks=NA,
-  yaxis.labels=NA
+  yaxis.labels=NA,
+  
+  trans = NULL
 ) 
 
 
@@ -62,7 +64,7 @@ standard_att <- function(show=FALSE) list(
 #*** labels ***#
 labels_att <- function(show=FALSE) {
   tmp.att <- append(standard_att(), 
-			list(text.font=NA,
+			list(text.font='sans',
 				text.face='plain',
 				text.size=as.numeric(1),
 				align='right'))
@@ -80,7 +82,7 @@ labels_att <- function(show=FALSE) {
 #*** ranks ***#
 ranks_att <- function(show=FALSE) {
   tmp.att <- append(standard_att(), 
-			list(font=NA,
+			list(font='sans',
 				face='plain',
 				size=as.numeric(1),
 				align='right'))
