@@ -1,5 +1,5 @@
 Package: micromap
-Version: 1.9.2
+Version: 1.9.2.9000
 Date: 2015-02-06
 Title: Linked Micromap Plots
 Authors@R: c(person("Quinn", "Payton", role="aut",
@@ -11,12 +11,15 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
              person("Michael", "McManus",  role="ctb",
                     email = "McManus.Michael@epa.gov"),
              person("Tom", "Kincaid", role=c("cre", "ctb"),
-                    email = "Kincaid.Tom@epa.gov"),
-             person("Marcus W.", "Beck", role=c("ctb"),
-                    email = "beck.marcus@epa.gov"))
-Depends: R (>= 3.0), maptools, RColorBrewer, rgdal, sp
-Imports: 
-    ggplot2, 
+                    email = "Kincaid.Tom@epa.gov"))
+Depends:
+    R (>= 2.10),
+    maptools,
+    RColorBrewer,
+    rgdal,
+    sp
+Imports:
+    ggplot2 (>= 2.0.0),
     grid
 Description: This group of functions simplifies the creation of linked micromap
     plots.
@@ -29,9 +32,12 @@ Author: Quinn Payton [aut],
   Michael McManus [ctb],
   Tom Kincaid [cre, ctb],
   Marcus W. Beck [ctb]
-Maintainer: Marcus W. Beck <beck.marcus@epa.gov>
+Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2015-02-06 21:22:27
-Suggests: knitr
+Suggests:
+    knitr,
+    rgeos
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

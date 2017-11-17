@@ -256,7 +256,7 @@ RankMaps <- function(pl, p, mapDF, att){
 	pl  <- plot_opts(p, pl, att)		
 	pl  <- graph_opts(p, pl, att)	
 
-	pl <- pl + theme(panel.margin = unit(0, "lines"))
+	pl <- pl + theme(panel.spacing = unit(0, "lines"))
 
 
 	pl 
@@ -329,7 +329,7 @@ CatMaps <- function(pl, p, mapDF, att){
 
 	pl  <- plot_opts(p, pl, att)		
 	pl  <- graph_opts(p, pl, att)	
-	pl <- pl + theme(panel.margin = unit(0, "lines")) 
+	pl <- pl + theme(panel.spacing = unit(0, "lines")) 
 
 	pl
 

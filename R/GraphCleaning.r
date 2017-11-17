@@ -202,9 +202,10 @@ axis_opts <- function(i, pl, a, limsx=NA, limsy=NA, border=TRUE, expx=FALSE){
 	   # otherwise text shows up as ggplot defaults
 	}
  
- 
-	  # put it all together and execute the eval call
-	xstr <- paste("scale_x_continuous(", xstr.title)
+  # transformation string
+  xstr.trans <- paste0(', trans = ', a[[i]]$trans)
+
+	xstr <- paste("scale_x_continuous(", xstr.title, xstr.trans)
 	if (x.expand) xstr <- paste(xstr, xstr.expand)
 	if (x.breaks) xstr <- paste(xstr, xstr.breaks)
 	if (x.labels) xstr <- paste(xstr, xstr.labels)
@@ -238,7 +239,7 @@ axis_opts <- function(i, pl, a, limsx=NA, limsy=NA, border=TRUE, expx=FALSE){
 	ystr.limits <- as.character(paste('c(',min(limsy), ',', max(limsy),')'))
 	ystr.limits <- paste(", limits=", ystr.limits)
 
-	pl <- pl + theme(panel.margin = unit(0, "lines"))
+	pl <- pl + theme(panel.spacing = unit(0, "lines"))
 
 	
 	# if (any(is.na(limsy)) | a$median.row) y.limits <- FALSE else y.limits <- TRUE
