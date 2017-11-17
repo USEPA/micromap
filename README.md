@@ -61,16 +61,7 @@ citation(package = 'micromap')
 
 ### Using the functions
 
-Please consult the [publication](http://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software for a general overview of the package.  A vignette is also provided with the development version of the package:
-
-
-```r
-# view vignette
-vignette(package = 'micromap')
-
-# open vignette
-vignette('Introduction_Guide')
-```
+A detailed overview of the micromap package is provided as in introduction guide that is included with the package.  Additional information can be found from the [publication](http://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software. 
 
 ### EPA Disclaimer
 

@@ -27,11 +27,12 @@ License: GPL (>= 2)
 URL: http://www.jstatsoft.org/v63/i02/
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
-    Tony Olsen [aut],
-    Marc Weber [ctb],
-    Michael McManus [ctb],
-    Tom Kincaid [cre, ctb]
-Maintainer: Tom Kincaid <Kincaid.Tom@epa.gov>
+  Tony Olsen [aut],
+  Marc Weber [ctb],
+  Michael McManus [ctb],
+  Tom Kincaid [cre, ctb],
+  Marcus W. Beck [ctb]
+Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2015-02-06 21:22:27
