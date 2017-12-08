@@ -184,7 +184,9 @@ lmplot(stat.data = edPov,  map.data = statePolys ,
 	colors = c('red','orange','green','blue','purple'), 
 	map.color2 = 'lightgray',
        
-	panel.att = list(list(1, header = 'States', panel.width = .8, align = 'left', text.size = .9),
+	panel.att = list(
+	    list(1, header = 'States', panel.width = .8, align = 'left', 
+	      text.size = .9),
 			list(2, header = 'Percent Living Below \\n Poverty Level',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
 				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
@@ -223,12 +225,14 @@ lmplot (stat.data = edPov, map.data = statePolys,
 
 				list(3, header = 'Percent Living Below\\nPoverty Level',
 					graph.bgcolor = 'lightgray', point.size = 1.5,
-					xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
+					xaxis.ticks = list(10,15,20), 
+					xaxis.labels = list(10,15,20),
 					xaxis.title = 'Percent'),
 
 				list(4, header = 'Percent Adults With\\n4+ Years of College',
 					graph.bgcolor = 'lightgray', point.size = 1.5,
-					xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40), 
+					xaxis.ticks = list(20,30,40), 
+					xaxis.labels = list(20,30,40), 
 					xaxis.title = 'Percent'),
 	
 				list(5, header = 'Light Gray Means\\nHighlighted Above', 
@@ -264,7 +268,8 @@ myPlot <- lmplot(stat.data = edPov, map.data = statePolys,
 
 			list(5, header = 'Percent Adults With\\n4+ Years of College',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
-				xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40), 
+				xaxis.ticks = list(20,30,40), 
+				xaxis.labels = list(20,30,40), 
 				xaxis.title = 'Percent'),
 	
 			list(1, header = 'Light Gray Means\\nHighlighted Above', 

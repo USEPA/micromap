@@ -88,7 +88,9 @@
 #' 	colors = c('red','orange','green','blue','purple'), 
 #' 	map.color2 = 'lightgray',
 #'        
-#' 	panel.att = list(list(1, header = 'States', panel.width = .8, align = 'left', text.size = .9),
+#' 	panel.att = list(
+#' 	    list(1, header = 'States', panel.width = .8, align = 'left', 
+#' 	      text.size = .9),
 #' 			list(2, header = 'Percent Living Below \n Poverty Level',
 #' 				graph.bgcolor = 'lightgray', point.size = 1.5,
 #' 				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
@@ -127,12 +129,14 @@
 #' 
 #' 				list(3, header = 'Percent Living Below\nPoverty Level',
 #' 					graph.bgcolor = 'lightgray', point.size = 1.5,
-#' 					xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
+#' 					xaxis.ticks = list(10,15,20), 
+#' 					xaxis.labels = list(10,15,20),
 #' 					xaxis.title = 'Percent'),
 #' 
 #' 				list(4, header = 'Percent Adults With\n4+ Years of College',
 #' 					graph.bgcolor = 'lightgray', point.size = 1.5,
-#' 					xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40), 
+#' 					xaxis.ticks = list(20,30,40), 
+#' 					xaxis.labels = list(20,30,40), 
 #' 					xaxis.title = 'Percent'),
 #' 	
 #' 				list(5, header = 'Light Gray Means\nHighlighted Above', 
@@ -168,7 +172,8 @@
 #' 
 #' 			list(5, header = 'Percent Adults With\n4+ Years of College',
 #' 				graph.bgcolor = 'lightgray', point.size = 1.5,
-#' 				xaxis.ticks = list(20,30,40), xaxis.labels = list(20,30,40), 
+#' 				xaxis.ticks = list(20,30,40), 
+#' 				xaxis.labels = list(20,30,40), 
 #' 				xaxis.title = 'Percent'),
 #' 	
 #' 			list(1, header = 'Light Gray Means\nHighlighted Above', 
@@ -243,13 +248,6 @@ mmplot.default <- function(map.data,
   if(median.row) colors <- c(colors, median.color) 
   
   pps = plot.panel.spacing*.05
-  
-  ##
-  # sanity checks
-
-  # stop if panel.data doesnt match the attribute data
-  if(any(!na.omit(unlist(panel.data)) %in% names(stat.data))) 
-    stop('panel.data must be in stat.data')
   
   ###################################
   ## create attribute object/list ###
