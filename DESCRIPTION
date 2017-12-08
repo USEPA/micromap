@@ -1,6 +1,6 @@
 Package: micromap
-Version: 1.9.2.9000
-Date: 2015-02-06
+Version: 1.9.3
+Date: 2017-12-11
 Title: Linked Micromap Plots
 Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "Payton.Quinn@epa.gov"),
@@ -11,7 +11,9 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
              person("Michael", "McManus",  role="ctb",
                     email = "McManus.Michael@epa.gov"),
              person("Tom", "Kincaid", role=c("cre", "ctb"),
-                    email = "Kincaid.Tom@epa.gov"))
+                    email = "Kincaid.Tom@epa.gov"),
+             person("Marcus", "Beck",  role="ctb",
+                    email = "marcusb@sccwrp.org"))
 Depends:
     R (>= 2.10),
     maptools,
@@ -35,9 +37,8 @@ Author: Quinn Payton [aut],
 Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2015-02-06 21:22:27
 Suggests:
     knitr,
     rgeos
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
