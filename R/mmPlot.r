@@ -239,7 +239,7 @@ mmplot.default <- function(map.data,
   dMap <- map.data
   
   # get plot colors, add median if supplied
-  colors = colorRampPalette(colors)(grouping)
+  colors = colorRampPalette(colors)(max(grouping))
   if(median.row) colors <- c(colors, median.color) 
   
   pps = plot.panel.spacing*.05

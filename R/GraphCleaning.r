@@ -34,7 +34,7 @@ plot_opts <- function(i, pl, a){
 
 		pl <- pl + ggtitle(tmp.title) +
 				theme(plot.title=element_text(family=a[[i]]$panel.header.font, face=a[[i]]$panel.header.face, 
-							colour=a[[i]]$panel.header.color, size=tmp.size, lineheight=tmp.lineheight))
+							colour=a[[i]]$panel.header.color, size=tmp.size, lineheight=tmp.lineheight, hjust = 0.5))
 	} 
 	
 

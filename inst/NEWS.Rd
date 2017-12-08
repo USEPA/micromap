@@ -1,6 +1,27 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.3 (Released 2017-12-11)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item trans argument added to mmplot for axis transformations.
+      \item Widened default panel margins of plot attributes.
+      \item mmplot includes a method for SpatialPolygonsDataFrame objects.
+      \item Plot objects no longer open in a separate graphics window.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Expanded color ramp to include all observations in a perceptual grouping.
+      \item Fixed namespace conflicts between grid adn ggplot 2.x.
+      \item Font for text called explicitly as 'sans' to prevent warning of 'font family not found'.
+      \item Removed free scales on map panels to preserve aspect ratios.
+    }
+  }
+}
+
+
 \section{CHANGES IN micromap VERSION 1.9.2 (Released 2015-02-06)}{
   \subsection{NEW FEATURES}{
     \itemize{
