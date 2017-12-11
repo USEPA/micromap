@@ -7,3 +7,4 @@
 ^README\.html$
 ^README_files/.*
 ^CONTRIBUTING\.md*
+^cran-comments\.md$

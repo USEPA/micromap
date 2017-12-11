@@ -1,7 +1,8 @@
 
-# R-micromap-package-development
+# micromap
 
-[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap) [![AppVeyor Build Status](http://ci.appveyor.com/api/projects/status/github/fawda123/R-micromap-package-development?branch=development)](http://ci.appveyor.com/project/fawda123/R-micromap-package-development)
+[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap) [![Travis-CI Build Status](https://travis-ci.org/fawda123/micromap.png?branch=development)](https://travis-ci.org/fawda123/micromap)
+[![AppVeyor Build Status](http://ci.appveyor.com/api/projects/status/github/fawda123/micromap?branch=development)](http://ci.appveyor.com/project/fawda123/micromap)
 
 This repository is for development of the USEPA R micromap package.   If you would like to contribute to this repository please follow the guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
@@ -61,7 +62,16 @@ citation(package = 'micromap')
 
 ### Using the functions
 
-A detailed overview of the micromap package is provided as in introduction guide that is included with the package.  Additional information can be found from the [publication](http://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software. 
+Please consult the [publication](http://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software for a general overview of the package.  A vignette is also provided with the development version of the package:
+
+
+```r
+# view vignette
+vignette(package = 'micromap')
+
+# open vignette
+vignette('Introduction_Guide')
+```
 
 ### EPA Disclaimer
 

@@ -2,6 +2,10 @@
 exportPattern(".")
 
 # Import all packages listed as Depends or Imports
+S3method(print,mm)
+S3method(mmplot,default)
+S3method(mmplot,SpatialPolygonsDataFrame)
+export(mmplot)
 import(maptools)
 import(RColorBrewer)
 import(rgdal)
@@ -11,5 +15,7 @@ importFrom(grid, grid.layout)
 importFrom(grid, grid.newpage)
 importFrom(grid, pushViewport)
 importFrom(grid, viewport)
+importFrom("grDevices", "colorRampPalette", "dev.off", "gray", "jpeg",
+             "pdf", "png", "postscript", "tiff")
+importFrom("stats", "aggregate", "median", "poly")
 
-S3method(print, mm)
