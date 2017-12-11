@@ -59,7 +59,7 @@ mmplot(map.data, ...)
   plot.header.size = NA, plot.header.color = NA, plot.footer = NA,
   plot.footer.size = NA, plot.footer.color = NA, plot.width = 7,
   plot.height = 7, map.spacing = 1, plot.pGrp.spacing = 1,
-  plot.panel.spacing = 1, plot.panel.margins = c(0, 0, 1, 0))
+  plot.panel.spacing = 1, plot.panel.margins = c(0, 0, 1, 0), ...)
 }
 \arguments{
 \item{stat.data}{table of statistics for display}
