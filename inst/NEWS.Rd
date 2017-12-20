@@ -4,8 +4,7 @@
 \section{CHANGES IN micromap VERSION 1.9.3 (Released 2017-12-11)}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item trans argument added to mmplot for axis transformations.
-      \item Widened default panel margins of plot attributes.
+      \item trans argument added to mmplot for axis transformations.    
       \item mmplot includes a method for SpatialPolygonsDataFrame objects.
       \item Plot objects no longer open in a separate graphics window.
     }
