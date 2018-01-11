@@ -33,7 +33,7 @@ install.packages('devtools')
 library(devtools)
 
 # install from repo
-install_github('USEPA/R-micromap-package-development', ref = 'development')
+install_github('USEPA/micromap)
 library(micromap)
 ```
 
