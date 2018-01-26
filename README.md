@@ -1,3 +1,12 @@
+---
+output:
+  html_document:
+    keep_md: yes
+    toc: no
+    self_contained: no
+  pdf_document:
+    toc: yes
+---
 
 # micromap
 
@@ -26,7 +35,7 @@ install.packages('devtools')
 library(devtools)
 
 # install from repo
-install_github('USEPA/R-micromap-package-development', ref = 'development')
+install_github('USEPA/micromap', ref = 'development')
 library(micromap)
 ```
 
