@@ -1,13 +1,3 @@
----
-output:
-  html_document:
-    keep_md: yes
-    toc: no
-    self_contained: no
-  pdf_document:
-    toc: yes
----
-
 # micromap
 
 [![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap) [![Travis-CI Build Status](https://travis-ci.org/fawda123/micromap.png?branch=development)](https://travis-ci.org/fawda123/micromap)
