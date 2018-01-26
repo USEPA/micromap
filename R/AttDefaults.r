@@ -15,7 +15,7 @@ standard_att <- function(show=FALSE) list(
 
   left.margin=NA,
   right.margin=NA,
-  panel.margins=c(1, -0.25, 1, -1.5),
+  panel.margins=c(1, 0, 1, 0),
 
 
   graph.grid.major=as.logical(TRUE),

@@ -871,15 +871,17 @@ We assigned the National region equal to 4 as the other areas had already been a
 We can now produce the basic group-categorized micromap using syntax very similar to \textbf{mmplot} function.  We now specify two new arguments ``grp.by'' and ``cat''.  The ``grp''.by specifies the areas or polygons we are using from the statistical data, and ``cat'' specifies the categories that will be crossed with each of the areas.
 <<label=fig9>>=
 mmgroupedplot(stat.data=vegCov,
-map.data=wsa.polys,
-panel.types=c("map", "labels", "bar_cl", "bar_cl"),
-panel.data=list(NA,"Category",
-list("Estimate.P","LCB95Pct.P","UCB95Pct.P"),
-list("Estimate.U","LCB95Pct.U","UCB95Pct.U")),
-grp.by="Subpopulation",
-cat="Category",
-map.link=c("Subpopulation", "ID"),
-print.file="fig9.jpeg",print.res=300)
+              map.data=wsa.polys,
+              panel.types=c("map", "labels", "bar_cl", "bar_cl"),
+              panel.data=list(NA,"Category",
+                              list("Estimate.P","LCB95Pct.P","UCB95Pct.P"),
+                              list("Estimate.U","LCB95Pct.U","UCB95Pct.U")),
+              panel.att=list(list(2, panel.width = 1.5)),
+              grp.by="Subpopulation",
+              cat="Category",
+              map.link=c("Subpopulation", "ID"),
+              plot.width = 9,
+              print.file="fig9.jpeg",print.res=300)
 @
 \begin{figure}[!tbp] 
 \begin{center} 
@@ -908,7 +910,7 @@ panel.att=list(list(1, header="Region", header.size=1.5,
 panel.width=.75),
 list(2, header="Category",
 header.size=1.5,
-panel.width=1.7),
+panel.width=2),
 list(3, header="Percent", header.size=1.5,
 graph.bgcolor="lightgray",
 xaxis.title="percent",

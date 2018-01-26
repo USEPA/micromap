@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{micromap News}
 
-\section{CHANGES IN micromap VERSION 1.9.3 (Released 2017-12-11)}{
+\section{CHANGES IN micromap VERSION 1.9.3 (Released xxxxx)}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item trans argument added to mmplot for axis transformations.    
@@ -13,9 +13,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Expanded color ramp to include all observations in a perceptual grouping.
-      \item Fixed namespace conflicts between grid adn ggplot 2.x.
+      \item Fixed namespace conflicts between grid and ggplot 2.x.
       \item Font for text called explicitly as 'sans' to prevent warning of 'font family not found'.
-      \item Removed free scales on map panels to preserve aspect ratios.
     }
   }
 }
