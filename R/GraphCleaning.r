@@ -281,7 +281,8 @@ axis_opts <- function(i, pl, a, limsx=NA, limsy=NA, border=TRUE, expx=FALSE){
 
 		
 assimilatePlot <- function(pl, i, a, limsx=NA, limsy=NA){
-	pl <- plot_opts(i,pl,a)
+
+  pl <- plot_opts(i,pl,a)
 	pl <- graph_opts(i,pl,a)
 
 	if(is.na(limsx)){ 
@@ -299,7 +300,7 @@ assimilatePlot <- function(pl, i, a, limsx=NA, limsy=NA){
 	  }
 
 	if(a$median.row){	
-		pl <- pl + scale_colour_manual(values=c(a$colors,gray(.5)), guide='none') 
+		pl <- suppressMessages({pl + scale_colour_manual(values=c(a$colors,gray(.5)), guide='none')})
 		
 		median.limsy <-  c(-.5, -1.5)
 		limsy <- c(limsy, median.limsy)
