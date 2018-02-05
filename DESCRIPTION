@@ -10,9 +10,9 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "Weber.Marc@epa.gov"),
              person("Michael", "McManus",  role="ctb",
                     email = "McManus.Michael@epa.gov"),
-             person("Tom", "Kincaid", role=c("cre", "ctb"),
+             person("Tom", "Kincaid", role=c("ctb"),
                     email = "Kincaid.Tom@epa.gov"),
-             person("Marcus", "Beck",  role="ctb",
+             person("Marcus W.", "Beck",  role=c("cre", "ctb"),
                     email = "marcusb@sccwrp.org"))
 Depends:
     R (>= 2.10),
@@ -32,8 +32,8 @@ Author: Quinn Payton [aut],
   Tony Olsen [aut],
   Marc Weber [ctb],
   Michael McManus [ctb],
-  Tom Kincaid [cre, ctb],
-  Marcus W. Beck [ctb]
+  Tom Kincaid [ctb],
+  Marcus W. Beck [cre, ctb]
 Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
 NeedsCompilation: no
 Repository: CRAN
