@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{micromap News}
 
-\section{CHANGES IN micromap VERSION 1.9.3 (Released xxxxx)}{
+\section{CHANGES IN micromap VERSION 1.9.3 (Released 2018-02-05)}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item trans argument added to mmplot for axis transformations.    
