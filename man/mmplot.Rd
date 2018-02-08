@@ -152,7 +152,6 @@ Creates a linked micromap, displaying specified polygons and their associated st
 See the Introduction Guide for a full list of the options available for altering micromaps.
 }
 \examples{
-\dontrun{
 # initial example
 
 data("USstates")
@@ -171,6 +170,7 @@ lmplot(stat.data = edPov,
 	grouping = 5, median.row = TRUE,
 	map.link = c('StateAb','ID'))
 
+\dontrun{
 # publication figure 1a
 lmplot(stat.data = edPov,  map.data = statePolys ,
 	panel.types = c('labels', 'dot', 'dot','map'),
