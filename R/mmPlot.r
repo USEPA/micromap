@@ -56,7 +56,6 @@
 #' @name mmplot
 #' 
 #' @examples
-#' \dontrun{
 #' # initial example
 #' 
 #' data("USstates")
@@ -75,6 +74,7 @@
 #' 	grouping = 5, median.row = TRUE,
 #' 	map.link = c('StateAb','ID'))
 #' 
+#' \dontrun{
 #' # publication figure 1a
 #' lmplot(stat.data = edPov,  map.data = statePolys ,
 #' 	panel.types = c('labels', 'dot', 'dot','map'),
@@ -142,7 +142,7 @@
 #' 				list(5, header = 'Light Gray Means\nHighlighted Above', 
 #' 					inactive.border.color = gray(.7), inactive.border.size = 2, 
 #' 					panel.width = .8)))
-#' 
+#'
 #' # publication figure 1c
 #' myPlot <- lmplot(stat.data = edPov, map.data = statePolys,
 #' 	panel.types = c('map', 'dot',  'labels', 'dot', 'dot'),
