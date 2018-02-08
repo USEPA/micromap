@@ -17,7 +17,7 @@ This repository is for development of the USEPA R micromap package.   If you wou
 
 ### Installing the package
 
-Version 1.9.2 is the stable version on CRAN and can be installed as follows.
+Version 1.9.3 is the stable version on CRAN and can be installed as follows.
 
 ```{r eval = F}
 # install from CRAN
@@ -33,7 +33,7 @@ install.packages('devtools')
 library(devtools)
 
 # install from repo
-install_github('USEPA/micromap)
+install_github('USEPA/micromap', ref = 'development')
 library(micromap)
 ```
 

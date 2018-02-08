@@ -26,10 +26,8 @@ create_map_table(tmp.map, IDcolumn=NA, poly.thresh=.0001)
   Quinn Payton \email{Payton.Quinn@epa.gov}
 }
 \examples{
-\dontrun{
 data("USstates")
 head(USstates@data)
 statePolys <- create_map_table(USstates, IDcolumn="ST")
 head(statePolys)
-}
 }

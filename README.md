@@ -1,3 +1,4 @@
+
 # micromap
 
 [![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap) [![Travis-CI Build Status](https://travis-ci.org/fawda123/micromap.png?branch=master)](https://travis-ci.org/fawda123/micromap)
@@ -7,7 +8,7 @@ This repository is for development of the USEPA R micromap package.   If you wou
 
 ### Installing the package
 
-Version 1.9.2 is the stable version on CRAN and can be installed as follows.
+Version 1.9.3 is the stable version on CRAN and can be installed as follows.
 
 
 ```r
@@ -25,7 +26,7 @@ install.packages('devtools')
 library(devtools)
 
 # install from repo
-install_github('USEPA/micromap')
+install_github('USEPA/micromap', ref = 'development')
 library(micromap)
 ```
 
