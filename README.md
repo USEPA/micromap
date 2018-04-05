@@ -26,7 +26,7 @@ install.packages('devtools')
 library(devtools)
 
 # install from repo
-install_github('USEPA/micromap', ref = 'development')
+install_github('USEPA/micromap')
 library(micromap)
 ```
 
