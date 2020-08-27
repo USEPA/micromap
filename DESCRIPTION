@@ -18,8 +18,8 @@ Depends:
     R (>= 3.5),
     maptools,
     RColorBrewer,
-    rgdal (>= 1.5.17),
-    sp (>= 1.4.4)
+    rgdal,
+    sp
 Imports:
     ggplot2 (>= 2.0.0),
     grid
