@@ -13,13 +13,13 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
              person("Tom", "Kincaid", role=c("ctb"),
                     email = "Kincaid.Tom@epa.gov"),
              person("Marcus W.", "Beck",  role=c("cre", "ctb"),
-                    email = "marcusb@sccwrp.org"))
+                    email = "mbeck@tbep.org"))
 Depends:
-    R (>= 2.10),
+    R (>= 3.5),
     maptools,
     RColorBrewer,
-    rgdal,
-    sp
+    rgdal (>= 1.5.17),
+    sp (>= 1.4.4)
 Imports:
     ggplot2 (>= 2.0.0),
     grid
@@ -34,10 +34,10 @@ Author: Quinn Payton [aut],
   Michael McManus [ctb],
   Tom Kincaid [ctb],
   Marcus W. Beck [cre, ctb]
-Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
+Maintainer: Marcus W. Beck <mbeck@tbep.org>
 NeedsCompilation: no
 Repository: CRAN
 Suggests:
     knitr,
     rgeos
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1
