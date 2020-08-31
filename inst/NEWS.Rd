@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.4 (Released 2020-08-27)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None    
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Fix to CRS strings for stale sp data objects included with the package.  This was done in anticipation of updates to sp and rgdal.  This affects the \code{USstates}, \code{WSA3}, and {OrEcoLevel3} data objects used in the examples and the \code{txeco} data object used in the vignette.
+      \item The package now requires R version >= 3.5 for compliance of data objects to version 3. 
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.3 (Released 2018-02-05)}{
   \subsection{NEW FEATURES}{
     \itemize{

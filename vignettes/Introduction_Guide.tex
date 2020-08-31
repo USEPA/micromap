@@ -1,0 +1,30 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+
+% knitr and global options
+
+\newcommand{\R}{{\normalfont\textsf{R }}{}}
+\newcommand{\NA}{{\normalfont\textsf{NA }}{}}
+
+%\VignetteIndexEntry{Introduction to the micromap package}
+
+\usepackage{Sweave}
+\begin{document}
+
+\input{Introduction_Guide-concordance}
+
+\title{Linked Micromaps}
+
+\author{Quinn Payton, Marc Weber, Michael McManus, Tony Olsen, Tom Kincaid}
+\maketitle
+
+
+\section{Introduction}
+The \R package \verb@micromap@ is used to create linked micromaps, which display statistical summaries associated with areal units, or polygons. Linked micromaps provide a means to simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries to a series of small maps. The package contains functions, heavily dependent on the utilities of the \verb@ggplot2@ package, which may be used to produce a row-oriented graph composed of different panels, or columns, of information. These panels at a minimum contain maps, a legend, and statistical summaries.
+
+The key to using these functions is to have your data set up correctly. For a first example, we would like to display US state names, a graph illustrating their poverty level, a graph illustrating their percentage of college graduates, and a micromap indicating which states are being referenced. In order to do this, all we need is a table with state names and estimates of each of the two metrics we're interested in. The dataset \verb@edpov@ included in the \verb@micromap@ library is in this form:
+
+\begin{Schunk}
+\begin{Sinput}
+> library(micromap)
