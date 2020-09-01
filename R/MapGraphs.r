@@ -75,7 +75,8 @@ RankMaps <- function(pl, p, mapDF, att){
 	}
 
 	#*** Creates the map panel object 	
-	pl <- ggplot(mapDF, aes(x=coordsx, y=coordsy, group=IDpoly)) 
+	pl <- ggplot(mapDF, aes(x=coordsx, y=coordsy, group=IDpoly)) +
+	  coord_cartesian(defaut=TRUE)
 
 
 	#*** If we are displaying polygons without associated data we 
@@ -171,7 +172,7 @@ RankMaps <- function(pl, p, mapDF, att){
 			data=subset(mapDF, hole==0)) + 				
 		facet_grid(pGrp~., space="free", scales="free_y") +
 		scale_fill_manual(values=c(att$colors), guide='none') +
-		coord_cartesian()  
+		coord_cartesian(default=TRUE)  
 
 
 	  #################################
@@ -191,7 +192,7 @@ RankMaps <- function(pl, p, mapDF, att){
 				geom_text(aes(x=textx, y=texty, label=tmp.label, hjust=.5, vjust=.4),
 						colour=att$median.text.color, size=5*att$median.text.size, data=mapDF.median) +
 				facet_grid(pGrp~., scales="free_y", space="free") +
-	      coord_cartesian() 
+	      coord_cartesian(default=TRUE) 
 
 	  #################################
 	  #################################
@@ -277,7 +278,7 @@ CatMaps <- function(pl, p, mapDF, att){
 		geom_polygon(fill='white', colour='black', data=subset(mapDF, hole==1)) +
 		geom_polygon(fill='transparent', colour='black', data=subset(transform(mapDF, pGrp=NULL), hole==1)) +
 		facet_grid(pGrp~., scales = "free_y", space="free") +
-		coord_cartesian()  
+		coord_cartesian(default=TRUE)  
 
 
 
