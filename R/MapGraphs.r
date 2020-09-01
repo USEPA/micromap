@@ -76,7 +76,7 @@ RankMaps <- function(pl, p, mapDF, att){
 
 	#*** Creates the map panel object 	
 	pl <- ggplot(mapDF, aes(x=coordsx, y=coordsy, group=IDpoly)) +
-	  coord_cartesian(defaut=TRUE)
+	  coord_cartesian(default=TRUE)
 
 
 	#*** If we are displaying polygons without associated data we 
