@@ -14,7 +14,7 @@ citEntry(
   volume = "63",
   number = "2",
   pages = "1--16",
-  url = "https://www.jstatsoft.org/article/view/v063i02,
+  url = "https://www.jstatsoft.org/article/view/v063i02",
   textVersion = paste(
     "Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R. Olsen, and
      Thomas M. Kincaid (2015).", "micromap: A Package for Linked Micromaps.",
