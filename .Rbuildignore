@@ -8,3 +8,5 @@
 ^README_files/.*
 ^CONTRIBUTING\.md*
 ^cran-comments\.md$
+^CRAN-RELEASE$
+^\.github$
