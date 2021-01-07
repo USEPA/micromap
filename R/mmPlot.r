@@ -245,6 +245,14 @@ mmplot.default <- function(map.data,
                            ...
 ){		
   
+  # stop if 'median' is a column name in stat.data
+  if('median' %in% names(stat.data))
+    stop('"median" cannot be a column name in stat.data')
+  
+  # stop if 'median' is used in panel.data
+  if('median' %in% unlist(panel.data))
+    stop('"median" cannot be used in panel.data')
+  
   # rename function inputs
   dStats <- stat.data
   dMap <- map.data
