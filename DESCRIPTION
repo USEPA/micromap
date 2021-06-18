@@ -19,7 +19,8 @@ Depends:
     maptools,
     RColorBrewer,
     rgdal,
-    sp
+    sp,
+    sf
 Imports:
     ggplot2 (>= 2.0.0),
     grid
