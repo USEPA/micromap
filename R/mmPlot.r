@@ -204,12 +204,18 @@ mmplot.SpatialPolygonsDataFrame <- function(map.data, ...){
   
 }
 
+#' @rdname mmplot
+#' 
+#' @export
+#' 
+#' @importFrom sf as_Spatial
+#' 
 #' @method mmplot sf
 mmplot.sf <- function(map.data, ...){
   
   # use sf object and separate map.data and stat.data from the combined input
   # put in format used by the default method
-  map.data <- sf::as_Spatial(map.data)
+  map.data <- as_Spatial(map.data)
   map.data@data$ID <- row.names(map.data@data)
   stat.data <- map.data@data   
   map.data <- create_map_table(map.data, IDcolumn = 'ID')

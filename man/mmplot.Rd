@@ -6,60 +6,149 @@
 \alias{lmplot}
 \alias{mmgroupedplot}
 \alias{mmplot}
-\alias{lmplot}
-\alias{mmgroupedplot}
-\alias{lmgroupedplot}
 \alias{mmplot.SpatialPolygonsDataFrame}
+\alias{mmplot.sf}
 \alias{mmplot.default}
 \title{Linked Micromaps}
 \usage{
-lmgroupedplot(stat.data, map.data, panel.types, panel.data, map.link = NULL,
-  nPanels = length(panel.types), grp.by, cat, colors = brewer.pal(10,
-  "Spectral"), map.color = "lightyellow", map.all = FALSE,
-  print.file = "no", print.res = NA, panel.att = vector("list", nPanels),
-  plot.header = NA, plot.header.size = NA, plot.header.color = NA,
-  plot.footer = NA, plot.footer.size = NA, plot.footer.color = NA,
-  plot.width = 7, plot.height = 7, map.spacing = 1,
-  plot.grp.spacing = 1, plot.panel.spacing = 1, plot.panel.margins = c(0,
-  0, 1, 0), ...)
+lmgroupedplot(
+  stat.data,
+  map.data,
+  panel.types,
+  panel.data,
+  map.link = NULL,
+  nPanels = length(panel.types),
+  grp.by,
+  cat,
+  colors = brewer.pal(10, "Spectral"),
+  map.color = "lightyellow",
+  map.all = FALSE,
+  print.file = "no",
+  print.res = NA,
+  panel.att = vector("list", nPanels),
+  plot.header = NA,
+  plot.header.size = NA,
+  plot.header.color = NA,
+  plot.footer = NA,
+  plot.footer.size = NA,
+  plot.footer.color = NA,
+  plot.width = 7,
+  plot.height = 7,
+  map.spacing = 1,
+  plot.grp.spacing = 1,
+  plot.panel.spacing = 1,
+  plot.panel.margins = c(0, 0, 1, 0),
+  ...
+)
 
-lmplot(stat.data, map.data = NULL, panel.types, panel.data, map.link = NULL,
-  nPanels = length(panel.types), ord.by, rev.ord = FALSE, grouping,
-  median.row = FALSE, vertical.align = "top", median.color = gray(0.5),
-  colors = brewer.pal(max(grouping), "Spectral"), map.all = FALSE,
-  map.color2 = "lightgray", two.ended.maps = FALSE, print.file = "no",
-  print.res = 300, panel.att = vector("list", nPanels), plot.header = NA,
-  plot.header.size = NA, plot.header.color = NA, plot.footer = NA,
-  plot.footer.size = NA, plot.footer.color = NA, plot.width = 7,
-  plot.height = 7, map.spacing = 1, plot.pGrp.spacing = 1,
-  plot.panel.spacing = 1, plot.panel.margins = c(0, 0, 1, 0), ...)
+lmplot(
+  stat.data,
+  map.data = NULL,
+  panel.types,
+  panel.data,
+  map.link = NULL,
+  nPanels = length(panel.types),
+  ord.by,
+  rev.ord = FALSE,
+  grouping,
+  median.row = FALSE,
+  vertical.align = "top",
+  median.color = gray(0.5),
+  colors = brewer.pal(max(grouping), "Spectral"),
+  map.all = FALSE,
+  map.color2 = "lightgray",
+  two.ended.maps = FALSE,
+  print.file = "no",
+  print.res = 300,
+  panel.att = vector("list", nPanels),
+  plot.header = NA,
+  plot.header.size = NA,
+  plot.header.color = NA,
+  plot.footer = NA,
+  plot.footer.size = NA,
+  plot.footer.color = NA,
+  plot.width = 7,
+  plot.height = 7,
+  map.spacing = 1,
+  plot.pGrp.spacing = 1,
+  plot.panel.spacing = 1,
+  plot.panel.margins = c(0, 0, 1, 0),
+  ...
+)
 
-mmgroupedplot(stat.data, map.data, panel.types, panel.data, map.link = NULL,
-  nPanels = length(panel.types), grp.by, cat, colors = brewer.pal(10,
-  "Spectral"), map.color = "lightyellow", map.all = FALSE,
-  print.file = "no", print.res = NA, panel.att = vector("list", nPanels),
-  plot.header = NA, plot.header.size = NA, plot.header.color = NA,
-  plot.footer = NA, plot.footer.size = NA, plot.footer.color = NA,
-  plot.width = 7, plot.height = 7, map.spacing = 1,
-  plot.grp.spacing = 1, plot.panel.spacing = 1, plot.panel.margins = c(0,
-  0, 1, 0))
+mmgroupedplot(
+  stat.data,
+  map.data,
+  panel.types,
+  panel.data,
+  map.link = NULL,
+  nPanels = length(panel.types),
+  grp.by,
+  cat,
+  colors = brewer.pal(10, "Spectral"),
+  map.color = "lightyellow",
+  map.all = FALSE,
+  print.file = "no",
+  print.res = NA,
+  panel.att = vector("list", nPanels),
+  plot.header = NA,
+  plot.header.size = NA,
+  plot.header.color = NA,
+  plot.footer = NA,
+  plot.footer.size = NA,
+  plot.footer.color = NA,
+  plot.width = 7,
+  plot.height = 7,
+  map.spacing = 1,
+  plot.grp.spacing = 1,
+  plot.panel.spacing = 1,
+  plot.panel.margins = c(0, 0, 1, 0)
+)
 
 mmplot(map.data, ...)
 
 \method{mmplot}{SpatialPolygonsDataFrame}(map.data, ...)
 
-\method{mmplot}{default}(map.data, stat.data, panel.types, panel.data, map.link,
-  nPanels = length(panel.types), ord.by, rev.ord = FALSE, grouping,
-  median.row = FALSE, vertical.align = "top", median.color = gray(0.5),
-  median.text.color = "black", median.text.size = 1,
-  median.text.label = "Median", colors = brewer.pal(max(grouping),
-  "Spectral"), map.all = FALSE, map.color2 = "lightgray",
-  two.ended.maps = FALSE, trans = "identity", print.file = "no",
-  print.res = 300, panel.att = vector("list", nPanels), plot.header = NA,
-  plot.header.size = NA, plot.header.color = NA, plot.footer = NA,
-  plot.footer.size = NA, plot.footer.color = NA, plot.width = 7,
-  plot.height = 7, map.spacing = 1, plot.pGrp.spacing = 1,
-  plot.panel.spacing = 1, plot.panel.margins = c(0, 0, 1, 0), ...)
+\method{mmplot}{sf}(map.data, ...)
+
+\method{mmplot}{default}(
+  map.data,
+  stat.data,
+  panel.types,
+  panel.data,
+  map.link,
+  nPanels = length(panel.types),
+  ord.by,
+  rev.ord = FALSE,
+  grouping,
+  median.row = FALSE,
+  vertical.align = "top",
+  median.color = gray(0.5),
+  median.text.color = "black",
+  median.text.size = 1,
+  median.text.label = "Median",
+  colors = brewer.pal(max(grouping), "Spectral"),
+  map.all = FALSE,
+  map.color2 = "lightgray",
+  two.ended.maps = FALSE,
+  trans = "identity",
+  print.file = "no",
+  print.res = 300,
+  panel.att = vector("list", nPanels),
+  plot.header = NA,
+  plot.header.size = NA,
+  plot.header.color = NA,
+  plot.footer = NA,
+  plot.footer.size = NA,
+  plot.footer.color = NA,
+  plot.width = 7,
+  plot.height = 7,
+  map.spacing = 1,
+  plot.pGrp.spacing = 1,
+  plot.panel.spacing = 1,
+  plot.panel.margins = c(0, 0, 1, 0),
+  ...
+)
 }
 \arguments{
 \item{stat.data}{table of statistics for display}
@@ -187,15 +276,15 @@ lmplot(stat.data = edPov,  map.data = statePolys ,
 	panel.att = list(
 	    list(1, header = 'States', panel.width = .8, align = 'left', 
 	      text.size = .9),
-			list(2, header = 'Percent Living Below \\n Poverty Level',
+			list(2, header = 'Percent Living Below \n Poverty Level',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
 				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
 				xaxis.title = 'Percent'),
-			list(3, header = 'Percent Adults With\\n4+ Years of College',
+			list(3, header = 'Percent Adults With\n4+ Years of College',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
 				xaxis.ticks = list(0,20,30,40), xaxis.labels = list(0,20,30,40),
 				xaxis.title = 'Percent'),
-			list(4, header = 'Light Gray Means\\nHighlighted Above',  
+			list(4, header = 'Light Gray Means\nHighlighted Above',  
 				inactive.border.color = gray(.7), inactive.border.size = 2,	
 				panel.width = .8)))
 
@@ -223,19 +312,19 @@ lmplot (stat.data = edPov, map.data = statePolys,
 				list(2, header = 'States', panel.width = .8, 
 					align = 'left', text.size = .9),
 
-				list(3, header = 'Percent Living Below\\nPoverty Level',
+				list(3, header = 'Percent Living Below\nPoverty Level',
 					graph.bgcolor = 'lightgray', point.size = 1.5,
 					xaxis.ticks = list(10,15,20), 
 					xaxis.labels = list(10,15,20),
 					xaxis.title = 'Percent'),
 
-				list(4, header = 'Percent Adults With\\n4+ Years of College',
+				list(4, header = 'Percent Adults With\n4+ Years of College',
 					graph.bgcolor = 'lightgray', point.size = 1.5,
 					xaxis.ticks = list(20,30,40), 
 					xaxis.labels = list(20,30,40), 
 					xaxis.title = 'Percent'),
 	
-				list(5, header = 'Light Gray Means\\nHighlighted Above', 
+				list(5, header = 'Light Gray Means\nHighlighted Above', 
 					inactive.border.color = gray(.7), inactive.border.size = 2, 
 					panel.width = .8)))
 
@@ -261,18 +350,18 @@ myPlot <- lmplot(stat.data = edPov, map.data = statePolys,
 			list(3, header = 'States', panel.width = .8, 
 				align = 'left', text.size = .9),
 
-			list(4, header = 'Percent Living Below\\nPoverty Level',
+			list(4, header = 'Percent Living Below\nPoverty Level',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
 				xaxis.ticks = list(10,15,20), xaxis.labels = list(10,15,20),
 				xaxis.title = 'Percent'),
 
-			list(5, header = 'Percent Adults With\\n4+ Years of College',
+			list(5, header = 'Percent Adults With\n4+ Years of College',
 				graph.bgcolor = 'lightgray', point.size = 1.5,
 				xaxis.ticks = list(20,30,40), 
 				xaxis.labels = list(20,30,40), 
 				xaxis.title = 'Percent'),
 	
-			list(1, header = 'Light Gray Means\\nHighlighted Above', 
+			list(1, header = 'Light Gray Means\nHighlighted Above', 
 				inactive.border.color = gray(.7), inactive.border.size = 2, 
 				panel.width = .8)))
 
