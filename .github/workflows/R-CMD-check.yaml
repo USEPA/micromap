@@ -28,5 +28,5 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
-        run: devtools::check(vignettes = FALSE, error_on = "error")
+        run: devtools::check(vignettes = FALSE, error_on = "warning")
         shell: Rscript {0}
