@@ -1,6 +1,6 @@
 Package: micromap
-Version: 1.9.4
-Date: 2020-09-02
+Version: 1.9.5
+Date: 2021-09-28
 Title: Linked Micromap Plots
 Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "Payton.Quinn@epa.gov"),
