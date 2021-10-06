@@ -25,9 +25,8 @@ Imports:
     ggplot2 (>= 2.0.0),
     grid
 Description: This group of functions simplifies the creation of linked micromap
-    plots.
+    plots. <doi: 10.18637/jss.v063.i02>
 License: GPL (>= 2)
-URL: https://www.jstatsoft.org/article/view/v063i02
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
   Tony Olsen [aut],
