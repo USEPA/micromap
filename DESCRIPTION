@@ -16,9 +16,8 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "mbeck@tbep.org"))
 Depends:
     R (>= 3.5),
-    maptools,
     RColorBrewer,
-    rgdal,
+    maptools,
     sp,
     sf
 Imports:
