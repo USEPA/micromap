@@ -1,6 +1,6 @@
 Package: micromap
-Version: 1.9.5
-Date: 2021-09-28
+Version: 1.9.6
+Date: 2023-04-20
 Title: Linked Micromap Plots
 Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "Payton.Quinn@epa.gov"),
@@ -22,7 +22,8 @@ Depends:
 Imports:
     ggplot2 (>= 2.0.0),
     grid
-Description: This group of functions simplifies the creation of linked micromap plots. <doi: 10.18637/jss.v063.i02>
+Description: This group of functions simplifies the creation of linked micromap plots. Please
+  see <http://www.jstatsoft.org/v63/i02/> for additional details.
 License: GPL (>= 2)
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
