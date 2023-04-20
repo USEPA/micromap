@@ -44,7 +44,7 @@ jobs:
           extra-packages: any::devtools
           needs: check
 
-       name: Check
+      - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: devtools::check(vignettes = FALSE, error_on = "warning")
