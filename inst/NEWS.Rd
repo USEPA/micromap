@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.6 (Released 2023-04-20)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Dependency on \code{maptools} was removed 
+      \item Vignette information about rgdal or rgeos was removed
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item None
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.5 (Released 2020-09-28)}{
   \subsection{NEW FEATURES}{
     \itemize{

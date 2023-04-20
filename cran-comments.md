@@ -1,6 +1,6 @@
 ## Resubmission 
 
-This is a resubmission for version 1.9.5 additional method dispatch and a minor bug fix in the main plotting function.
+This is a resubmission for version 1.9.6, removing maptools, rgeos, and rgdal.
 
 ## Test environments
 * ubuntu 20.04 (on GitHub Actions), R 4.1.1
