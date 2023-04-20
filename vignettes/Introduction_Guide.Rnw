@@ -38,7 +38,7 @@ head(edPov)
 
 Next, we need a table of polygons to map. We can use the \verb@create_map_table@ function to take a spatial object file and create a small efficient table in the form that the mmplot function can use or we can construct our table directly.  In order to do this successfully our table must end up with 4 essential columns that must be named as follows:  ID; coordsx; coordsy; and poly. The ID column is what links to the table of statistics. The poly column is used to identify state polygons for the same ID (otherwise R will connect all the vertices with some odd looking results). For this first example we will use the \verb@USstates@ included with the library and use \verb@create_map_table@ in order to get the data in the right format. 
 
-Some preliminary steps are usually required to use the \verb@create_map_table@ function. First, many spatial objects are quite detailed, far more detailed than what is needed for a micromap. The size and complexity of these files will drastically reduce the speed at which plots can be produced and, in some cases, overwhelm \R with the amount of data being handled causing it to crash. One option for reducing shapefile complexity is to use a simplification function from the maptools library which can be used to reduce the size and complexity of a spatial object.  See Section 3,"Preparing data for use with the library", for more details and an example.  The \verb@USstates@ data is very simple and therefore we will hold off discussion of the thinning function until later.
+Some preliminary steps are usually required to use the \verb@create_map_table@ function. First, many spatial objects are quite detailed, far more detailed than what is needed for a micromap. The size and complexity of these files will drastically reduce the speed at which plots can be produced and, in some cases, overwhelm \R with the amount of data being handled causing it to crash. One option for reducing shapefile complexity is to use a simplification function from the sf library which can be used to reduce the size and complexity of a spatial object.  See Section 3,"Preparing data for use with the library", for more details and an example.  The \verb@USstates@ data is very simple and therefore we will hold off discussion of the thinning function until later.
 
 The second (and much simpler) step in successfully using the \verb@create_map_table@ function is assigning an explicit ID to each polygon. The data table associated with the spatial object must have an ID column (literally called 'ID') to name each polygon. This is the column that will be used to link the information from the stat table to this built map table. With this in mind we can check the data table from our \verb@USstates@ file by using the following @data syntax. The "@" syntax refers to grabbing the data object stored in this slot of an \verb@sp@ spatial object. To examine the other slots of this shapefile one would use the \verb@slotNames()@ function.
 
@@ -71,7 +71,7 @@ mmplot(stat.data=edPov,map.data=statePolys,
   ord.by="pov", grouping=5,
   median.row=T,
   map.link=c("StateAb","ID"),
-  print.file="fig1.jpeg",print.res=300
+  print.file="fig1.jpeg",print.res=100
 ) 
 @ 
 
@@ -138,7 +138,7 @@ list(4, header="Light Gray Means\nHighlighted Above",
 inactive.fill="lightgray",
 inactive.border.color=gray(.7), inactive.border.size=2,
 panel.width=.8)), print.file="fig2.jpeg", 
-print.res=300) 
+print.res=100) 
 @ 
 \begin{figure}
 \begin{center}
@@ -157,7 +157,7 @@ This seems pretty good. Note ``\textbackslash n'' inserts a carriage return in t
 \end{quote}
 We have two options for storing this final figure. In the mmplot function call we can add a line to the final list of panel attributes specifying a filename (and resolution if desired) as follows:
 \begin{quote}
-``mmplot(stat.data=edPov,\dots,\textbf{print.file='myFigure.tiff', print.res=300)}''
+``mmplot(stat.data=edPov,\dots,\textbf{print.file='myFigure.tiff', print.res=100)}''
 \end{quote}
 The ``.tiff'' tells the mmplot function that a tiff file is requested. Jpeg, jpg,  png, ps, and eps files may also be produced in a similar manner. The other option is to store our function output in an R object as we build it. When we have results
 we are satisfied with we can use the \verb@printmmplot@ function to print it out:
@@ -208,7 +208,7 @@ list(5, header="Light Gray Means\nHighlighted Above",
 inactive.fill="lightgray",     
 inactive.border.color=gray(.7), inactive.border.size=2, 
 panel.width=.8)),
-print.file="fig3.jpeg",print.res=300)
+print.file="fig3.jpeg",print.res=100)
 @
 
 Note the correspondence between the panel.types and panel.data  statements.  The panel.data statement refers to the data from the statistical data frame edPov.  The first "dot\_legend" in panel.types corresponds to the "NA" as no statistcal data are being referenced, the "labels" corresponds to the "state" column, the second "dot" corresponds to the poverty column, and the third "dot" corresponds to the education column.  The last panel.type, "map" corresponds to "NA" in the panel.data list as there is no map data in the edPov data frame.  The map data is associated with the statePolys data frame. Also, note that the addition of the dots before the state names increased the number of panels displayed in the linked micromap to five so the panel.att statement contains five lists now.
@@ -247,7 +247,7 @@ list(1, header="Light Gray Means\nHighlighted Above",
 inactive.fill="lightgray",     
 inactive.border.color=gray(.7), inactive.border.size=2, 
 panel.width=.8)),
-print.file="fig4.jpeg",print.res=300)
+print.file="fig4.jpeg",print.res=100)
 @
 \begin{figure}[!tbp] 
 \begin{center} 
@@ -274,35 +274,14 @@ Method for simplifying polygons using simplification in GIS software such as Arc
   \begin{quote}Maximum Allowable Offset: 1000 Meters\end{quote}
   \begin{quote}Minimum Area: .001\end{quote}
   \begin{quote}Handling Topological Errors: RESOLVE\_ERRORS\end{quote} 
-  \item Read resulting shapefile into \R using \verb@readOGR@ (uses \verb@readOGR@ from \verb@rgdal@, loaded with the \verb@micromap@ library):
-  \begin{quote}> txeco <- readOGR(".","tx\_eco\_l3")\end{quote}
+  \item Read resulting shapefile into \R using \verb@st_read@ (uses \verb@st_read@ from \verb@sf@, loaded with the \verb@micromap@ library):
+  \begin{quote}> txeco <- st\_read(``tx\_eco\_l3\.shp'')\end{quote}
+  \item Convert the imported shapefile to a spatial dataframe using \verb@as_Spatial@ from \verb@sf@:
+  \begin{quote}> txeco <- as\_Spatial(txeco)\end{quote}
   \item Create an ID column in your spatial dataframe for the \verb@create_map_table@ function
   \begin{quote}> txeco\$ID <- txeco\$US\_L3CODE\end{quote}
   \end{itemize}
-Method two is to simplify polygons within \R, and this can be done in several ways, two of which will be illustrated below. One way is to use the \verb@thinnedSpatialPoly@ function in the \verb@maptools@ library. The other way is to use the \verb@gSimplify@ method in \verb@rgeos@, which includes the step of converting a \verb@SpatialPolygon@ object in R into a \verb@SpatialPolygonDataFrame@. The \verb@create_map_table@ function in the \verb@micromap@ library only works on a\\ \verb@SpatialPolygonDataFrame@.  
-
-<<micromap-3a,fig=FALSE,echo=FALSE>>=
-# The download.file command may or may not work depending on firewall settings.  # If it fails, then download the file from the ftp directory to a local directory # manually.
-load(file = 'txeco.RData')
-plot(txeco)
-
-# Create an ID column in your spatial dataframe for the 
-# create_map_table function
-txeco$ID <- txeco$US_L3CODE
-# Load the maptools library
-library(maptools)
-txeco1<-thinnedSpatialPoly(txeco,tolerance=7000, minarea=0.001,
-topologyPreserve = F, avoidGEOS = T)
-plot(txeco1)
-
-# Alternatively, load the rgeos library
-library(rgeos)
-txeco2 <- gSimplify(txeco, 7000, topologyPreserve=T)
-txeco2<-SpatialPolygonsDataFrame(txeco2, txeco@data)
-# Notice the difference in resolution, particularly along 
-# the southeastern coastline, before and after thinning using rgeos.
-plot(txeco2)
-@
+Method two is to simplify polygons within \R, and this can be done using the \verb@st_simplify@ function from the \verb@sf@ package.  
 
 \textbf{Steps for simplifying very large spatial data:}
 For very large data you need to take extra steps to get manageable spatial data for use in linked micromaps. We will use level 3 ecoregions for the conterminous US as an example. Note that these are one example of steps that work, other combinations of steps could possibly work better for other data \textemdash the point is to get rid of very small features and simplify line work as much as possible.
@@ -319,21 +298,21 @@ In ArcMap:
   \begin{quote}Open Simplify Polygon tool\end{quote}
   \begin{quote}Choose simplification algorithm = Point Remove, Maximum allowable offset 10,000 meters, minimum area 10,000 square meters, and handling toplogical errors = resolve errors\end{quote}
 \end{itemize}
-This will create a sufficiently simplified shapefile to use with the mmplot function\\
-In R:
-The best option for getting a sufficiently simplified spatial object that still looks reasonable is to use ArcMap. We have found it difficult to use existing simplification algorithms available through R packages to create visually
-acceptable, as well as simple enough, spatial objects for the mmplot function. However, methods to try in R are available in both maptools and rgeos library, such as:  
-\begin{quote}> eco3\_thin1 <- thinnedSpatialPoly(eco3, tolerance=50000, topologyPreserve=TRUE, avoidGEOS=FALSE)\end{quote}
-\begin{quote}> eco3\_thin2 <- thinnedSpatialPoly(eco3, tolerance=50000, minarea=100,avoidGEOS = TRUE)\end{quote}
-\begin{quote}> eco3\_thin3 <- gSimplify(eco3, tol=50000, topologyPreserve=TRUE)\end{quote}
+This will create a sufficiently simplified shapefile to use with the mmplot function.\\
 
-If you do not have valid topology, you will need to fix topology errors in your shapefile.  If you try gSimplify method, you will need to promote the object to a SpatialPolygonsDataFrame in R using your original SpatialPolygonsDataFrame prior to thinning, in this manner:
-\begin{quote}> df <- eco3\@data\end{quote}
-\begin{quote}> eco3 <- SpatialPolygonsDataFrame(eco3\_thin3, df)\end{quote}
+In R:
+Simplification methods to try in R are available using the \verb@sf@ package, specifically the \verb@st_simplify@ function. 
+\begin{itemize}
+  \item Load the shapefile using \verb@st_read@ from \verb@sf@:
+  \begin{quote}> txeco <- st\_read(``tx\_eco\_l3.shp'')\end{quote}
+  \item Simplify using \verb@st_simplify@, set the options to preserve topology and the desired tolerance (in units of the CRS, meters in this case):
+  \begin{quote}> txecosimp <- st\_simplify(txeco, preserveTopology = T, dTolerance = 1000)\end{quote}
+  \item Convert the simplified dataset to a spatial dataframe using \verb@as_Spatial@ from \verb@sf@, as needed:
+  \begin{quote}> txecosimp <- as\_Spatial(txecosimp)\end{quote}
+\end{itemize}
 
 Other simplification approaches using  open source or free tools include the online tool MapShaper available here: \\ \url{http://www.mapshaper.org/}. Both polygon simplification as well as line smoothing (Bezier curves for instance)
 can be implemented as well in Quantum GIS via the 'Generalizer'  plugin, and in PostGIS the Douglas-Peucker algorithm is implemented with 'simplify'.
-
 
 For further reading on polygon simplification, we refer users to the following papers:
 
@@ -772,7 +751,7 @@ ord.by="Rate_00",
 grouping=5,
 map.link=c("StateAb","ID"),
 panel.att=list(list(3, line.width=1.25, tip.length=1.5)), 
-print.file="fig7.jpeg", print.res=300) 
+print.file="fig7.jpeg", print.res=100) 
 @ 
 
 \begin{figure}
@@ -825,7 +804,7 @@ graph.bgcolor="lightgray",
 xaxis.ticks=list(20,30,40,50),
 xaxis.labels=list(20,30,40,50),
 xaxis.title="Deaths per 100,000")),
-print.file="fig8.jpeg", print.res=300) 
+print.file="fig8.jpeg", print.res=100) 
 @ 
 
 \begin{figure}
@@ -881,7 +860,7 @@ mmgroupedplot(stat.data=vegCov,
               cat="Category",
               map.link=c("Subpopulation", "ID"),
               plot.width = 9,
-              print.file="fig9.jpeg",print.res=300)
+              print.file="fig9.jpeg",print.res=100)
 @
 \begin{figure}[!tbp] 
 \begin{center} 
@@ -921,7 +900,7 @@ graph.bgcolor="lightgray",
 xaxis.title="thousands",
 xaxis.ticks=list(0,200000,350000,550000),
 xaxis.labels=list(0,200,350,550))),
-print.file="fig10.jpeg",print.res=300)
+print.file="fig10.jpeg",print.res=100)
 @
 \begin{figure}[!tbp] 
 \begin{center} 

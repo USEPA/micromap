@@ -17,14 +17,12 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
 Depends:
     R (>= 3.5),
     RColorBrewer,
-    maptools,
     sp,
     sf
 Imports:
     ggplot2 (>= 2.0.0),
     grid
-Description: This group of functions simplifies the creation of linked micromap
-    plots. <doi: 10.18637/jss.v063.i02>
+Description: This group of functions simplifies the creation of linked micromap plots. <doi: 10.18637/jss.v063.i02>
 License: GPL (>= 2)
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
@@ -37,6 +35,5 @@ Maintainer: Marcus W. Beck <mbeck@tbep.org>
 NeedsCompilation: no
 Repository: CRAN
 Suggests:
-    knitr,
-    rgeos
+    knitr
 RoxygenNote: 7.1.1
