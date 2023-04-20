@@ -3,9 +3,9 @@
 This is a resubmission for version 1.9.6, removing maptools, rgeos, and rgdal.
 
 ## Test environments
-* ubuntu 20.04 (on GitHub Actions), R 4.1.1
-* OS X (on GitHub Actions), R 4.1.1
-* windows (on GitHub Actions), R 4.1.1
+* ubuntu 22.04.2 (on GitHub Actions), R release (4.2.3), devel, and old-release
+* OS X (on GitHub Actions), R 4.2,3
+* windows (on GitHub Actions), R 2.3.
 * win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel and release)
 
 ## R CMD check results
