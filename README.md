@@ -11,7 +11,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.3 is the stable version on CRAN and can be installed as
+Version 1.9.6 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
@@ -57,7 +57,7 @@ citation(package = 'micromap')
     ##     volume = {63},
     ##     number = {2},
     ##     pages = {1--16},
-    ##     url = {http://www.jstatsoft.org/v63/i02/},
+    ##     doi = {10.18637/jss.v063.i02},
     ##   }
 
 ### Using the functions
