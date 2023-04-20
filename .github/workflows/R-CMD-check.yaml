@@ -41,10 +41,18 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: any::devtools
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
+       name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: devtools::check(vignettes = FALSE, error_on = "warning")
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@main
         with:
-          args: 'c("--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")'
-          upload-snapshots: true
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
