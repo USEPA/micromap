@@ -43,7 +43,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          args: 'c(vignettes = FALSE, error_on = "warning")''
+          args: 'c(vignettes = FALSE, error_on = "warning")'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
