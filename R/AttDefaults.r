@@ -1,7 +1,7 @@
 #*** standard attributes used by most panels
 #*** these can be altered after being added to the
 #*** current panel's attribute list
-standard_att <- function(show=FALSE) list(
+standard_att <- function(show=FALSE){ list(
   panel.header=NA,
   	panel.header.size=1,
 	panel.header.color='black',
@@ -58,7 +58,7 @@ standard_att <- function(show=FALSE) list(
   trans = NULL
 ) 
 
-
+}
 
 
 #*** labels ***#
