@@ -1,4 +1,6 @@
 #' @rdname mmplot
+#'
+#' @export lmgroupedplot
 lmgroupedplot <- function(stat.data, map.data, 		# Required -- statistical data; map data
   panel.types, panel.data, 				# Required -- panel types (e.g. 'map', 'labels', 'dot.cl', etc.);
 								# 	which columns in dStats to get the data from

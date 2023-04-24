@@ -1,3 +1,26 @@
+#' Prepares A Polygon Table
+#' 
+#' Takes the user supplied polygon table and prepares it to be plotted
+#' correctly with the lmplot function.
+#' 
+#' 
+#' @param tmp.map a shapefile to be parsed into a flat table for use with
+#' ggplot2.
+#' @param IDcolumn specify which column in the data file to use as a unique
+#' identifier.
+#' @param poly.thresh specify the minimum polygon area which to keep. All
+#' polygons with less area will be dropped.
+#' @return A flat table of all the polygons in the shapefile with an entry for
+#' each vertice.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @examples
+#' 
+#' data("USstates")
+#' head(USstates@data)
+#' statePolys <- create_map_table(USstates, IDcolumn="ST")
+#' head(statePolys)
+#' 
+#' @export create_map_table
 create_map_table <- function (tmp.map, IDcolumn = NA, poly.thresh=.0001) 
 {
     if(is.logical(poly.thresh)){

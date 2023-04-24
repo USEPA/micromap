@@ -1,4 +1,9 @@
-#'@rdname mmplot
+#' @export
+#'
+#' @import ggplot2
+#' @importFrom grid grid.layout grid.newpage pushViewport viewport
+#'
+#' @rdname mmplot
 lmplot <- function(stat.data, map.data=NULL, 	# Required -- statistical data; map data
   panel.types, panel.data, 			# Required -- panel types (e.g. 'map', 'labels', 'dot.cl', etc.);
 							# 	which columns in dStats to get the data from
@@ -62,6 +67,23 @@ mmplot(stat.data=stat.data, map.data=map.data,
 
 }
 
+
+
+
+
+#' Print lmplot Object to a File
+#' 
+#' Takes a stored lmplot object and uses the print method for objects of class
+#' mm to print to a file whose type is implied by the file name.
+#' 
+#' 
+#' @param plobject name of the lmplot object.
+#' @param name name of the file to be produced. Tiff, png, jpeg, and pdf are
+#' recognized.
+#' @param res resolution in dpi.
+#' @return Returns nothing.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export printLMPlot
 printLMPlot <- function(plobject, name=NULL, res=300){
  print(plobject, name=name, res=res)
 }
