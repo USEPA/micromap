@@ -38,3 +38,4 @@ Repository: CRAN
 Suggests:
     knitr
 RoxygenNote: 7.2.3
+Encoding: UTF-8
