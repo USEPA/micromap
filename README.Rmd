@@ -11,7 +11,7 @@ This repository is for development of the USEPA R micromap package.   If you wou
 
 ### Installing the package
 
-Version 1.9.3 is the stable version on CRAN and can be installed as follows.
+Version 1.9.6 is the stable version on CRAN and can be installed as follows.
 
 ```{r eval = F}
 # install from CRAN
@@ -39,7 +39,7 @@ citation(package = 'micromap')
 
 ### Using the functions
 
-Please consult the [publication](http://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software for a general overview of the package.  A vignette is also provided with the development version of the package:
+Please consult the [publication](https://www.jstatsoft.org/v63/i02/) in the Journal of Statistical Software for a general overview of the package.  A vignette is also provided with the development version of the package:
 
 ```{r eval = F}
 # view vignette

@@ -1,7 +1,7 @@
 #*** standard attributes used by most panels
 #*** these can be altered after being added to the
 #*** current panel's attribute list
-standard_att <- function(show=FALSE) list(
+standard_att <- function(show=FALSE){ list(
   panel.header=NA,
   	panel.header.size=1,
 	panel.header.color='black',
@@ -58,10 +58,26 @@ standard_att <- function(show=FALSE) list(
   trans = NULL
 ) 
 
-
+}
 
 
 #*** labels ***#
+
+
+
+
+#' Default Attribute Lists
+#' 
+#' Creates a list of default attribute lists for each panel type.
+#' 
+#' 
+#' @aliases labels_att bar_att bar_cl_att box_summary_att dot_att dot_cl_att
+#' map_att ranks_att standard_att
+#' @param show If show equals FALSE, then the resulting list is returned
+#' invisibly.
+#' @return A list of defaults to be stored in the overall attribute list.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export labels_att
 labels_att <- function(show=FALSE) {
   tmp.att <- append(standard_att(), 
 			list(text.font='sans',
@@ -269,6 +285,30 @@ map_att <- function(show=FALSE) {
 
 
 
+
+
+
+
+#' Sample Attribute List Creator
+#' 
+#' Creates a sample attribute list for use in the creation of new panel types.
+#' 
+#' 
+#' @param size specify the number of attibutes lists to be created.
+#' @param type match the attributes to which type of default panel.
+#' @param ord.by argument inhereted from lmplot/lmGroupedplot.
+#' @param grouping argument inhereted from lmplot/lmGroupedplot.
+#' @param colors argument inhereted from lmplot/lmGroupedplot.
+#' @param plot.pGrp.spacing argument inhereted from lmplot/lmGroupedplot.
+#' @param plot.panel.margins argument inhereted from lmplot/lmGroupedplot.
+#' @param panel.data argument inhereted from lmplot/lmGroupedplot.
+#' @param median.row argument inhereted from lmplot/lmGroupedplot.
+#' @param show controls whether to print the resulting attribute list.
+#' @return A list of attributes to be used in the creation of a panel
+#' @note See the Introduction Guide for a full list of the options available
+#' for altering micromaps.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export sample_att
 sample_att <- function(size=1, type=rep('standard',size), ord.by=NA, grouping=5,
 	colors=brewer.pal(max(grouping), "Spectral"), plot.pGrp.spacing=.05,
 	plot.panel.margins=c(0,1,0,0), panel.data=list(NA), median.row=FALSE, show=FALSE){

@@ -280,6 +280,27 @@ axis_opts <- function(i, pl, a, limsx=NA, limsy=NA, border=TRUE, expx=FALSE){
 
 
 		
+
+
+
+
+#' Cleans a User Made Panel
+#' 
+#' Sends a user made panel out to the graph "cleaning functions" in lmplot in
+#' order to properly display a user made panel seemlessly into the rest of an
+#' lmplot.
+#' 
+#' 
+#' @param pl the lmplot object.
+#' @param i the panel number.
+#' @param a the attribute list.
+#' @param limsx limits of the x axis if desired.
+#' @param limsy limits of the y axis if desired.
+#' @return Returns a cleaned plot object.
+#' @note See the Introduction Guide for a full list of the options available
+#' for altering micromaps.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export assimilatePlot
 assimilatePlot <- function(pl, i, a, limsx=NA, limsy=NA){
 
   pl <- plot_opts(i,pl,a)

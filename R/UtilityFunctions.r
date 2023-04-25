@@ -6,6 +6,12 @@ if(getRversion() >= "2.15.1")
       "tmp.label", "tmp.labels", "tmp.y", "textx", "texty", "xmax", "xmin",
       "ymax", "ymin"))
 
+#' @importFrom stats aggregate median poly
+NULL
+
+#' @importFrom grDevices colorRampPalette dev.off gray jpeg pdf png postscript tiff
+NULL
+
 
 all_atts <- function(a, att.name)
    unlist(unlist(a)[which(att.name==names(unlist(a)))])
@@ -27,6 +33,20 @@ make.string <- function(vct) {
 }
 
 
+
+
+
+
+#' Substring Function
+#' 
+#' Mimics the Excel Function of the Same Name
+#' 
+#' 
+#' @param txt string to be substringed.
+#' @param i number of characters to substring.
+#' @return A character value containing the substring.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export right
 right <- function(txt, i)
    substring(txt, nchar(txt)-i+1)
 

@@ -31,9 +31,9 @@ RankMaps <- function(pl, p, mapDF, att){
 				
 		  lHull <- append(lHull, Polygons(tmpPlys, ID=rr))
 		}
-		spHull <- SpatialPolygons(lHull)
 		
-		unionHull <- unionSpatialPolygons(spHull, rep(1, length(spHull)))
+		spHull <- sf::st_as_sf(SpatialPolygons(lHull))
+		unionHull <- sf::as_Spatial(sf::st_union(spHull))
 		
 		    lHull <- vector("list", length(unionHull@polygons))
 		    for (i in 1:length(lHull)) {

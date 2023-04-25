@@ -45,6 +45,9 @@
 #'   
 #' @return A list of ggplot2 objects with entries for each individual panel.
 #' 
+#' @importFrom RColorBrewer brewer.pal
+#' @import sp
+#' 
 #' @note See the Introduction Guide for a full list of the options available for altering micromaps.
 #'
 #' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
@@ -533,6 +536,24 @@ mmplot.default <- function(map.data,
 } 
 
 # the printing function
+
+
+
+
+#' Print lmplot Object to a File
+#' 
+#' Takes a stored lmplot object of class mm and prints to a file whose type is
+#' implied by the file name.
+#' 
+#' 
+#' @param x name of the lmplot object.
+#' @param name name of the file to be produced. tiff, png, jpeg, and pdf are
+#' recognized.
+#' @param res resolution in dpi.
+#' @param ...  Additional arguments.  (Currently ignored.)
+#' @return Returns nothing.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export
 print.mm <- function(x, name = NULL, res = 300, ...){
   plobject <- x
   file.name <- print.file <- name

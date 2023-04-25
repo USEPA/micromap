@@ -1,23 +1,29 @@
 citHeader("To cite the micromap package in publications use:")
 
-citEntry(
-  entry = "Article",
+bibentry(
+  bibtype = "Article",
   title = "{micromap}: A Package for Linked Micromaps",
-  author = personList(
-             as.person("Quinn C. Payton"),
-             as.person("Michael G. McManus"),
-             as.person("Marc H. Weber"),
-             as.person("Anthony R. Olsen"),
-             as.person("Thomas M. Kincaid")),
+  author =c(person("Quinn", "Payton", role="aut",
+                    email = "Payton.Quinn@epa.gov"),
+             person("Tony", "Olsen",  role="aut",
+                    email = "Olsen.Tony@epa.gov"),
+             person("Marc", "Weber",  role="ctb",
+                    email = "Weber.Marc@epa.gov"),
+             person("Michael", "McManus",  role="ctb",
+                    email = "McManus.Michael@epa.gov"),
+             person("Tom", "Kincaid", role=c("ctb"),
+                    email = "Kincaid.Tom@epa.gov"),
+             person("Marcus W.", "Beck",  role=c("cre", "ctb"),
+                    email = "mbeck@tbep.org")),
   journal = "Journal of Statistical Software",
   year = "2015",
   volume = "63",
   number = "2",
   pages = "1--16",
-  url = "https://www.jstatsoft.org/article/view/v063i02",
+  doi = "10.18637/jss.v063.i02",
   textVersion = paste(
     "Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R. Olsen, and
      Thomas M. Kincaid (2015).", "micromap: A Package for Linked Micromaps.",
      "Journal of Statistical Software, 63(2), 1-16.",
-     "URL http://www.jstatsoft.org/v63/i02/.")
+     "URL https://www.jstatsoft.org/v63/i02/.")
 )	

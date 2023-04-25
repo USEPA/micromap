@@ -1,6 +1,35 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.6 (Released 2023-04-20)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Dependency on \code{maptools} was removed 
+      \item Vignette information about rgdal or rgeos was removed
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item None
+    }
+  }
+}
+
+\section{CHANGES IN micromap VERSION 1.9.5 (Released 2020-09-28)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Added \code{sf} method dispatch for \code{mmplot} and \code{sf} dependency to the package.    
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Added error message if \code{"median"} is a named column used in \code{stat.data} or \code{panel.data} input to \code{mmplot}.  This was creating an error in the plot call that was unclear.
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.4 (Released 2020-09-02)}{
   \subsection{NEW FEATURES}{
     \itemize{

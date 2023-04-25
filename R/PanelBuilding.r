@@ -1,3 +1,18 @@
+#' Builds panels
+#' 
+#' Creates a panel of the user specified type using the attribute list to make
+#' adjustments.
+#' 
+#' @aliases labels_build bar_build bar_cl_build box_summary_build dot_build
+#' dot_cl_build ranks_build
+#' @param pl the lmplot object being constructed.
+#' @param p number of the panel within the plot.
+#' @param DF the data table of statistics to be referenced.
+#' @param att the attribute list to specify visual and graphical
+#' characteristics.
+#' @return Returns a ggplot object to be printed later in the lmplot function.
+#' @author Quinn Payton \email{Payton.Quinn@@epa.gov}
+#' @export labels_build
 labels_build <- function(pl, p, DF, att){ 
 
 	DF$tmp.labels <- DF[,unlist(att[[p]]$panel.data)]

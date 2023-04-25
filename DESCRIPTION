@@ -1,6 +1,6 @@
 Package: micromap
-Version: 1.9.4
-Date: 2020-09-02
+Version: 1.9.6
+Date: 2023-04-24
 Title: Linked Micromap Plots
 Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "Payton.Quinn@epa.gov"),
@@ -16,18 +16,15 @@ Authors@R: c(person("Quinn", "Payton", role="aut",
                     email = "mbeck@tbep.org"))
 Depends:
     R (>= 3.5),
-    maptools,
     RColorBrewer,
-    rgdal,
     sp,
     sf
 Imports:
     ggplot2 (>= 2.0.0),
     grid
-Description: This group of functions simplifies the creation of linked micromap
-    plots.
+Description: This group of functions simplifies the creation of linked micromap plots. Please
+  see <https://www.jstatsoft.org/v63/i02/> for additional details.
 License: GPL (>= 2)
-URL: https://www.jstatsoft.org/article/view/v063i02
 Packaged: 2015-02-06 16:52:58 UTC; tkincaid
 Author: Quinn Payton [aut],
   Tony Olsen [aut],
@@ -39,6 +36,6 @@ Maintainer: Marcus W. Beck <mbeck@tbep.org>
 NeedsCompilation: no
 Repository: CRAN
 Suggests:
-    knitr,
-    rgeos
-RoxygenNote: 7.1.1
+    knitr
+RoxygenNote: 7.2.3
+Encoding: UTF-8
