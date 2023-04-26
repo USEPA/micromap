@@ -11,7 +11,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.6 is the stable version on CRAN and can be installed as
+Version 1.9.7 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
@@ -45,13 +45,13 @@ citation(package = 'micromap')
     ##   Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R. Olsen,
     ##   and Thomas M. Kincaid (2015). micromap: A Package for Linked
     ##   Micromaps. Journal of Statistical Software, 63(2), 1-16. URL
-    ##   http://www.jstatsoft.org/v63/i02/.
+    ##   https://www.jstatsoft.org/v63/i02/.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Article{,
     ##     title = {{micromap}: A Package for Linked Micromaps},
-    ##     author = {Quinn C. Payton and Michael G. McManus and Marc H. Weber and Anthony R. Olsen and Thomas M. Kincaid},
+    ##     author = {Quinn Payton and Tony Olsen and Marc Weber and Michael McManus and Tom Kincaid and Marcus W. Beck},
     ##     journal = {Journal of Statistical Software},
     ##     year = {2015},
     ##     volume = {63},
@@ -62,7 +62,7 @@ citation(package = 'micromap')
 
 ### Using the functions
 
-Please consult the [publication](http://www.jstatsoft.org/v63/i02/) in
+Please consult the [publication](https://www.jstatsoft.org/v63/i02/) in
 the Journal of Statistical Software for a general overview of the
 package. A vignette is also provided with the development version of the
 package:
