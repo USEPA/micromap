@@ -1,6 +1,6 @@
 ## Resubmission 
 
-This is a resubmission for version 1.9.6, removing maptools, rgeos, and rgdal.
+This is a resubmission for version 1.9.7, fixing some function exports
 
 ## Test environments
 * ubuntu 22.04.2 (on GitHub Actions), R release (4.2.3), devel, and old-release
