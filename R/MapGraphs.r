@@ -1,3 +1,4 @@
+#' @export
 RankMaps <- function(pl, p, mapDF, att){
 	# att=a
 	bgcolor 	<- ifelse(!is.na(att[[p]]$panel.bgcolor), att[[p]]$panel.bgcolor, 'white')
@@ -264,7 +265,7 @@ RankMaps <- function(pl, p, mapDF, att){
 
 }
 
-
+#' @export
 CatMaps <- function(pl, p, mapDF, att){
 	bgcolor <- ifelse(!is.na(att[[p]]$panel.bgcolor), att[[p]]$panel.bgcolor, 'white')
 

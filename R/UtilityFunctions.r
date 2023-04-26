@@ -12,19 +12,19 @@ NULL
 #' @importFrom grDevices colorRampPalette dev.off gray jpeg pdf png postscript tiff
 NULL
 
-
+#' @export
 all_atts <- function(a, att.name)
    unlist(unlist(a)[which(att.name==names(unlist(a)))])
 
-
+#' @export
 all_attsb <- function(a, att.name)
    as.logical(unlist(a)[which(att.name==names(unlist(a)))])
 
-
+#' @export
 all_equal2 <- function(v)
    all(unlist(sapply(1:length(v), function(x) v[x]==v[x:length(v)])))
 
-
+#' @export
 make.string <- function(vct) {
 	rtn <- vct[1]
 	if (length(vct) > 1) for(i in 2:length(vct)) rtn <- paste(rtn, vct[i],sep=", ")
@@ -50,7 +50,7 @@ make.string <- function(vct) {
 right <- function(txt, i)
    substring(txt, nchar(txt)-i+1)
 
-
+#' @export
 subplot <- function(x, y)
    viewport(layout.pos.row = x, layout.pos.col = y)
 

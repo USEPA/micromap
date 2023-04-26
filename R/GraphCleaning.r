@@ -8,6 +8,7 @@
 
 
 ### set panel background color, overall title and margins
+#' @export
 plot_opts <- function(i, pl, a){		
 	  # sets background color if specified
 	if(!is.na(a[[i]]$panel.bgcolor)) pl <- pl + theme(plot.background = element_rect(colour=a[[i]]$panel.bgcolor, 
@@ -51,6 +52,7 @@ plot_opts <- function(i, pl, a){
 
 
 ### set graph background color and whether grid lines show up
+#' @export
 graph_opts <- function(i, pl, a){		
 	bgcolor <- ifelse(!is.na(a[[i]]$panel.bgcolor), a[[i]]$panel.bgcolor, 'white')
 	bgcolor <- ifelse(!is.na(a[[i]]$graph.bgcolor), a[[i]]$graph.bgcolor, bgcolor)
@@ -78,6 +80,7 @@ graph_opts <- function(i, pl, a){
 
 
 ### sets graph boundaries, ticks, labels, borders
+#' @export
 axis_opts <- function(i, pl, a, limsx=NA, limsy=NA, border=TRUE, expx=FALSE){
 	# i=p; a=att; limsx=tmp.limsx; limsy=c(tmp.limsy,tmp.median.limsy); border=FALSE; expx=FALSE
 

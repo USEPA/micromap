@@ -1,0 +1,1155 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+
+% knitr and global options
+
+\newcommand{\R}{{\normalfont\textsf{R }}{}}
+\newcommand{\NA}{{\normalfont\textsf{NA }}{}}
+
+%\VignetteIndexEntry{Introduction to the micromap package}
+
+\usepackage{Sweave}
+\begin{document}
+
+\input{Introduction_Guide-concordance}
+
+\title{Linked Micromaps}
+
+\author{Quinn Payton, Marc Weber, Michael McManus, Tony Olsen, Tom Kincaid}
+\maketitle
+
+
+\section{Introduction}
+The \R package \verb@micromap@ is used to create linked micromaps, which display statistical summaries associated with areal units, or polygons. Linked micromaps provide a means to simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries to a series of small maps. The package contains functions, heavily dependent on the utilities of the \verb@ggplot2@ package, which may be used to produce a row-oriented graph composed of different panels, or columns, of information. These panels at a minimum contain maps, a legend, and statistical summaries.
+
+The key to using these functions is to have your data set up correctly. For a first example, we would like to display US state names, a graph illustrating their poverty level, a graph illustrating their percentage of college graduates, and a micromap indicating which states are being referenced. In order to do this, all we need is a table with state names and estimates of each of the two metrics we're interested in. The dataset \verb@edpov@ included in the \verb@micromap@ library is in this form:
+
+\begin{Schunk}
+\begin{Sinput}
+> library(micromap)
+> data("edPov") 
+> head(edPov)
+\end{Sinput}
+\begin{Soutput}
+       state   ed  pov region StateAb
+IL  Illinois 26.1 10.7     MW      IL
+IN   Indiana 19.4  9.5     MW      IN
+IA      Iowa 21.2  9.1     MW      IA
+KS    Kansas 25.8  9.9     MW      KS
+MI  Michigan 21.8 10.5     MW      MI
+MN Minnesota 27.4  7.9     MW      MN
+\end{Soutput}
+\end{Schunk}
+
+Next, we need a table of polygons to map. We can use the \verb@create_map_table@ function to take a spatial object file and create a small efficient table in the form that the mmplot function can use or we can construct our table directly.  In order to do this successfully our table must end up with 4 essential columns that must be named as follows:  ID; coordsx; coordsy; and poly. The ID column is what links to the table of statistics. The poly column is used to identify state polygons for the same ID (otherwise R will connect all the vertices with some odd looking results). For this first example we will use the \verb@USstates@ included with the library and use \verb@create_map_table@ in order to get the data in the right format. 
+
+Some preliminary steps are usually required to use the \verb@create_map_table@ function. First, many spatial objects are quite detailed, far more detailed than what is needed for a micromap. The size and complexity of these files will drastically reduce the speed at which plots can be produced and, in some cases, overwhelm \R with the amount of data being handled causing it to crash. One option for reducing shapefile complexity is to use a simplification function from the sf library which can be used to reduce the size and complexity of a spatial object.  See Section 3,"Preparing data for use with the library", for more details and an example.  The \verb@USstates@ data is very simple and therefore we will hold off discussion of the thinning function until later.
+
+The second (and much simpler) step in successfully using the \verb@create_map_table@ function is assigning an explicit ID to each polygon. The data table associated with the spatial object must have an ID column (literally called 'ID') to name each polygon. This is the column that will be used to link the information from the stat table to this built map table. With this in mind we can check the data table from our \verb@USstates@ file by using the following @data syntax. The "@" syntax refers to grabbing the data object stored in this slot of an \verb@sp@ spatial object. To examine the other slots of this shapefile one would use the \verb@slotNames()@ function.
+
+\begin{Schunk}
+\begin{Sinput}
+> data("USstates") 
+> head(USstates@data)
+\end{Sinput}
+\begin{Soutput}
+  ST    ST_NAME   AREA_KM  PERIM_KM
+0 AK     Alaska 1506038.1 60260.638
+1 AL    Alabama  133761.0  2354.600
+2 AR   Arkansas  137733.7  2172.208
+3 AZ    Arizona  295267.5  2395.409
+4 CA California  409603.3  5682.304
+5 CO   Colorado  269599.9  2100.092
+\end{Soutput}
+\end{Schunk}
+
+Since there is no ID column in this table we can insert a second argument into \verb@create_map_table@ identifying which column we would like to use as our ID. The ST column will be used in linking to our stats table so that will be used:
+
+\begin{Schunk}
+\begin{Sinput}
+> statePolys <- create_map_table(USstates, IDcolumn="ST") 
+> head(statePolys) 
+\end{Sinput}
+\begin{Soutput}
+  ID region poly coordsx coordsy hole plotorder plug
+1 AK      1    1       2       5    0         1    0
+2 AK      1    1       7      10    0         1    0
+3 AK      1    1       4      12    0         1    0
+4 AK      1    1       7      15    0         1    0
+5 AK      1    1       4      15    0         1    0
+6 AK      1    1       4      17    0         1    0
+\end{Soutput}
+\end{Schunk}
+
+From here we can create the draft micromap plot. To graph our poverty and college degree metrics we must specify the type of graph to be used. As of now, there are only 6 types of graphs built in:
+
+\begin{itemize}
+  \item Dot plots (with or without confidence limits)
+  \item Bar plots (with or without confidence limits)
+  \item Box summary (5 and 7 point)  
+\end{itemize}
+
+Additional graph types will be built and included as needed. Users can create and include new graph types as is explained later in section 5, ``Creating a new panel/graph type''. The draft version of a micromap plot can be made with this code:
+
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(stat.data=edPov,map.data=statePolys,
++   panel.types=c("labels", "dot","dot", "map"),
++   panel.data=list("state","pov","ed", NA),
++   ord.by="pov", grouping=5,
++   median.row=T,
++   map.link=c("StateAb","ID"),
++   print.file="fig1.jpeg",print.res=100
++ ) 
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig1.jpeg} 
+  \caption{State Education and Poverty} 
+  \label{fig1}
+\end{center}
+\end{figure}
+
+
+A full explanation of all the function arguments is
+provided below but 3 things should be made clear here:
+\begin{itemize}
+  \item panel.data is list of lists to specify which columns of the stat.data table to use in filling out the panels. For a panel needing multiple columns you would enter a sublist. There needs to be an entry for every panel even when specific data from the stat table isn't supplied by the user. As you can see here, the map panel has an NA entry. \textbf{These entries cannot be left out.} Note: The order of the entries in panel.data and panel.types must coincide. If we want to rearrange the order of the panels, the entries of both panel.data and panel.types need to be rearranged.
+  \item map.link is a vector specifying which column from the stat table matches the respective column from the map table. In this example the StateAb column from the stat table matches each data line to its associated polygons in the map table labeled by matching entries in that table's ID column. Note that the StateAB column and the ID column have to be of the same case. Here both columns are uppercase.
+  \item Setting median.row=TRUE will insert a median row. As is noted below, this will override the default to force the x and y axis coordinates to stay respective to each other which will probably cause distortion in the maps being presented. Adjusting panel.width should be used to manually correct this. If median.row is specified with an even number of polygons then the median is simply the average of the values of the n/2 and (n/2)+1 polygons.  As that median value will not correspond to an observed data value and polygon then that median value is plotted on the statistical panel, but no label or polygon are assigned to that symbol.
+\end{itemize}
+
+This initial call will rarely result in high quality, final looking results. From here we can make notes on what adjustments would make this look better. We are attempting to replicate a figure created by Dan Carr
+\url{http://mason.gmu.edu/~dcarr/} and so we must make some adjustments.
+
+As with most R functions, a few plot wide adjustments can be made by simply adding in extra arguments in the function call (such as plot.height, colors, and inactive.fill in this example). To adjust the individual panels, however, we must make a list of lists specifying which panel we are adjusting and then which attributes we would like to modify.
+
+To make this more intuitive here is a quick and simple example. Suppose we just want to change the text alignment in panel 1 and the graph background colors in panels 2 and 3. First we make a list for each of these panels specifying the changes we would like to make with the first entry of each list specifying which panel is to be altered:
+\begin{Schunk}
+\begin{Sinput}
+> list(1, align="left")
+> list(2, graph.bgcolor="lightgray")
+> list(3, graph.bgcolor="lightgray")
+\end{Sinput}
+\end{Schunk}
+Now we compile these lists into a list of lists:
+\begin{Schunk}
+\begin{Sinput}
+> list(list(1, align="left"), list(2, graph.bgcolor="lightgray"), 
++      list(3, graph.bgcolor="lightgray"))
+\end{Sinput}
+\end{Schunk}
+
+Now we can just add: 
+\noindent\begin{quote}panel.att= list(list(1, align="left"), list(2, graph.bgcolor="lightgray"), list(3,graph.bgcolor="lightgray"))\end{quote} 
+to our mmplot function call and see the changes. We have a lot more changes to
+make, though, so we might as well implement all of them at once. The following code is used to make the graph below in Figure \ref{fig2}:
+
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(stat.data=edPov, map.data=statePolys,
++ panel.types=c("labels", "dot", "dot","map"),
++ panel.data=list("state","pov","ed", NA),
++ ord.by="pov", grouping=5,
++ median.row=T,
++ map.link=c("StateAb","ID"),
++ plot.height=9,
++ colors=c("red","orange","green","blue","purple"),
++ panel.att=list(list(1, header="States",
++ panel.width=.8, 
++ align="left", text.size=.9),
++ list(2, header="Percent Living Below \n Poverty Level",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
++ xaxis.title="Percent"),
++ list(3, header="Percent Adults With\n4+ Years of College",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(20,30,40), xaxis.labels=list(20,30,40),
++ xaxis.title="Percent"),
++ list(4, header="Light Gray Means\nHighlighted Above",
++ inactive.fill="lightgray",
++ inactive.border.color=gray(.7), inactive.border.size=2,
++ panel.width=.8)), print.file="fig2.jpeg", 
++ print.res=100) 
+\end{Sinput}
+\end{Schunk}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig2.jpeg} 
+  \caption{State Education and Poverty} 
+\label{fig2}
+\end{center}
+\end{figure}
+
+This seems pretty good. Note ``\textbackslash n'' inserts a carriage return in the header. Actual carriage returns have the same effect but should not be used as this will result in mmplot being unable to properly align panels, e.g. use: 
+\begin{quote}
+``\dots header="Percent Living Below \textbackslash n Poverty Level"\dots''\\
+\textbf{not}\\
+``\dots header="Percent Living Below\\ 
+    Poverty Level"\dots''
+\end{quote}
+We have two options for storing this final figure. In the mmplot function call we can add a line to the final list of panel attributes specifying a filename (and resolution if desired) as follows:
+\begin{quote}
+``mmplot(stat.data=edPov,\dots,\textbf{print.file='myFigure.tiff', print.res=100)}''
+\end{quote}
+The ``.tiff'' tells the mmplot function that a tiff file is requested. Jpeg, jpg,  png, ps, and eps files may also be produced in a similar manner. The other option is to store our function output in an R object as we build it. When we have results
+we are satisfied with we can use the \verb@printmmplot@ function to print it out:
+\begin{quote}
+myPlot <- mmplot(stat.data=edPov,\dots)\\
+print(myPlot, name=``myFigure.tiff'', res=300)
+\end{quote}
+
+\section{Quick Plotting Tips}
+Quick tips for making higher quality figures with the mmplot function:
+\begin{itemize}
+\item Panel widths will almost certainly need to be adjusted in order to have the text correctly fit across the panel. Text in the labels and ranks panels are defaulted to fit vertically correctly. If text is overlapping vertically, it may be because not enough vertical space is being provided on the plot. Adjusting plot.height (defaults to 7) and plot.pGrp.spacing (defaults to 1) can, and should, be used to correct this.
+\item Adjusting right and left panel margins are perhaps the most useful tool
+in making a plot look nice. Panels are printed out from left to right and
+many times a panel will overlap its preceding neighbor; therefore bringing
+in the left margin by setting left.margin=-.5 or even left.margin=-1 can be very helpful in clearing out white space. For neighboring panels (such
+as the poverty and education panels in the example) adjusting the left panel's
+right margin and the right panel's left margin can cause them to share a
+border thus appearing attached.
+\item As noted elsewhere, the micromaps are set to have the x and y axis coordinates set respective to each other. This causes quite a few unintended consequences, one of which is micromap ``shrinkage'' if the
+panel.width is not wide enough. If your maps look too small at first, expanding the panel width will probably enlarge your graph quite a bit.
+\item Also, due to an artifact (some might call it a bug) in ggplot2, this coordinate ``respectivity'' in the micromaps goes away when adding a median row. Therefore, one should be careful in such situations and
+take care in setting the panel width of the map panel to correct any distortion that may present itself.
+\end{itemize}
+We can illustrate these options by adding to our example. Suppose we wish to add a series of color coded bullets in front of our state names in the original poverty and education micromap. We can do this by specifying the dot\_legend panel.type.  This now gives us five panel types.
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(stat.data=edPov,map.data=statePolys,
++ panel.types=c("dot_legend","labels","dot","dot","map"),
++ panel.data=list(NA,"state","pov","ed",NA),
++ map.link=c("StateAb","ID"),
++ ord.by="pov", 
++ grouping=5, 
++ median.row=T,
++ plot.height=9, 
++ colors=c("red","orange","green","blue","purple"),
++ panel.att=list(list(1, point.type=20, point.border=TRUE),
++ list(2, header="States", panel.width=.8, 
++ align="left", text.size=.9),
++ list(3, header="Percent Living Below\nPoverty Level",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
++ xaxis.title="Percent"),
++ list(4, header="Percent Adults With\n4+ Years of College",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(20,30,40), xaxis.labels=list(20,30,40), 
++ xaxis.title="Percent", left.margin=-.8, right.margin=0),
++ list(5, header="Light Gray Means\nHighlighted Above",
++ inactive.fill="lightgray",     
++ inactive.border.color=gray(.7), inactive.border.size=2, 
++ panel.width=.8)),
++ print.file="fig3.jpeg",print.res=100)
+\end{Sinput}
+\end{Schunk}
+
+Note the correspondence between the panel.types and panel.data  statements.  The panel.data statement refers to the data from the statistical data frame edPov.  The first "dot\_legend" in panel.types corresponds to the "NA" as no statistcal data are being referenced, the "labels" corresponds to the "state" column, the second "dot" corresponds to the poverty column, and the third "dot" corresponds to the education column.  The last panel.type, "map" corresponds to "NA" in the panel.data list as there is no map data in the edPov data frame.  The map data is associated with the statePolys data frame. Also, note that the addition of the dots before the state names increased the number of panels displayed in the linked micromap to five so the panel.att statement contains five lists now.
+
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig3.jpeg}
+  \caption{State Education and Poverty with Dot Legend}
+  \label{fig3} 
+\end{center} 
+\end{figure}
+A final option that we can illustrate is that we can easily rearrange the panels by changing the order of the panel.types and panel.data by re-numbering the panel attributes section.  We now move the maps to the first panel.
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(stat.data=edPov,map.data=statePolys,
++ panel.types=c("map","dot_legend","labels","dot","dot"),
++ panel.data=list(NA,NA,"state","pov","ed"),
++ map.link=c("StateAb","ID"),
++ ord.by="pov", 
++ grouping=5, 
++ median.row=T,
++ plot.height=9, 
++ colors=c("red","orange","green","blue","purple"),
++ panel.att=list(list(2, point.type=20,
++ point.border=TRUE),
++ list(3, header="States", panel.width=.8, 
++ align="left", text.size=.9),
++ list(4, header="Percent Living Below\nPoverty Level",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(10,15,20), xaxis.labels=list(10,15,20),
++ xaxis.title="Percent"),
++ list(5, header="Percent Adults With\n4+ Years of College",
++ graph.bgcolor="lightgray", point.size=1.5,
++ xaxis.ticks=list(20,30,40), xaxis.labels=list(20,30,40), 
++ xaxis.title="Percent"),
++ list(1, header="Light Gray Means\nHighlighted Above",
++ inactive.fill="lightgray",     
++ inactive.border.color=gray(.7), inactive.border.size=2, 
++ panel.width=.8)),
++ print.file="fig4.jpeg",print.res=100)
+\end{Sinput}
+\end{Schunk}
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig4.jpeg} 
+  \caption{State Education and Poverty with Map Panel First}
+  \label{fig4} 
+\end{center} 
+\end{figure}
+
+\section{Preparing data for use with the library}
+\textbf{Example Steps for simplifying spatial polygons in a spatial data set for the mmplot function:}
+Users can download an example shapefile.  We will use level 3 ecoregions of Texas as an example (located here):\\
+\url{ftp://ftp.epa.gov/wed/ecoregions/tx/tx_eco_l3.zip}\\
+
+We will look at two approaches to simplifying spatial polygons for use in micromaps \textemdash one using GIS software such as ESRI ArcMap and the other entirely in R.\\
+Method for simplifying polygons using simplification in GIS software such as ArcMap:
+\begin{itemize}
+  \item Read the shapefile into R from your working directory
+  \begin{quote}File > Add Data > navigate to where you downloaded file\end{quote}
+  \item Open the Simplify Polygon tool in ArcToolbox
+  \begin{quote}Generalization > Simplify Polygon\end{quote}
+  \item Choose simplification algorithm, maximum allowable offset, and minimum area. Point remove is quick, bend simplify can take longer but gives more aesthetically pleasing results
+  \begin{quote}Simplification Algorithm: POINT\_REMOVE\end{quote} 
+  \begin{quote}Maximum Allowable Offset: 1000 Meters\end{quote}
+  \begin{quote}Minimum Area: .001\end{quote}
+  \begin{quote}Handling Topological Errors: RESOLVE\_ERRORS\end{quote} 
+  \item Read resulting shapefile into \R using \verb@st_read@ (uses \verb@st_read@ from \verb@sf@, loaded with the \verb@micromap@ library):
+  \begin{quote}> txeco <- st\_read(``tx\_eco\_l3\.shp'')\end{quote}
+  \item Convert the imported shapefile to a spatial dataframe using \verb@as_Spatial@ from \verb@sf@:
+  \begin{quote}> txeco <- as\_Spatial(txeco)\end{quote}
+  \item Create an ID column in your spatial dataframe for the \verb@create_map_table@ function
+  \begin{quote}> txeco\$ID <- txeco\$US\_L3CODE\end{quote}
+  \end{itemize}
+Method two is to simplify polygons within \R, and this can be done using the \verb@st_simplify@ function from the \verb@sf@ package.  
+
+\textbf{Steps for simplifying very large spatial data:}
+For very large data you need to take extra steps to get manageable spatial data for use in linked micromaps. We will use level 3 ecoregions for the conterminous US as an example. Note that these are one example of steps that work, other combinations of steps could possibly work better for other data \textemdash the point is to get rid of very small features and simplify line work as much as possible.
+First we'll download level 3 ecoregions for the US (located here):\\
+\url{ftp://ftp.epa.gov/wed/ecoregions/us/Eco_Level_III_US.zip}\\
+In ArcMap:
+\begin{itemize}
+  \item To get rid of state boundaries, first open the Dissolve tool in the Generalization toolbox:
+  \begin{quote}Generalization > Dissolve\end{quote}
+  \item Simplify newly created feature using the Simplify Polygon tool:
+  \begin{quote}Cartography Tools > Generalization > Simplify Polygon\end{quote}
+  \begin{quote}Choose simplification algorithm = Bend Simplify, Reference Baseline 100 kilometers, minimum area 100 square kilometers, and handling toplogical errors = resolve errors\end{quote}
+  \item Now simplify features you just created again, but using a different simplification algorithm:
+  \begin{quote}Open Simplify Polygon tool\end{quote}
+  \begin{quote}Choose simplification algorithm = Point Remove, Maximum allowable offset 10,000 meters, minimum area 10,000 square meters, and handling toplogical errors = resolve errors\end{quote}
+\end{itemize}
+This will create a sufficiently simplified shapefile to use with the mmplot function.\\
+
+In R:
+Simplification methods to try in R are available using the \verb@sf@ package, specifically the \verb@st_simplify@ function. 
+\begin{itemize}
+  \item Load the shapefile using \verb@st_read@ from \verb@sf@:
+  \begin{quote}> txeco <- st\_read(``tx\_eco\_l3.shp'')\end{quote}
+  \item Simplify using \verb@st_simplify@, set the options to preserve topology and the desired tolerance (in units of the CRS, meters in this case):
+  \begin{quote}> txecosimp <- st\_simplify(txeco, preserveTopology = T, dTolerance = 1000)\end{quote}
+  \item Convert the simplified dataset to a spatial dataframe using \verb@as_Spatial@ from \verb@sf@, as needed:
+  \begin{quote}> txecosimp <- as\_Spatial(txecosimp)\end{quote}
+\end{itemize}
+
+Other simplification approaches using  open source or free tools include the online tool MapShaper available here: \\ \url{http://www.mapshaper.org/}. Both polygon simplification as well as line smoothing (Bezier curves for instance)
+can be implemented as well in Quantum GIS via the 'Generalizer'  plugin, and in PostGIS the Douglas-Peucker algorithm is implemented with 'simplify'.
+
+For further reading on polygon simplification, we refer users to the following papers:
+
+Douglas, D. and Peucker, T. (1973). Algorithms for the reduction of the number of points required to represent a digitized line or its caricature. The Canadian Cartographer 10(2). 112-122.
+
+Harrower, M. and Bloch, M. (2006). MapShaper.org: A Map Generalization Web Service. IEE Computer Graphics and Applications 26(4). 22-27.
+
+Mansouryar, M. and Hedayati, A. (2012). Smoothing Via Iterative Averaging (SIA) A Basic Techniqu for Line Smoothing. International Journal of Computer and Electrical Engineering 4(3), 307-311.
+
+Technical paper, ESRI, "Automation of Map Generalization: The Cutting-Edge Technology," 1996. It can be found in the White Papers section of ArcOnline at this Internet address: \url{http://downloads.esri.com/support/whitepapers/ao_/mapgen.pdf}
+
+\section{Full List of Adjustable Attributes}
+\begin{itemize}
+\item  \textbf{Attribute arguments recognized by the mmplot function:}
+\item  \textbf{cat} - category column within stats table for a categorization type linked micromap.
+\item  \textbf{colors} - the color palette used within each perceptual group. (e.g. brewer.pal(5, "Spectral")).
+\item  \textbf{grouping} (required)- the number of lines per perceptual group. E.g. simply entering ``5'' will put 5 lines in each
+perceptual group or you can enter c(5,6,5,4) to have disproportionate numbers of lines in each group.
+\item  \textbf{map.data} (required) - data table likely created by the create\_map\_table function applied to a spatial polygon data frame.
+\item  \textbf{map.link} (required) - a vector specifying which column from the stat table matches which column from the map table respectively (e.g. ``c(``StateAb'', ``ID''))''. The two columns must be of the same case.
+\item \textbf{median.color} - if median.row is specified, then the user can specify the color for the median symbol, such as median.color="black".
+\item  \textbf{median.row} - specifies whether a median row should be included. If an odd number of data lines are supplied a data line itself will be used as the median; otherwise median entries will be calculated from the supplied data. Note that without a median row maps are forced into proper size. However, an artifact in \verb@ggplot2@ removes this feature when a median row is added and so a user must use the panel.width argument (and left.margin/right.margin panel attribute) for the map panel so that panel that does not have distorted coordinates. (The default setting is FALSE)
+\item \textbf{median.text.color} - the default is median.text.color='black'.  Other colors can be specified to change the color of the word Median plotted when median.row=TRUE.
+\item \textbf{median.text.label} - the default is median.text.label='Median' when median.row=TRUE.
+\item \textbf{median.text.size} - the default is median.text.size=1 when
+median.row=TRUE. As with all defaults set to 1, any change from default will magnify the default size by a factor.  For example, meidan.text.size=.5 will print the word "Median" half as big as the default size.
+\item  \textbf{ord.by, grp.by} (required) - ord.by specifies the stats.data column to be ranked for the ordering of the figure. See related rev.ord.  grp.by is used for grouped plots in order to specify which data table column to sort the figure by.
+\item  \textbf{panel.att} - a list of panel specific attributes to be altered (described in more detail below).
+\item  \textbf{panel.data} (required) - a list of lists to specify which columns of the stat.data table to use in filling out the panels. For a panel needing multiple columns you enter a sublist. For example, the dot\_cl requires a sublist that includes three column names from the statistics data frame.  One column name identifies the summary statistics, and the other two column names identify the lower and upper confidence bounds.  There needs to be an entry for every panel even when specific data from the stat table isn't supplied by the user. That is to say map and rank panels (as well as user created panel types) should have NAs.
+e.g. panel.data=list(``State'', list(``Estimate'', ``Lower.Bound'', ``Upper.Bound''), NA).
+\item  \textbf{panel.types} (required) - a vector specifying the panels of the plot. Note: each ``panel.type'' (e.g. ``map'', ``labels'',
+``dot\_cl'', etc.) is the name of a function that will be called to create that panel. Therefore a user can create a new panel type (e.g. ``new.graph.type'') and the mmplot function will automatically go look for and call that function just
+by changing the entry here. See the section ``Creating a New Panel Type''.
+\item  \textbf{plot.footer} - not implemented yet.
+\item  \textbf{plot.footer.size} - not implemented yet.
+\item  \textbf{plot.footer.color} - not implemented yet.
+\item  \textbf{plot.grp.spacing} - the verticle spacing between groups measured in lines. Defaults to 1.
+\item  \textbf{plot.pGrp.spacing} - the spacing between perceptual groups. ``1'', the default, implies standard spacing.
+\item  \textbf{plot.header} - not implemented yet.
+\item  \textbf{plot.header.size} - not implemented yet.
+\item  \textbf{plot.header.color} - not implemented yet.
+\item  \textbf{plot.height} - the height of the plot window.
+\item  \textbf{plot.width} - the width of the plot window. (Defaults to 7)
+\item  \textbf{print.file} - the full file name (i.e. including extension) to save the resulting figure. The extension tells the mmplot function which type of printing function to run. Tiff, png ,jpeg, .jpg, .ps, or .eps are all recognized.
+\item  \textbf{print.res} - the resolution desired for the resulting file.
+\item  \textbf{rev.ord} - reverse the order for ranking the plot.
+\item  \textbf{stat.data} (required) - data table of statistic.
+\item  \textbf{vertical.align} - the default is vertical.align="top" specifying that the rows within a perceptual group are aligned at the top.  Specifying vertical.align="center" will center align the rows within a perceptual group, which is useful when perceptual groups do not contain the same number of rows, such as group=c(5,5,4,4,5,5)
+\item  \textbf{Attribute arguments applied to the panels:}
+\item  \textbf{panel.att} - is a list object (simply referred to as ``a'' throughout the function) which contains a sublist of
+specifications for each panel. Some attributes are standard for all panel types (e.g. header, graph color, etc.), while
+other options are only available to alter for certain panels (bar size, point type, etc.). If a user tries to alter a panel
+specific attribute that isn't recognized (e.g. bar size on a dot plot), it is ignored and a warning is printed.
+\end{itemize}
+\underline{Standard Attributes}
+\begin{itemize}
+\item  \textbf{graph.bgcolor} -the background color within any graphs being drawn.
+\item  \textbf{graph.border.color} - alters the border color on graphs. Note this can be used to hide borders on graphs by setting it equal to white or whatever the specified panel background color is. Defaults to ``Black'' on graphs. No borders are shown on maps, labels and ranks.
+\item  \textbf{graph.grid.major} - a boolean variable stating whether major grid lines should appear in the graph. (T/F or 0/1 should both work). The defaults is ``TRUE'' for graphs, and ``FALSE'' for all other panels.
+\item  \textbf{graph.grid.minor} - see above.
+\item  \textbf{panel.att} - a list of panel specific attributes. These are to be entered as a list of lists, with the first entry of each
+sublist specifying with panel's attributes are being altered:
+For example
+panel.att=list(list(1, \ldots),list(2, \ldots),\ldots, list(n, \ldots))
+The following attributes can be specified for each list.
+\item \textbf{left.margin, right.margin} - set panel specific panel margins individually.
+\item  \textbf{panel.bgcolor} - the back ground color in each panel.
+\item  \textbf{panel.footer} - not implemented yet.
+\item  \textbf{panel.footer.size} - not implemented yet.
+\item  \textbf{panel.footer.color} - not implemented yet.
+\item  \textbf{panel.header} - a title for the whole panel.
+\item  \textbf{panel.header.size} - size relative to default. All panels should have the same size header to keep proper alignment between panels. If a user has specified unequal header sizes between panels, the function will return a warning.
+\item \textbf{panel.header.color} - not implemented yet.
+\item  \textbf{panel.width} - this is the relative panel width compared to the other panels.
+\item  \textbf{xaxis.color} - the color of the x axis line.
+\item  \textbf{xaxis.labels} - this is a list or vector of text to be written at each tick mark. Note: if these are being explicitly specified then xaxis.ticks must be explicitly specified as well.
+e.g. xaxis.labels=list(500,1000,1500,2000)
+\item \textbf{xaxis.labels.angle} - rotates the labels on the x axis. The default xaxis.labels.angle=0 has the labels horizontally arranged; whereas xaxis.labels.angle=90 orients the labels vertically.
+\item  \textbf{xaxis.labels.size} - controls the size of of the labels under the x axis of the panels by specifying, for example, xaxis.labels.size=c(1.5).  All x axis labels will be sized the same across the panels.
+\item  \textbf{xaxis.line.display} - a boolean variable stating whether the line of the x axis should appear on the graph. (T/F or 0/1
+should both work). This defaults to ``FALSE''on maps, labels and ranks panel types so no x axis line is displayed for those panels.
+\item  \textbf{xaxis.text.display} - a boolean variable indicating whether text should be displayed on the x axis.  This is the text associated with each tick, not the axis title.  For the panel types of maps, labels, and ranks the default is set to ``FALSE''.
+\item  \textbf{xaxis.ticks} - this is a list or vector of points at which ticks should be drawn on the x axis.
+e.g. xaxis.ticks=list(500,1000,1500,2000)
+\item  \textbf{xaxis.ticks.display} - a boolean variable stating whether the axis ticks should appear on the x axis. (T/F or 0/1 should both work) Defaults to "FALSE" on all graphs.
+\item  \textbf{xaxis.title} - specifies what the x axis should be labeled. The default is for to no axis label.
+\item  \textbf{yaxis.labels} - see description for xaxis.labels.
+\item  \textbf{yaxis.line.display} - see description for xaxis.line.display.
+\item  \textbf{yaxis.text.display} - see description for xaxis.text.display.
+\item  \textbf{yaxis.ticks} - see description for xaxis.ticks.
+\item  \textbf{yaxis.ticks.display} - see description for xaxis.ticks.display.
+\item  \textbf{yaxis.title} - see description for xaxis.title.
+\end{itemize}
+\underline{Attributes for Specific Panel Types}
+labels:
+\begin{itemize}
+\item \textbf{align} - horizontal alignment  for labels with alignment options of ``center'', ``left'', ``right'.
+\item \textbf{text.size} - relative to default size.
+\end{itemize}
+ranks:
+\begin{itemize}
+\item \textbf{align} - horizontal alignment for ranks with alignment options of ``center'', ``left'', ``right''.
+\item \textbf{text.size} - relative to default size.
+\end{itemize}
+dot\_legend:
+\begin{itemize}
+\item \textbf{point.border} - by default a black border will be placed around dots. To correct this, set this option to FALSE.
+\item \textbf{point.size} - size relative to default.
+\item \textbf{point.type} - the pch specification for points contained in a graph.
+\end{itemize}
+dot:
+\begin{itemize}
+\item \textbf{add.line} - add a line at some specified x coordinate.
+\item \textbf{add.line.col} - specify color.
+\item \textbf{add.line.typ} - specify type**.
+\item \textbf{connected.dots} - set equal ``TRUE'' makes a line connecting the dots within each perceptual group of a dot plot.
+\item \textbf{connected.col} - color of the connecting line, such as ``gray(.6)''.
+\item \textbf{connected.typ} - specify line type, such as  = ``solid'', for the connecting line.
+\item \textbf{connected.size} - specify the size of the line type for the connecting line.
+\item \textbf{median.line} - add a line at the calculated median.
+\item \textbf{median.line.col} - specify line color.
+\item \textbf{median.line.typ} - specify type**.
+\item \textbf{point.border} - by default a black border will be placed around dots. To correct this, set this option to FALSE.
+\item \textbf{point.size} - size relative to default.
+\item \textbf{point.type} - the pch specification for points contained in a graph.
+\end{itemize}
+dot\_cl: requires a sublist identifying that statistics column and the two columns containing the lower and upper confidcence bounds from the statistics data frame.
+\begin{itemize}
+\item \textbf{add.line} - add a line at some specified x coordinate.
+\item \textbf{add.line.col} - specify color.
+\item \textbf{add.line.typ} - specify type**.
+\item \textbf{line.width} - thickness of confidence bands relative to default.
+\item \textbf{median.line} - add a line at the calculated median.
+\item \textbf{median.line.col} - specify line color.
+\item \textbf{median.line.typ} - specify type**.
+\item \textbf{point.border} - by default a black border will be placed around dots. To correct this, set this option to FALSE.
+\item \textbf{point.size} - size relative to default.
+\item \textbf{point.type} - the pch specification for points contained in a graph.
+\end{itemize}
+bar:
+\begin{itemize}
+\item \textbf{add.line} - add a line at some specified x coordinate.
+\item \textbf{add.line.col} - specify color.
+\item \textbf{add.line.typ} - specify type**.
+\item \textbf{graph.bar.size} - relative to default size
+\item \textbf{median.line} - add a line at the calculated median.
+\item \textbf{median.line.col} - specify line color.
+\item \textbf{median.line.typ} - specify type**.
+\end{itemize}
+bar\_cl: see description of dot\_cl sublist
+\begin{itemize}
+\item \textbf{add.line} - add a line at some specified x coordinate.
+\item \textbf{add.line.col} - specify color.
+\item \textbf{add.line.typ} - specify type**.
+\item \textbf{graph.bar.size} - relative to default size
+\item \textbf{median.line} - add a line at the calculated median.
+\item \textbf{median.line.col} - specify line color.
+\item \textbf{median.line.typ} - specify type**.
+\end{itemize}
+box\_summary: requires a sublist identifying for a five-number summary the columns containing the minimum, first quartile, median, third quarterile, and maximum from the statistics data frame.
+\begin{itemize}
+\item \textbf{add.line} - add a line at some specified x coordinate.
+\item \textbf{add.line.col} - specify color.
+\item \textbf{add.line.typ} - specify type**.
+\item \textbf{graph.bar.size} - relative to default size
+\item \textbf{median.line} - add a line at the calculated median.
+\item \textbf{median.line.col} - specify line color.
+\item \textbf{median.line.typ} - specify type**.
+\end{itemize}
+map:
+\begin{itemize}
+\item \textbf{map.all} - by default, the mmplot function will only plot the polygons associated with data in the stats table. Setting ``map.all=T'' will tell it to show all the polygons from the map table regardless of whether the polygons have data associated with the stats table.  Setting ``map.all=F'' eliminates polygons from the map that do not have data associated with the stats table.
+\item \textbf{fill.regions}="aggregate" is the default and creates the standard micromap in which polygons in a previous perceptual group are shaded or filled in subsequent perceptual groups.  The fill.regions=``aggregate'' proceeds from the top perceptual group to the bottom perceptual group by sequentially filling the polygons that have already been displayed.  Arguments typically used when fill.regions=``aggregate'' is specified include:
+\item \textbf{active.border.color} - specifies the border color of the polygons that are linked to the statistical summaries being displayed in that row's perceptual group.  The default is active.border.color=``black''.
+\item \textbf{active.border.size} - specifies the size of the line around the border of the polygons that are linked to the statistical summaries being displayed in that row's perceptual group.  The default is active.border.size=1.
+\item \textbf{inactive.fill} - ``lightgray'' is the default, and inactive polygons are those polygons that were displayed in a previous perceptual group.
+\item \textbf{inactive.border.color} - gray(.25) is the default.
+\item \textbf{inactive.border.size} - 1 is the default.
+\item \textbf{fill.regions} =``two ended'' is typically used along with the median.row=T statement to indicate which polygons are above or below the median value of the variable specified in the ord.by= statement.  With fill.regions=``two ended'', the active and inactive arguments previously described are only applied to the subset of polygons that are above the median or the subset below the median.
+\item \textbf{fill.regions} = "with data" simply applies a fill to all the polygons not being displayed in a specific row of a perceptual group. These polygons do have statistical data that will be displayed in a later perceptual group.  Additional arguments used with fill.regons=``with data'' include:
+\item \textbf{withdata.fill} - ``white'' is the default.
+\item \textbf{withdata.border.color} - ``gray(.75)'' is the default.
+\item \textbf{withdata.border.size} - ``1'' is the default.
+\end{itemize}
+
+Two other arguments can be applied to the map panel for two situations when a user wants to display polygons on the map, but those polygons are not included in the statistics data table.  Such ``no data'' polygons will never be included in a perceptual group.  In the first situation, fill, border color, and border size arguments are used so that the individual polyons that have no statistical data are displayed.  These arguments are:
+\begin{itemize}
+\item \textbf{nodata.fill} - ``white'' is the default.
+\item \textbf{nodata.border.color} - ``gray(.75)'' is the default.
+\item \textbf{nodata.border.size} - ``1'' is the default.
+\end{itemize}
+In the second situation, the user does not want to display the individual polygons of the no data polygons.  For example, forty-seven states have statistical summary data on a public health variable, but Alabama, Georgia, and Florida do not.  With the ``outerhull'' arguments, the three individual polygons of Alabam, Georgia, and Florida are not displayed in the map, but only their exterior border outline, or outer hull, are displayed; whereas the polygons for the forty-seven other states are displayed on the map panel.
+\begin{itemize}
+\item \textbf{outer.hull} - setting equalt to ``TRUE'' draws only the outer.hull.
+\item \textbf{outer.hull.color} - ``black'' is the default.
+\item \bf{outer.hull.size} - is the size of the line, with the default of ``1''.
+\end{itemize}
+
+***Here is a helpful site for line types:
+\url{http://www.cookbook-r.com/Graphs/Shapes\_and\_line\_types/}
+\textnormal{See the section ``Creating a New Panel Type'' on how to specify other attributes.}
+
+\section{Creating a new panel type}
+\textbf{Note: A general understanding of ggplot2 is needed and assumed throughout this section}
+
+Now let's say we would like to illustrate the change in lung cancer rates using arrows on a graph. We can build our own graph type by creating our own graphing function; we'll call it \verb@arrow.plot.build@. The mmplot function sends all
+graphing functions the same arguments (in this order): the panel ggplot2 object being worked on; the number of the panel; the stats data table; and the attributes list (this is a little involved so we won't get into it until a little later).
+(Note: the panel number tells you which sublist in the attribute list to work with). To start, let's get our data and store it in a new object:
+
+\begin{Schunk}
+\begin{Sinput}
+> data(lungMort)
+> myStats <- lungMort
+> head(myStats)
+\end{Sinput}
+\begin{Soutput}
+   StateAb Rate_95 Count_95 Lower_95 Upper_95   Pop_95
+AK      AK    50.0      298     44.2     56.3  1089123
+AL      AL    40.2     4095     39.0     41.4  8124753
+AR      AR    43.8     3079     42.3     45.4  5479988
+AZ      AZ    38.4     4794     37.3     39.5 10557561
+CA      CA    41.5    26931     41.0     42.0 64354973
+CO      CO    31.5     2723     30.3     32.7  9245273
+   StdErr_95 Rate_00 Count_00 Lower_00 Upper_00   Pop_00
+AK       3.1    46.8      350     41.8     52.2  1122525
+AL       0.6    43.4     4630     42.2     44.7  8245919
+AR       0.8    48.3     3568     46.7     49.9  5661547
+AZ       0.6    38.5     5482     37.4     39.5 12066024
+CA       0.3    39.2    27406     38.7     39.6 68478617
+CO       0.6    33.9     3265     32.7     35.1 10159130
+   StdErr_00      State
+AK       2.6     Alaska
+AL       0.6    Alabama
+AR       0.8   Arkansas
+AZ       0.5    Arizona
+CA       0.2 California
+CO       0.6   Colorado
+\end{Soutput}
+\end{Schunk}
+
+For the time being, we'll also remove Washington D.C. so that we have nice even grouping numbers and can
+momentarily avoid the median row topic.
+
+\begin{Schunk}
+\begin{Sinput}
+> myStats <- subset(myStats, !StateAb=="DC")
+\end{Sinput}
+\end{Schunk}
+
+The data table that will actually be passed into our graphing function once we implement it into the function is not exactly like our stats table. Before constructing the panels, the mmplot function adds the extra columns "rank",
+"median", "color", "pGrp" and "pGrpOrd" that specify, respectively, the overall order to plot the information, whether the row should be seperated as a median, the color from the color list to use, the perceptual group each table
+entry belongs to and the order in each perceptual group of each entry. These columns are added using a built-in function called \verb@create_DF_rank@. The syntax for this function is: \verb@create_DF_rank@ (data, ord.by, group). We
+need these columns to know the nature of what we are working with in order to build our new graph type.
+
+For now, we can assume groups of 5 will look good and we will want our table ordered by the rate from 2000. To create a new table with these columns file we run:
+
+\begin{Schunk}
+\begin{Sinput}
+> myNewStats <- create_DF_rank(myStats, ord.by="Rate_00", group=5)
+> head(myNewStats)
+\end{Sinput}
+\begin{Soutput}
+  pGrp StateAb Rate_95 Count_95 Lower_95 Upper_95  Pop_95
+1    1      UT    17.6      685     16.3     18.9 5036638
+2    1      ND    30.6      574     28.1     33.3 1527853
+3    1      NM    31.8     1293     30.1     33.6 3899455
+4    1      SD    30.5      659     28.2     33.1 1710003
+5    1      CO    31.5     2723     30.3     32.7 9245273
+6    2      ID    33.0      981     31.0     35.2 2976963
+  StdErr_95 Rate_00 Count_00 Lower_00 Upper_00   Pop_00
+1       0.7    16.9      738     15.7     18.2  5488475
+2       1.3    31.4      608     28.9     34.1  1480915
+3       0.9    31.5     1420     29.9     33.2  4038163
+4       1.2    32.9      736     30.5     35.5  1716683
+5       0.6    33.9     3265     32.7     35.1 10159130
+6       1.1    35.0     1158     33.0     37.1  3230513
+  StdErr_00        State rank median addOrd pGrpRank
+1       0.6         Utah    1  FALSE      0        1
+2       1.3 North Dakota    2  FALSE      0        2
+3       0.8   New Mexico    3  FALSE      0        3
+4       1.2 South Dakota    4  FALSE      0        4
+5       0.6     Colorado    5  FALSE      0        5
+6       1.0        Idaho    6  FALSE      0        1
+  pGrpOrd color
+1       1     1
+2       2     2
+3       3     3
+4       4     4
+5       5     5
+6       1     1
+\end{Soutput}
+\end{Schunk}
+
+Now, to build our new graphing function, we have 4 basic steps to go through:
+\begin{enumerate}
+  \item create the general graph's structure
+  \item generalize the inputs
+  \item integrate it with the mmplot function
+  \item enable user customization if desired
+\end{enumerate}
+
+\textbf{Step 1:} First we use ggplot2 to create the general structure of the graphs as we would like to see them. We can use \verb@geom_segment@ function in ggplot2 to make arrows. On our graph we would like an arrow starting at the 1995 rate extending to the 2000 rate so these columns will obviously be used for our "x" and "xend" parameters. The y coordinates can be inferred from the "pGrpOrd" column which has been created for just this purpose. Setting both the "y" and "yend" parameters equal to "pGrpOrd" should result in a flat arrow for each state, descending down our graph in an order which will match our label column as well as any other graphs being presented.
+
+First, we can use the "color" column (which is calculated in \verb@create.DF.rank@ based on the pGrpOrd column) to vary the color of arrows within each perceptual group. Second, for various portions of the mmplot function code, we must
+use \verb@facet_grid@ instead of \verb@facet_wrap@.
+
+\begin{Schunk}
+\begin{Sinput}
+> library(ggplot2)
+> library(grid)
+> ### ggplot2 code:
+> ggplot(myNewStats) +
++   geom_segment(aes(x=Rate_95, y=-pGrpOrd,
++   xend=Rate_00, yend=-pGrpOrd, colour=factor(color)),
++   arrow=arrow(length=unit(0.1,"cm"))) +
++   facet_grid(pGrp~., scales="free_y") +
++   scale_colour_manual(values=c("red","orange","green","blue","purple"),
++   guide="none")
+> ggsave(file="fig5.jpeg", dpi=300)
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig5.jpeg} 
+  \caption{Initial mmplot with new panel type of arrow plot} 
+  \label{fig5}
+\end{center}
+\end{figure}
+
+\textbf{Step 2:} This graph in Figure \ref{fig5} looks like it is in the basic form we need. Good initial start but we need to change our x coordinate columns and color palette from being hard coded to being user specified. As noted earlier, the mmplot function provides the panel object, the panel number, the stats data table and the attribute list. It is this attributes list through which the color and data specifications are going to be provided to the function. Without delving too far into the details of this list just yet, we can take for granted that the user
+specified color palette will be stored in the \verb@colors@ slot in the plot
+section of the object and the names of our data columns will be stored in the \verb@panel.data@ slot of one of the panel sections; the panel number tells us which panel section to look in.
+
+In writing our function we can refer to the panel object, the panel number, stats table and the attribute list however we like. We've already been referring to the data table as myNewStats so, along those same lines, let's call the other items myPanel, myNumber, and myAtts respectively. In the next section we will start referring to myAtts and myNumber so it is helpful to set up a fake list and fake number to work with while we build our function that we can work with to test our code as we go along. The sample.att function will provide this list for us and we will simply set myNumber equal to 1.
+
+\begin{Schunk}
+\begin{Sinput}
+> myAtts <- sample_att()
+> myNumber <- 1
+\end{Sinput}
+\end{Schunk}
+
+This is just a dummy attribute list for now so we need to overwrite its entries with our specifications from above so that we can continue to test and have everything work as expected:
+
+\begin{Schunk}
+\begin{Sinput}
+> myAtts$colors <- c("red","orange","green","blue","purple")
+> myAtts[[myNumber]]$panel.data <- c("Rate_95","Rate_00")
+\end{Sinput}
+\end{Schunk}
+
+We will pull out our color list and panel column list into variables called myColors and myColumns. This means myColumns will be a vector with the myColumns[1] referring to the start points and myColumns[2] referring to the end points of our arrows. The code to pull these items out of the attributes list will look like this:
+
+\begin{Schunk}
+\begin{Sinput}
+> myColors <- myAtts$colors 
+>   # pulls color out of the plot level 
+>   # section of the "myAtts" attributes list
+> myColumns <- myAtts[[myNumber]]$panel.data 
+>   # looks in the panel level section numbered 
+>   # "myNumber" of the "myAtts" attributes list
+\end{Sinput}
+\end{Schunk}
+
+We need to work around ggplot a bit in order for it to understand where to find our data. Using the syntax "x=myColumns[1], xend=myColumns[2]" won't work in ggplot. Instead, we have to hard code which column names to look for (i.e. "x=data1, xend=data2") and add those columns to myNewStats. This is illustrated with the following code:
+
+\begin{Schunk}
+\begin{Sinput}
+> myNewStats$data1 <- myNewStats[, myColumns[1]]
+> myNewStats$data2 <- myNewStats[, myColumns[2]]
+> myPanel <- ggplot(myNewStats) +
++   geom_segment(aes(x=data1, y=-pGrpOrd,
++   xend= data2, yend=-pGrpOrd, colour=factor(color)),
++   arrow=arrow(length=unit(0.1,"cm"))) +
++   facet_grid(pGrp~.) +
++   scale_colour_manual(values=myColors,
++   guide="none")
+> myPanel
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Introduction_Guide-micromap-5h}
+
+Note that we have also gone ahead and stored this graph in the myPanel object as we will eventually be returning this back to the mmplot function anyways. This means the last line of code (simply "myPanel") has the dual purpose of telling R to show us our graph but will also return the panel object back to the mmplot function when we're finally ready to compile this into function form.
+
+\textbf{Step 3:} We are getting close to being able to implement our graph but we still have to clean it up a bit in order for it to seamlessly match the rest of our linked micromap. There are several built in functions that work to this end. We have stored our plot in a variable called myPanel that we can send out to the assimilatePlot function to do all the needed work for us.
+
+\begin{Schunk}
+\begin{Sinput}
+> assimilatePlot(myPanel, myNumber, myAtts)
+> ggsave(file="fig6.jpeg", dpi=300)
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig6.jpeg} 
+  \caption{Intermediate mmplot with new panel type of arrow plot} 
+  \label{fig6}
+\end{center}
+\end{figure}
+
+Our graph in Figure \ref{fig6} looks like it will probably fit right in with the rest of the linked micromap plot. Now, we just need to put our code in proper function form:
+
+\begin{Schunk}
+\begin{Sinput}
+> arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts){
++   myColors <- myAtts$colors
++   myColumns <- myAtts[[myNumber]]$panel.data
++   myNewStats$data1 <- myNewStats[, myColumns[1]]
++   myNewStats$data2 <- myNewStats[, myColumns[2]]
++   myPanel <- ggplot(myNewStats) +
++   geom_segment(aes(x=data1, y=-pGrpOrd,
++   xend= data2, yend=-pGrpOrd,
++   colour=factor(color)),
++   arrow=arrow(length=unit(0.1,"cm"))) +
++   facet_grid(pGrp~.) +
++   scale_colour_manual(values=myColors, guide="none")
++   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
++   }
+> myPanel
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Introduction_Guide-micromap-5j}
+
+\textbf{Dealing with a median row:} 
+An additional issue to deal with is dealing with inserting a median row. There is a built in function that should handle this fairly we called \verb@alterForMedian@. If, after we've added our new columns, we simply hand that function our stats table and the attributes list, it should give us back one that has been altered as needed. We also need to slightly alter the \verb@facet_grid@ line to allow for the median to be a different size.
+
+\begin{Schunk}
+\begin{Sinput}
+> arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts){
++   myColors <- myAtts$colors
++   myColumns <- myAtts[[myNumber]]$panel.data
++   myNewStats$data1 <- myNewStats[, myColumns[1]]
++   myNewStats$data2 <- myNewStats[, myColumns[2]]
++   myNewStats <- alterForMedian(myNewStats, myAtts)
++   myPanel <- ggplot(myNewStats) +
++   geom_segment(aes(x=data1, y=-pGrpOrd,
++   xend= data2, yend=-pGrpOrd,
++   colour=factor(color)),
++   arrow=arrow(length=unit(0.1,"cm"))) +
++   facet_grid(pGrp~., space="free", scales="free_y") +
++   scale_colour_manual(values=myColors, guide="none")
++   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
++   }
+> myPanel
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Introduction_Guide-micromap-5k}
+
+After we run this function, or saving it to a file and then sourcing that file, we'll be able to tell the mmplot function to build this graph simply entering a panel type of "arrow.plot".
+
+
+\textbf{Optional Step 4 - specializing user controlled attributes:}
+If we run the line of code:
+\begin{quote}> print(myAtts)\end{quote}
+
+We can see a full list of attributes available for alteration/specification by a user. All of these attributes (e.g. axis labels, background color, grid lines, etc.) are applied to the graph through the \verb@assimilatePlot@ function so if we like how our graph looks and don't feel the need to give the user any more control on its features we can stop here. However, there might be some changes that users would like to make such as the width of the arrows and lengths of the arrow heads. In order to allow these changes by users we need to: a) create extra slots in our panel level of the attributes list and b) alter our code to recognize these options.
+
+Creating the extra slots in the attribute list is actually not a terribly difficult process. This is done for every graph that has already been built into the micromap library. What these built in graphs have that ours is still lacking is a personalized "attribute function". When the \verb@mmplot@ function sees a panel type of "arrow.plot", it's already looking for an attribute function called \verb@arrow.plot.att@ to supply the panel level list for our all encompassing attribute list that is being passed around, but we haven't created this yet; so it settles on a built in function called \verb@standard.att@. We'll use \verb@standard.att@ to build our new \verb@arrow.plot.att@ function.
+
+In the code below we first start with \verb@standard.att@ to get our useful base list, and then we append on the new attributes we'd like to control. We'll call these new attributes "line.width" and "tip.length".
+
+\begin{Schunk}
+\begin{Sinput}
+> myPanelAtts <- standard_att()
+> myPanelAtts <- append(myPanelAtts,
++ list(line.width=1, tip.length=1))
+\end{Sinput}
+\end{Schunk}
+
+Note that the "=1" is setting our defaults for these 2 entries at "1". We can control what "1" actually implies later. Now let's put this into function form. Note that the mmplot function "sends" nothing to this function. It only wants a
+list of attributes back. Which makes our function simply look like:
+
+\begin{Schunk}
+\begin{Sinput}
+> arrow_plot_att <- function(){
++   myPanelAtts <- standard_att()
++   myPanelAtts <- append(myPanelAtts,
++   list(line.width=1, tip.length=1))
++ }
+\end{Sinput}
+\end{Schunk}
+
+Simple enough. Now let's revisit our \verb@arrow.plot@ function and insert lines to pull these attribute specifications out of the attribute list and implement them in our graphing code:
+
+\begin{Schunk}
+\begin{Sinput}
+> arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts){
++   myColors <- myAtts$colors
++   myColumns <- myAtts[[myNumber]]$panel.data
++   myLineWidth <- myAtts[[myNumber]]$line.width 
++   # Again, note that these are stored in the panel level section of the
++   myTipLength <- myAtts[[myNumber]]$tip.length # attributes object
++   myNewStats$data1 <- myNewStats[, myColumns[1]]
++   myNewStats$data2 <- myNewStats[, myColumns[2]]
++   myNewStats <- alterForMedian(myNewStats, myAtts)
++   myPanel <- ggplot(myNewStats) +
++   geom_segment(aes(x=data1, y=-pGrpOrd,
++   xend= data2, yend=-pGrpOrd,
++   colour=factor(color)),
++   arrow=arrow(length=unit(0.1*myTipLength,"cm")), 
++   size=myLineWidth) +
++   facet_grid(pGrp~., space="free", scales="free_y") +
++   scale_colour_manual(values=myColors, guide="none")
++   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
++   }
+> myPanel
+\end{Sinput}
+\end{Schunk}
+\includegraphics{Introduction_Guide-micromap-5n}
+
+\textbf{Step Last:} Now let's try to implement this new panel in a simple linked micromap (using the statePolys map data from the initial example) and adjust the line width and tip length while we're at it.
+
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(stat.data=myStats,
++ map.data=statePolys,
++ panel.types=c("map","labels", "arrow_plot"),
++ panel.data=list(NA,"State", list("Rate_95","Rate_00")),
++ ord.by="Rate_00",
++ grouping=5,
++ map.link=c("StateAb","ID"),
++ panel.att=list(list(3, line.width=1.25, tip.length=1.5)), 
++ print.file="fig7.jpeg", print.res=100) 
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig7.jpeg} 
+  \caption{mmplot with new panel type of arrow plot} 
+  \label{fig7}
+\end{center}
+\end{figure}
+
+It looks like our new graph has been implemented nicely. We can obviously still clean this up a bit and might as well add in some extra plots as well. Also,
+we should bring Washington DC back into the picture (i.e. use our original myStats table) and make sure our median row is displaying correctly with the new graph. Using dot\_legend we will add a legend and tweek the panel attributes section quite a bit, we are ready to present the following:
+
+\begin{Schunk}
+\begin{Sinput}
+> data(lungMort)
+> myStats <- lungMort
+> mmplot(stat.data=myStats,
++ map.data=statePolys,
++ panel.types=c("map", "dot_legend", "labels", "dot_cl", "arrow_plot"),
++ panel.data=list(NA,
++ "points",
++ "State",
++ list("Rate_00","Lower_00","Upper_00"),
++ list("Rate_95","Rate_00")),
++ ord.by="Rate_00", grouping=5,
++ median.row=T,
++ map.link=c("StateAb","ID"),
++ plot.height=10,
++ colors=c("red","orange","green","blue","purple"),
++ panel.att=list(list(1, header="Light Gray Means\n Highlighted Above",
++ map.all=TRUE,
++ fill.regions="two ended",
++ inactive.fill="lightgray",                    
++ inactive.border.color=gray(.7),
++ inactive.border.size=2,
++ panel.width=1),
++ list(2, point.type=20,
++ point.border=TRUE),
++ list(3, header="U.S. \nStates ",
++ panel.width=.8,
++ align="left", text.size=.9),
++ list(4, header="State 2000\n Rate and 95% CI",
++ graph.bgcolor="lightgray",
++ xaxis.ticks=list(20,30,40,50),
++ xaxis.labels=list(20,30,40,50),
++ xaxis.title="Deaths per 100,000"),
++ list(5, header="State Rate Change\n 1995-99 to 2000-04",
++ line.width=1.25, tip.length=1.5,
++ graph.bgcolor="lightgray",
++ xaxis.ticks=list(20,30,40,50),
++ xaxis.labels=list(20,30,40,50),
++ xaxis.title="Deaths per 100,000")),
++ print.file="fig8.jpeg", print.res=100) 
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig8.jpeg} 
+  \caption{Cancer Rate in 2000 and Change from 1995-1999 to 2000-2004} 
+  \label{fig8}
+\end{center}
+\end{figure}
+
+\section{Group-Categorized Micromaps (mmgroupedplot function)}
+\textbf{mmgroupedplot}(stat.data, map.data, panel.types, panel.data, cat, map.link, \ldots)
+\noindent The \textbf{mmgroupedplot} function is very similar to the \textbf{mmplot} function described earlier.  With the \textbf{mmplot} function, we had a one-to-one relationship with one polygon being associated with one statistical summary that appeared as a single row in a perceptual group.  With a group-categorized micromap, we are going to have a one-to-many relationship with one polygon now being associated with several statistical summaries.  This one to many relationship is reflected in the structure of the statistical data table.
+\begin{Schunk}
+\begin{Sinput}
+> library(micromap)
+> data("vegCov")
+> head(vegCov, n = 9)
+\end{Sinput}
+\begin{Soutput}
+         Type Subpopulation                  Indicator
+1140 National      National CondClassWgt4b.VEGCVR_COND
+1141 National      National CondClassWgt4b.VEGCVR_COND
+1142 National      National CondClassWgt4b.VEGCVR_COND
+1188  ecowsa3         EHIGH CondClassWgt4b.VEGCVR_COND
+1189  ecowsa3         EHIGH CondClassWgt4b.VEGCVR_COND
+1190  ecowsa3         EHIGH CondClassWgt4b.VEGCVR_COND
+1193  ecowsa3        PLNLOW CondClassWgt4b.VEGCVR_COND
+1194  ecowsa3        PLNLOW CondClassWgt4b.VEGCVR_COND
+1195  ecowsa3        PLNLOW CondClassWgt4b.VEGCVR_COND
+                       Category NResp Estimate.P StdError.P
+1140          1:LEAST DISTURBED   698   47.61908   1.511643
+1141 2:INTERMEDIATE DISTURBANCE   394   28.31880   1.533217
+1142           3:MOST DISTURBED   291   19.33501   1.229759
+1188          1:LEAST DISTURBED   129   42.16749   2.597053
+1189 2:INTERMEDIATE DISTURBANCE    92   30.70827   2.685939
+1190           3:MOST DISTURBED    48   17.58212   1.990464
+1193          1:LEAST DISTURBED   155   47.53334   2.753267
+1194 2:INTERMEDIATE DISTURBANCE   111   24.45491   2.544108
+1195           3:MOST DISTURBED   145   25.95537   2.341336
+     LCB95Pct.P UCB95Pct.P Estimate.U StdError.U LCB95Pct.U
+1140   44.65632   50.58185  516806.99  18907.163  479749.63
+1141   25.31375   31.32385  307342.20  17184.380  273661.43
+1142   16.92473   21.74529  209841.67  13516.940  183348.96
+1188   37.07736   47.25762  187505.36  13383.579  161274.03
+1189   25.44393   35.97261  136549.87  12402.806  112240.82
+1190   13.68088   21.48336   78182.07   8887.312   60763.26
+1193   42.13704   52.92965  186008.37  11785.392  162909.42
+1194   19.46855   29.44127   95697.40  10313.978   75482.37
+1195   21.36644   30.54430  101569.04   9522.937   82904.42
+     UCB95Pct.U
+1140  553864.35
+1141  341022.96
+1142  236334.39
+1188  213736.69
+1189  160858.93
+1190   95600.88
+1193  209107.31
+1194  115912.42
+1195  120233.65
+\end{Soutput}
+\end{Schunk}
+The polygons, or areas, that we want to use are listed under Subpopulation as ``National'', ``EHIGH'', ``PLNLOW'', and ``WMTNS'', and each of those areas are repeated three times in the statistical data to correspond to the three levels of disturbance listed under the Category column.  We want to produce a micromap that has a panel showing the Estimate.P values crossed with the disturbance categories for each area.  We want a similar panel produced using the Estimate.U values.
+We need to examine the spatial polgyon dataframe to see how it is structured.  We will use the WSA3 spatial polygon data frame that has already been thinned.
+\begin{Schunk}
+\begin{Sinput}
+> data("WSA3")
+> print(WSA3@data)
+\end{Sinput}
+\begin{Soutput}
+   WSA_3            WSA_3_NM     area_mdm     ID
+1  EHIGH   Eastern Highlands 1.197706e+12  EHIGH
+2 PLNLOW Plains and Lowlands 3.949916e+12 PLNLOW
+3  WMTNS                West 2.640471e+12  WMTNS
+      area_mdm     area_mdm
+1 1.197676e+12 1.196321e+12
+2 3.949854e+12 3.951018e+12
+3 2.640467e+12 2.641354e+12
+\end{Soutput}
+\end{Schunk}
+Note that the column WSA\_3 is potentially a good ID variable that could link the spatial and statistical data together.  However, the WSA\_3 column does not list ``National'', but we can create that area after we make an inital map table using the \textbf{create\_map\_table} function.
+\begin{Schunk}
+\begin{Sinput}
+> wsa.polys<-create_map_table(WSA3)
+> head(wsa.polys)
+\end{Sinput}
+\begin{Soutput}
+     ID region poly  coordsx    coordsy hole plotorder plug
+1 EHIGH      1    2 672579.2 49281.8017    0         3    0
+2 EHIGH      1    2 692236.2 27743.7400    0         3    0
+3 EHIGH      1    2 662403.9 17823.7596    0         3    0
+4 EHIGH      1    2 656638.2  3781.2090    0         3    0
+5 EHIGH      1    2 643629.7  9115.8818    0         3    0
+6 EHIGH      1    2 632432.9  -139.7886    0         3    0
+\end{Soutput}
+\end{Schunk}
+To create a National area, we can just use the perimeter outline from EHIGH, PLNLOW, and WMTNS and avoid using any of the interior polygons by setting ``plug'' and ``hole'' arguments to zero.  Each of the polygons needs to have an unique number.  Here is the code to create a National area and to assign a unique number to every polygon.
+
+\begin{Schunk}
+\begin{Sinput}
+> national.polys<-subset(wsa.polys, hole==0 & plug==0)
+> national.polys<-transform(national.polys, ID="National", region=4,
++ poly=region*1000 + poly)
+> head(national.polys)
+\end{Sinput}
+\begin{Soutput}
+        ID region poly  coordsx    coordsy hole plotorder
+1 National      4 1002 672579.2 49281.8017    0         3
+2 National      4 1002 692236.2 27743.7400    0         3
+3 National      4 1002 662403.9 17823.7596    0         3
+4 National      4 1002 656638.2  3781.2090    0         3
+5 National      4 1002 643629.7  9115.8818    0         3
+6 National      4 1002 632432.9  -139.7886    0         3
+  plug
+1    0
+2    0
+3    0
+4    0
+5    0
+6    0
+\end{Soutput}
+\begin{Sinput}
+> wsa.polys<-rbind(wsa.polys,national.polys)
+> head(wsa.polys)
+\end{Sinput}
+\begin{Soutput}
+     ID region poly  coordsx    coordsy hole plotorder plug
+1 EHIGH      1    2 672579.2 49281.8017    0         3    0
+2 EHIGH      1    2 692236.2 27743.7400    0         3    0
+3 EHIGH      1    2 662403.9 17823.7596    0         3    0
+4 EHIGH      1    2 656638.2  3781.2090    0         3    0
+5 EHIGH      1    2 643629.7  9115.8818    0         3    0
+6 EHIGH      1    2 632432.9  -139.7886    0         3    0
+\end{Soutput}
+\begin{Sinput}
+> str(wsa.polys)
+\end{Sinput}
+\begin{Soutput}
+'data.frame':	4626 obs. of  8 variables:
+ $ ID       : Factor w/ 4 levels "EHIGH","PLNLOW",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ region   : num  1 1 1 1 1 1 1 1 1 1 ...
+ $ poly     : num  2 2 2 2 2 2 2 2 2 2 ...
+ $ coordsx  : num  672579 692236 662404 656638 643630 ...
+ $ coordsy  : num  49282 27744 17824 3781 9116 ...
+ $ hole     : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ plotorder: num  3 3 3 3 3 3 3 3 3 3 ...
+ $ plug     : num  0 0 0 0 0 0 0 0 0 0 ...
+\end{Soutput}
+\end{Schunk}
+We assigned the National region equal to 4 as the other areas had already been assigned the values 1, 2, and 3 when we applied the \textbf{create\_map\_table} function.  Note how the ID column in the map table can be linked to the Subpopulation column in the data table.
+
+We can now produce the basic group-categorized micromap using syntax very similar to \textbf{mmplot} function.  We now specify two new arguments ``grp.by'' and ``cat''.  The ``grp''.by specifies the areas or polygons we are using from the statistical data, and ``cat'' specifies the categories that will be crossed with each of the areas.
+\begin{Schunk}
+\begin{Sinput}
+> mmgroupedplot(stat.data=vegCov,
++               map.data=wsa.polys,
++               panel.types=c("map", "labels", "bar_cl", "bar_cl"),
++               panel.data=list(NA,"Category",
++                               list("Estimate.P","LCB95Pct.P","UCB95Pct.P"),
++                               list("Estimate.U","LCB95Pct.U","UCB95Pct.U")),
++               panel.att=list(list(2, panel.width = 1.5)),
++               grp.by="Subpopulation",
++               cat="Category",
++               map.link=c("Subpopulation", "ID"),
++               plot.width = 9,
++               print.file="fig9.jpeg",print.res=100)
+\end{Sinput}
+\end{Schunk}
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig9.jpeg}
+  \caption{National Lake Assessment}
+  \label{fig9} 
+\end{center} 
+\end{figure}
+We can the refine that code to produce the finished version of a group-categorized micromap.
+\begin{Schunk}
+\begin{Sinput}
+> mmgroupedplot(stat.data= vegCov,
++ map.data= wsa.polys,
++ panel.types=c("map", "labels", "bar_cl", "bar_cl"),
++ panel.data=list(NA,"Category",
++ list("Estimate.P","LCB95Pct.P","UCB95Pct.P"),
++ list("Estimate.U","LCB95Pct.U","UCB95Pct.U")),
++ grp.by="Subpopulation",
++ cat="Category",
++ colors=c("red3","green3","lightblue"),
++ map.link=c("Subpopulation", "ID"),
++ map.color="orange3",
++ plot.grp.spacing=2,
++ plot.width=7,
++ plot.height=4,
++ panel.att=list(list(1, header="Region", header.size=1.5,
++ panel.width=.75),
++ list(2, header="Category",
++ header.size=1.5,
++ panel.width=2),
++ list(3, header="Percent", header.size=1.5,
++ graph.bgcolor="lightgray",
++ xaxis.title="percent",
++ xaxis.ticks=list(0,20,40,60),
++ xaxis.labels=list(0,20,40,60)),
++ list(4, header="Unit", header.size=1.5,
++ graph.bgcolor="lightgray",
++ xaxis.title="thousands",
++ xaxis.ticks=list(0,200000,350000,550000),
++ xaxis.labels=list(0,200,350,550))),
++ print.file="fig10.jpeg",print.res=100)
+\end{Sinput}
+\end{Schunk}
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig10.jpeg}
+  \caption{National Lake Assessment}
+  \label{fig10} 
+\end{center} 
+\end{figure}
+
+\end{document}

@@ -1,7 +1,21 @@
 \name{NEWS}
 \title{micromap News}
 
-\section{CHANGES IN micromap VERSION 1.9.6 (Released 2023-04-20)}{
+\section{CHANGES IN micromap VERSION 1.9.7 (Released 2023-04-25)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Fixed missing exports
+    }
+  }
+}
+
+\section{CHANGES IN micromap VERSION 1.9.6 (Released 2023-04-24)}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item Dependency on \code{maptools} was removed 
