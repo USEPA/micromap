@@ -128,7 +128,7 @@ ranks_build <- function(pl, p, DF, att){
 }
 
 
-
+#' @export
 dot_legend_build <- function(pl, p, DF, att){ 
 	DF$tmp.data <- rep(0, nrow(DF))
 
@@ -216,7 +216,7 @@ dot_build <- function(pl, p, DF, att){
 		if(length(att[[p]]$add.line.size)==1) att[[p]]$add.line.size <- rep(att[[p]]$add.line.size[1], length(att[[p]]$add.line))
 
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
-										data=DF, colour=att[[p]]$add.line.col[j], 
+										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
 										size=att[[p]]$add.line.size[j])
 	  }
@@ -293,7 +293,7 @@ dot_cl_build <- function(pl, p, DF, att){
 				colour=factor(color)), size=att[[p]]$line.width) 
 
 
-	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), data=DF, 
+	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), 
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
 							size = att[[p]]$median.line.size)
@@ -304,7 +304,7 @@ dot_cl_build <- function(pl, p, DF, att){
 		if(length(att[[p]]$add.line.size)==1) att[[p]]$add.line.size <- rep(att[[p]]$add.line.size[1], length(att[[p]]$add.line))
 
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
-										data=DF, colour=att[[p]]$add.line.col[j], 
+										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
 										size=att[[p]]$add.line.size[j])
 	  }
@@ -376,7 +376,7 @@ bar_build <- function(pl, p, DF, att){
 	     	facet_grid(pGrp~., scales="free_y", space="free")
 
 
-	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), data=DF, 
+	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)),
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
 							size = att[[p]]$median.line.size)
@@ -387,7 +387,7 @@ bar_build <- function(pl, p, DF, att){
 		if(length(att[[p]]$add.line.size)==1) att[[p]]$add.line.size <- rep(att[[p]]$add.line.size[1], length(att[[p]]$add.line))
 
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
-										data=DF, colour=att[[p]]$add.line.col[j], 
+										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
 										size=att[[p]]$add.line.size[j])
 	  }
@@ -440,14 +440,14 @@ bar_cl_build <- function(pl, p, DF, att){
 		geom_rect(aes(xmin=0, ymin=-pGrpOrd-(tmp.adj/2), 
 				xmax=tmp.data1, ymax=-pGrpOrd+(tmp.adj/2), 
 				fill=factor(color), colour='black')) +
-	     	geom_errorbarh(aes(x=tmp.data1, xmin=tmp.data2, xmax=tmp.data3, y=-pGrpOrd), 
+	     	geom_errorbarh(aes(xmin=tmp.data2, xmax=tmp.data3, y=-pGrpOrd), 
 				height=.9*att[[p]]$graph.bar.size) + 
 	     	facet_grid(pGrp~., scales="free_y", space="free") +
 		scale_colour_manual(values='black', guide='none') +
 		scale_fill_manual(values=att$colors, guide='none')
 
 
-	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), data=DF, 
+	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)),
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
 							size = att[[p]]$median.line.size)
@@ -458,7 +458,7 @@ bar_cl_build <- function(pl, p, DF, att){
 		if(length(att[[p]]$add.line.size)==1) att[[p]]$add.line.size <- rep(att[[p]]$add.line.size[1], length(att[[p]]$add.line))
 
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
-										data=DF, colour=att[[p]]$add.line.col[j], 
+										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
 										size=att[[p]]$add.line.size[j])
 	  }
@@ -514,10 +514,9 @@ box_summary_build <- function(pl, p, DF, att){
 	  #################################
 	  #################################
 
-
 	pl  <- 
 		ggplot(DF) +
-	     	geom_errorbarh(aes(x=tmp.data1, xmin=tmp.data1, xmax=tmp.data7, y=-pGrpOrd), 
+	     	geom_errorbarh(aes(xmin=tmp.data1, xmax=tmp.data7, y=-pGrpOrd), 
 				height=.9*att[[p]]$graph.bar.size) + 
 		geom_rect(aes(xmin=tmp.data2, ymin=-pGrpOrd-(tmp.adj/4), 
 					xmax=tmp.data5, ymax=-pGrpOrd+(tmp.adj/4), 
@@ -543,7 +542,7 @@ box_summary_build <- function(pl, p, DF, att){
 		if(length(att[[p]]$add.line.size)==1) att[[p]]$add.line.size <- rep(att[[p]]$add.line.size[1], length(att[[p]]$add.line))
 
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
-										data=DF, colour=att[[p]]$add.line.col[j], 
+										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
 										size=att[[p]]$add.line.size[j])
 	  }

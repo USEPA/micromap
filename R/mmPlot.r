@@ -48,6 +48,8 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @import sp
 #' 
+#' @export
+#' 
 #' @note See the Introduction Guide for a full list of the options available for altering micromaps.
 #'
 #' @author Quinn Payton \email{Payton.Quinn@@epa.gov}

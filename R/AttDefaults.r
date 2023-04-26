@@ -1,6 +1,7 @@
 #*** standard attributes used by most panels
 #*** these can be altered after being added to the
 #*** current panel's attribute list
+#' @export
 standard_att <- function(show=FALSE){ list(
   panel.header=NA,
   	panel.header.size=1,
@@ -114,6 +115,7 @@ ranks_att <- function(show=FALSE) {
 
 
 #*** dot legend ***#
+#' @export
 dot_legend_att <- function(show=FALSE) {
   tmp.att <- append(standard_att(), 
 				list(point.size=as.numeric(1.2), 
@@ -322,5 +324,5 @@ sample_att <- function(size=1, type=rep('standard',size), ord.by=NA, grouping=5,
 }
 
 
-
+#' @export
 list_att <- function(panel.type) eval(parse(text=paste("print(",panel.type,"_att(show=TRUE))","")))

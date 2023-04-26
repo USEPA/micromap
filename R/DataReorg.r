@@ -1,3 +1,4 @@
+#' @export
 create_DF_rank <- function(data, ord.by, group, median.row=FALSE, rev.ord=FALSE, align='top'){
 	# data=dStats; align=vertical.align; group=grouping
 	DF <- data
@@ -61,7 +62,7 @@ create_DF_rank <- function(data, ord.by, group, median.row=FALSE, rev.ord=FALSE,
 	DF
 }
 
-
+#' @export
 create_DF_cat <- function(data, grp.by, cat){
 	DF <- data 
 
