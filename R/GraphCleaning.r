@@ -309,12 +309,12 @@ assimilatePlot <- function(pl, i, a, limsx=NA, limsy=NA){
   pl <- plot_opts(i,pl,a)
 	pl <- graph_opts(i,pl,a)
 
-	if(is.na(limsx)){ 
+	if(any(is.na(limsx))){ 
 		limsx <- range(pl$data[,unlist(a[[i]]$panel.data)])
 		limsx <- limsx+c(-1,1)*diff(limsx)*.05
 	  }
 
-	if(is.na(limsy)){
+	if(any(is.na(limsy))){
 		# labs <- names(pl$options$labels)
 		# labs <- labs[sapply(1:length(labs), function(j) pmatch("y",labs[j], nomatch=0)==1)]
 
