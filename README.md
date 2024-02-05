@@ -11,7 +11,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.7 is the stable version on CRAN and can be installed as
+Version 1.9.8 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
@@ -39,7 +39,6 @@ library(micromap)
 citation(package = 'micromap')
 ```
 
-    ## 
     ## To cite the micromap package in publications use:
     ## 
     ##   Quinn C. Payton, Michael G. McManus, Marc H. Weber, Anthony R. Olsen,
