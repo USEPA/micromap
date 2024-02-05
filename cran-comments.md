@@ -7,7 +7,7 @@ Package vignette without corresponding tangle output:
   ‘Introduction_Guide.Rnw’
 
 ## Test environments
-* ubuntu 22.04.2 (on GitHub Actions), R release (4.3.2), devel, and old-release
+* ubuntu 22.04.3 (on GitHub Actions), R release (4.3.2), devel, and old-release
 * OS X (on GitHub Actions), R 4.3.2
 * windows (on GitHub Actions), R 4.3.2
 * win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel and release)

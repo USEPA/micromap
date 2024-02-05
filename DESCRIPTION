@@ -36,7 +36,7 @@ NeedsCompilation: no
 Repository: CRAN
 Suggests:
     knitr
-URL: <https://github.com/USEPA/micromap>
+URL: <https://github.com/fawda123/micromap>
 BugReports: https://github.com/USEPA/micromap/issues
 RoxygenNote: 7.2.3
 Encoding: UTF-8
