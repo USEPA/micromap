@@ -574,7 +574,11 @@ print.mm <- function(x, name = NULL, res = 300, ...){
     if(right(print.file,5) == '.jpeg') 	jpeg(print.file, width = plobject$plot.width, height = plobject$plot.height, units = 'in', res = res)
     if(right(print.file,4) == '.jpg') 	jpeg(print.file, width = plobject$plot.width, height = plobject$plot.height, units = 'in', res = res)
     if(right(print.file,4) == '.png') 	png(print.file, width = plobject$plot.width, height = plobject$plot.height, units = 'in', res = res)
-    if(right(print.file,3) == '.ps') 		postscript(print.file, width = plobject$plot.width, height = plobject$plot.height)
+    if(right(print.file,3) == '.ps'){ 		
+      postscript(print.file, width = plobject$plot.width, height = plobject$plot.height, family = 'sans')
+      for(p in 1:(length(plobject)-3))
+        plobject[[p]] <- plobject[[p]] + ggplot2::theme(text = ggplot2::element_text(family = 'sans'))
+    }
     
     if(!recognized.print.type) print("Warning: printing file type not recognized")
   }

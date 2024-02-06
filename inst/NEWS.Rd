@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.8 (Released 2024-01-26)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Added GitHub URLs to DESCRIPTION
+      \item Added tangle output from vignette
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.7 (Released 2023-04-25)}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -53,7 +68,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Fix to CRS strings for stale sp data objects included with the package.  This was done in anticipation of updates to sp and rgdal.  This affects the \code{USstates}, \code{WSA3}, and {OrEcoLevel3} data objects used in the examples and the \code{txeco} data object used in the vignette.
+      \item Fix to CRS strings for stale sp data objects included with the package.  This was done in anticipation of updates to sp and rgdal.  This affects the \code{USstates}, \code{WSA3}, and \code{OrEcoLevel3} data objects used in the examples and the \code{txeco} data object used in the vignette.
       \item The package now requires R version >= 3.5 for compliance of data objects to version 3. 
       \item Added \code{default = TRUE} to \code{coord_cartesian()} on ggplot objects to prevent messaging on plot functions.
     }
