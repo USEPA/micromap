@@ -101,7 +101,7 @@ ranks_att <- function(show=FALSE) {
   tmp.att <- append(standard_att(), 
 			list(font='sans',
 				face='plain',
-				size=as.numeric(1),
+				text.size=as.numeric(1),
 				align='right'))
 
   tmp.att$xaxis.line.display=as.logical(FALSE)

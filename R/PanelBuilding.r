@@ -78,10 +78,10 @@ labels_build <- function(pl, p, DF, att){
 
 
 ranks_build <- function(pl, p, DF, att){ 
-	tmp.tsize <- att[[p]]$size*4
-	DF$tmp.y <- -DF$pGrpOrd*att[[p]]$size
-	tmp.limsy <- c((min(-DF$pGrpOrd)-.5)*att[[p]]$size, 
-			(max(-DF$pGrpOrd)+.5)*att[[p]]$size)
+	tmp.tsize <- att[[p]]$text.size*4
+	DF$tmp.y <- -DF$pGrpOrd*att[[p]]$text.size
+	tmp.limsy <- c((min(-DF$pGrpOrd)-.5)*att[[p]]$text.size, 
+			(max(-DF$pGrpOrd)+.5)*att[[p]]$text.size)
 
 	mln <- max(nchar(as.character(DF$rank)))
 	  if (att[[p]]$align=='right') {
@@ -113,11 +113,11 @@ ranks_build <- function(pl, p, DF, att){
 	  #################################
 	  #################################
 
-
+	
 	pl <- 
 	 	ggplot(DF) +
 		geom_text(aes(x=0, y=tmp.y, label=rank, hjust=tmp.adj, vjust=.4), 
-				font=att[[p]]$font, face=att[[p]]$face, size=tmp.tsize) +
+				family=att[[p]]$font, fontface=att[[p]]$face, size=tmp.tsize) +
      		facet_grid(pGrp~., scales="free_y", space="free") 
 
 	pl <- plot_opts(p, pl, att)		
