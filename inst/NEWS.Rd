@@ -1,6 +1,22 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.9 (Released 2024-08-26)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Arguments for \code{text.size}, \code{font}, and \code{face} now work correctly if panel type \code{ranks} is used.
+      \item Updated documentation for \code{panel.types} argument in \code{mmplot} to specify all available types, similar update to vignette. 
+      \item Vignette no longer indicates 5 or 7 point boxplot summaries.
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.8 (Released 2024-01-26)}{
   \subsection{NEW FEATURES}{
     \itemize{

@@ -4,7 +4,7 @@
 #' 
 #' @param stat.data table of statistics for display
 #' @param map.data table of polygons to be associated with each item in stat.data.
-#' @param panel.types vector of panel types to specify the layout of the plot (e.g. c('map', 'labels', 'dot.cl'))
+#' @param panel.types vector of panel types to specify the layout of the plot, e.g., \code{c('map', 'labels', 'dot.cl')}. Nine possible types are available: \code{'map'}, \code{'labels'}, \code{'dot'}, \code{'dot_cl'} (dotplots with confidence limits), \code{'dot_legend'}, \code{'bar'}, \code{'bar_cl'} (barplots with confidence limits), \code{'box_summary'}, and \code{'ranks'}.
 #' @param panel.data a list (of lists) of data to be used with each panel (e.g. list(NA, 'Names', list('lower.bound','estimate','upper.bound')).
 #' @param map.link a vector with the name of the columns from stat.data and map.data, respectively, on which to join.
 #' @param nPanels the number of panels, which is not expected to be set by the user.  The default is the length of panel.types.

@@ -54,12 +54,12 @@ statePolys <- create_map_table(USstates, IDcolumn="ST")
 head(statePolys) 
 @
 
-From here we can create the draft micromap plot. To graph our poverty and college degree metrics we must specify the type of graph to be used. As of now, there are only 6 types of graphs built in:
+From here we can create the draft micromap plot. To graph our poverty and college degree metrics we must specify the type of graph to be used. As of now, there are 5 types of graphs built in:
 
 \begin{itemize}
   \item Dot plots (with or without confidence limits)
   \item Bar plots (with or without confidence limits)
-  \item Box summary (5 and 7 point)  
+  \item Box summary
 \end{itemize}
 
 Additional graph types will be built and included as needed. Users can create and include new graph types as is explained later in section 5, ``Creating a new panel/graph type''. The draft version of a micromap plot can be made with this code:
@@ -338,14 +338,11 @@ perceptual group or you can enter c(5,6,5,4) to have disproportionate numbers of
 \item \textbf{median.text.color} - the default is median.text.color='black'.  Other colors can be specified to change the color of the word Median plotted when median.row=TRUE.
 \item \textbf{median.text.label} - the default is median.text.label='Median' when median.row=TRUE.
 \item \textbf{median.text.size} - the default is median.text.size=1 when
-median.row=TRUE. As with all defaults set to 1, any change from default will magnify the default size by a factor.  For example, meidan.text.size=.5 will print the word "Median" half as big as the default size.
+median.row=TRUE. As with all defaults set to 1, any change from default will magnify the default size by a factor.  For example, median.text.size=.5 will print the word "Median" half as big as the default size.
 \item  \textbf{ord.by, grp.by} (required) - ord.by specifies the stats.data column to be ranked for the ordering of the figure. See related rev.ord.  grp.by is used for grouped plots in order to specify which data table column to sort the figure by.
 \item  \textbf{panel.att} - a list of panel specific attributes to be altered (described in more detail below).
-\item  \textbf{panel.data} (required) - a list of lists to specify which columns of the stat.data table to use in filling out the panels. For a panel needing multiple columns you enter a sublist. For example, the dot\_cl requires a sublist that includes three column names from the statistics data frame.  One column name identifies the summary statistics, and the other two column names identify the lower and upper confidence bounds.  There needs to be an entry for every panel even when specific data from the stat table isn't supplied by the user. That is to say map and rank panels (as well as user created panel types) should have NAs.
-e.g. panel.data=list(``State'', list(``Estimate'', ``Lower.Bound'', ``Upper.Bound''), NA).
-\item  \textbf{panel.types} (required) - a vector specifying the panels of the plot. Note: each ``panel.type'' (e.g. ``map'', ``labels'',
-``dot\_cl'', etc.) is the name of a function that will be called to create that panel. Therefore a user can create a new panel type (e.g. ``new.graph.type'') and the mmplot function will automatically go look for and call that function just
-by changing the entry here. See the section ``Creating a New Panel Type''.
+\item  \textbf{panel.data} (required) - a list of lists to specify which columns of the stat.data table to use in filling out the panels. For a panel needing multiple columns you enter a sublist. For example, the dot\_cl requires a sublist that includes three column names from the statistics data frame.  One column name identifies the summary statistics, and the other two column names identify the lower and upper confidence bounds.  There needs to be an entry for every panel even when specific data from the stat table isn't supplied by the user. That is to say map and rank panels (as well as user created panel types) should have NAs. e.g. panel.data=list(``State'', list(``Estimate'', ``Lower.Bound'', ``Upper.Bound''), NA).
+\item  \textbf{panel.types} (required) - a vector specifying the panels of the plot. Note: each ``panel.type'' (e.g. ``map'', ``labels'', ``dot\_cl'', etc.) is the name of a function that will be called to create that panel.  Nine total types are available: ``map'', ``labels'', ``dot'', ``dot\_cl'' (dotplots with confidence limits), `'dot\_legend'`, `'bar'`, `'bar\_cl'` (barplots with confidence limits), ``box\_summary'', and ``ranks''. A user can create a new panel type (e.g. ``new.graph.type'') and the mmplot function will automatically go look for and call that function just by changing the entry here. See the section ``Creating a New Panel Type''.
 \item  \textbf{plot.footer} - not implemented yet.
 \item  \textbf{plot.footer.size} - not implemented yet.
 \item  \textbf{plot.footer.color} - not implemented yet.

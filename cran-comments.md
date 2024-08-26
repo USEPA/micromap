@@ -1,15 +1,11 @@
 ## Resubmission 
 
-This is a version update to v1.9.8 to address a NOTE on CRAN:
-
-checking package vignettes ... NOTE
-Package vignette without corresponding tangle output:
-  ‘Introduction_Guide.Rnw’
+This is a version update to v1.9.9.
 
 ## Test environments
-* ubuntu 22.04.3 (on GitHub Actions), R release (4.3.2), devel, and old-release
-* OS X (on GitHub Actions), R 4.3.2
-* windows (on GitHub Actions), R 4.3.2
+* ubuntu 22.04.3 (on GitHub Actions), R release (4.4.1), devel, and old-release
+* OS X (on GitHub Actions), R 4.4.1
+* windows (on GitHub Actions), R 4.4.1
 * win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel and release)
 
 ## R CMD check results
