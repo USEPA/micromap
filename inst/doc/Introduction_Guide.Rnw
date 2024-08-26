@@ -54,12 +54,12 @@ statePolys <- create_map_table(USstates, IDcolumn="ST")
 head(statePolys) 
 @
 
-From here we can create the draft micromap plot. To graph our poverty and college degree metrics we must specify the type of graph to be used. As of now, there are only 6 types of graphs built in:
+From here we can create the draft micromap plot. To graph our poverty and college degree metrics we must specify the type of graph to be used. As of now, there are only 5 types of graphs built in:
 
 \begin{itemize}
   \item Dot plots (with or without confidence limits)
   \item Bar plots (with or without confidence limits)
-  \item Box summary (5 and 7 point)  
+  \item Box summary
 \end{itemize}
 
 Additional graph types will be built and included as needed. Users can create and include new graph types as is explained later in section 5, ``Creating a new panel/graph type''. The draft version of a micromap plot can be made with this code:
