@@ -1,8 +1,7 @@
 
 # micromap
 
-[![Downloads from the RStudio CRAN
-mirror](http://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/micromap)](http://cran.rstudio.com/package=micromap)
 [![R-CMD-check](https://github.com/USEPA/micromap/workflows/R-CMD-check/badge.svg)](https://github.com/USEPA/micromap/actions)
 
 This repository is for development of the USEPA R micromap package. If
@@ -11,7 +10,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.8 is the stable version on CRAN and can be installed as
+Version 1.9.9 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
