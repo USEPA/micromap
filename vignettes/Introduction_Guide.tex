@@ -16,7 +16,7 @@
 
 \title{Linked Micromaps}
 
-\author{Quinn Payton, Marc Weber, Michael McManus, Tony Olsen, Tom Kincaid}
+\author{Quinn Payton, Marcus Beck, Marc Weber, Michael McManus, Tony Olsen, Tom Kincaid}
 \maketitle
 
 
@@ -1146,6 +1146,73 @@ We can the refine that code to produce the finished version of a group-categoriz
 \includegraphics[width=1.0\textwidth]{fig10.jpeg}
   \caption{National Lake Assessment}
   \label{fig10} 
+\end{center} 
+\end{figure}
+
+\section{Using the sf package with micromap}
+
+The \verb@micromap@ package primarily uses the \verb@sp@ package to work with spatially referenced data. This approach was created with the assumption that \verb@micromap@ users must first combine their data with spatial polygons using the \verb@create_map_table@ function, i.e., data are often collected separately prior to linking with any spatial attributes. The \verb@sf@ (simple features) package is a newer and more popular approach in R for working with spatial data that combines both attribute and geometry (spatial) data in a single object. Using data in the simple features format with \verb@micromap@ may be preferred by users familiar with the package.  The approach may also be preferred if the attribute and spatial data are already together, e.g., in a shapefile with attributes.
+
+Using \verb@sf@ spatial objects with \verb@micromap@ follows a similar workflow as with \verb@sp@ objects, with the exception that the feature data does not need to be explicitly linked to the spatial data before plotting.  In other words, the \verb@create_map_table@ function does not need to be used.  Below shows a simple example using \verb@micromap@ with a \verb@sf@ spatial object. The \verb@nc@ dataset from the \verb@sf@ package is first loaded from disk. 
+
+\begin{Schunk}
+\begin{Sinput}
+> library(sf)
+> nc <- st_read(system.file("shape/nc.shp", package="sf"), quiet=T)
+> head(nc)
+\end{Sinput}
+\begin{Soutput}
+Simple feature collection with 6 features and 14 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.74107 ymin: 36.07282 xmax: -75.77316 ymax: 36.58965
+Geodetic CRS:  NAD27
+   AREA PERIMETER CNTY_ CNTY_ID        NAME  FIPS FIPSNO
+1 0.114     1.442  1825    1825        Ashe 37009  37009
+2 0.061     1.231  1827    1827   Alleghany 37005  37005
+3 0.143     1.630  1828    1828       Surry 37171  37171
+4 0.070     2.968  1831    1831   Currituck 37053  37053
+5 0.153     2.206  1832    1832 Northampton 37131  37131
+6 0.097     1.670  1833    1833    Hertford 37091  37091
+  CRESS_ID BIR74 SID74 NWBIR74 BIR79 SID79 NWBIR79
+1        5  1091     1      10  1364     0      19
+2        3   487     0      10   542     3      12
+3       86  3188     5     208  3616     6     260
+4       27   508     1     123   830     2     145
+5       66  1421     9    1066  1606     3    1197
+6       46  1452     7     954  1838     5    1237
+                        geometry
+1 MULTIPOLYGON (((-81.47276 3...
+2 MULTIPOLYGON (((-81.23989 3...
+3 MULTIPOLYGON (((-80.45634 3...
+4 MULTIPOLYGON (((-76.00897 3...
+5 MULTIPOLYGON (((-77.21767 3...
+6 MULTIPOLYGON (((-76.74506 3...
+\end{Soutput}
+\end{Schunk}
+
+The \verb@mmplot@ function is then used, where the primary difference is that the first argument, \verb@stat.data@, is not needed when using a \verb@sf@ object.  The complete \verb@nc@ data object is passed to the \verb@map.data@ object.  All other arguments are used as before.  
+
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(map.data=nc,
++        panel.types=c("labels", "dot","dot", "map"),
++        panel.data=list("NAME","SID74","SID79", NA),
++        ord.by="SID74", grouping=10,
++        median.row=F,
++        print.file="fig11.jpeg",
++        print.res=100, 
++        plot.height=9, 
++        plot.width=6, 
++        panel.att=list(list(1, text.size=0.6))
++ ) 
+\end{Sinput}
+\end{Schunk}
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig11.jpeg}
+  \caption{A micromap plot created using a simple features object}
+  \label{fig11} 
 \end{center} 
 \end{figure}
 
