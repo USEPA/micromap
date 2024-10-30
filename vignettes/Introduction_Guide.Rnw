@@ -923,7 +923,7 @@ head(nc)
 
 The \verb@mmplot@ function is then used, where the primary difference is that the \verb@stat.data@ and \verb@map.link@ arguments are not needed for a \verb@sf@ object.  Instead, the complete \verb@nc@ data object is passed to the \verb@map.data@ argument.  All other arguments are used as before.  
 
-<<fig10>>=
+<<fig11>>=
 mmplot(map.data=nc,
        panel.types=c("labels", "dot","dot", "map"),
        panel.data=list("NAME","SID74","SID79", NA),

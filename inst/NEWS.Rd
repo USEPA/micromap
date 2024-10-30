@@ -1,6 +1,20 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.10 (Released 2024-10-30)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Vignette includes section about using simple features objects with micromap
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item None
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.9 (Released 2024-08-26)}{
   \subsection{NEW FEATURES}{
     \itemize{
