@@ -16,14 +16,14 @@
 
 \title{Linked Micromaps}
 
-\author{Quinn Payton, Marc Weber, Michael McManus, Tony Olsen, Tom Kincaid}
-\maketitle
+\author{Quinn Payton, Marcus Beck, Marc Weber, Michael McManus,\\Tony Olsen, Tom Kincaid}
 
+\maketitle
 
 \section{Introduction}
 The \R package \verb@micromap@ is used to create linked micromaps, which display statistical summaries associated with areal units, or polygons. Linked micromaps provide a means to simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries to a series of small maps. The package contains functions, heavily dependent on the utilities of the \verb@ggplot2@ package, which may be used to produce a row-oriented graph composed of different panels, or columns, of information. These panels at a minimum contain maps, a legend, and statistical summaries.
 
-The key to using these functions is to have your data set up correctly. For a first example, we would like to display US state names, a graph illustrating their poverty level, a graph illustrating their percentage of college graduates, and a micromap indicating which states are being referenced. In order to do this, all we need is a table with state names and estimates of each of the two metrics we're interested in. The dataset \verb@edpov@ included in the \verb@micromap@ library is in this form:
+The key to using these functions is to have your data set up correctly. For a first example, we would like to display US state names, a graph illustrating their poverty level, a graph illustrating their percentage of college graduates, and a micromap indicating which states are being referenced. In order to do this, all we need is a table with state names and estimates of each of the two metrics we're interested in. The dataset \verb@edpov@ included in the \verb@micromap@ package is in this form:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -42,9 +42,9 @@ MN Minnesota 27.4  7.9     MW      MN
 \end{Soutput}
 \end{Schunk}
 
-Next, we need a table of polygons to map. We can use the \verb@create_map_table@ function to take a spatial object file and create a small efficient table in the form that the mmplot function can use or we can construct our table directly.  In order to do this successfully our table must end up with 4 essential columns that must be named as follows:  ID; coordsx; coordsy; and poly. The ID column is what links to the table of statistics. The poly column is used to identify state polygons for the same ID (otherwise R will connect all the vertices with some odd looking results). For this first example we will use the \verb@USstates@ included with the library and use \verb@create_map_table@ in order to get the data in the right format. 
+Next, we need a table of polygons to map. We can use the \verb@create_map_table@ function to take a spatial object file and create a small efficient table in the form that the mmplot function can use or we can construct our table directly.  In order to do this successfully our table must end up with 4 essential columns that must be named as follows:  ID; coordsx; coordsy; and poly. The ID column is what links to the table of statistics. The poly column is used to identify state polygons for the same ID (otherwise R will connect all the vertices with some odd looking results). For this first example we will use the \verb@USstates@ included with the package and use \verb@create_map_table@ in order to get the data in the right format. 
 
-Some preliminary steps are usually required to use the \verb@create_map_table@ function. First, many spatial objects are quite detailed, far more detailed than what is needed for a micromap. The size and complexity of these files will drastically reduce the speed at which plots can be produced and, in some cases, overwhelm \R with the amount of data being handled causing it to crash. One option for reducing shapefile complexity is to use a simplification function from the sf library which can be used to reduce the size and complexity of a spatial object.  See Section 3,"Preparing data for use with the library", for more details and an example.  The \verb@USstates@ data is very simple and therefore we will hold off discussion of the thinning function until later.
+Some preliminary steps are usually required to use the \verb@create_map_table@ function. First, many spatial objects are quite detailed, far more detailed than what is needed for a micromap. The size and complexity of these files will drastically reduce the speed at which plots can be produced and, in some cases, overwhelm \R with the amount of data being handled causing it to crash. One option for reducing shapefile complexity is to use a simplification function from the \verb@sf@ package which can be used to reduce the size and complexity of a spatial object.  See Section 3,"Preparing data for use with the package", for more details and an example.  The \verb@USstates@ data is very simple and therefore we will hold off discussion of the thinning function until later.
 
 The second (and much simpler) step in successfully using the \verb@create_map_table@ function is assigning an explicit ID to each polygon. The data table associated with the spatial object must have an ID column (literally called 'ID') to name each polygon. This is the column that will be used to link the information from the stat table to this built map table. With this in mind we can check the data table from our \verb@USstates@ file by using the following @data syntax. The "@" syntax refers to grabbing the data object stored in this slot of an \verb@sp@ spatial object. To examine the other slots of this shapefile one would use the \verb@slotNames()@ function.
 
@@ -297,7 +297,7 @@ A final option that we can illustrate is that we can easily rearrange the panels
 \end{center} 
 \end{figure}
 
-\section{Preparing data for use with the library}
+\section{Preparing data for use with the package}
 \textbf{Example Steps for simplifying spatial polygons in a spatial data set for the mmplot function:}
 Users can download an example shapefile.  We will use level 3 ecoregions of Texas as an example (located here):\\
 \url{ftp://ftp.epa.gov/wed/ecoregions/tx/tx_eco_l3.zip}\\
@@ -314,7 +314,7 @@ Method for simplifying polygons using simplification in GIS software such as Arc
   \begin{quote}Maximum Allowable Offset: 1000 Meters\end{quote}
   \begin{quote}Minimum Area: .001\end{quote}
   \begin{quote}Handling Topological Errors: RESOLVE\_ERRORS\end{quote} 
-  \item Read resulting shapefile into \R using \verb@st_read@ (uses \verb@st_read@ from \verb@sf@, loaded with the \verb@micromap@ library):
+  \item Read resulting shapefile into \R using \verb@st_read@ (uses \verb@st_read@ from \verb@sf@, loaded with the \verb@micromap@ package):
   \begin{quote}> txeco <- st\_read(``tx\_eco\_l3\.shp'')\end{quote}
   \item Convert the imported shapefile to a spatial dataframe using \verb@as_Spatial@ from \verb@sf@:
   \begin{quote}> txeco <- as\_Spatial(txeco)\end{quote}
@@ -372,7 +372,7 @@ Technical paper, ESRI, "Automation of Map Generalization: The Cutting-Edge Techn
 \item  \textbf{grouping} (required)- the number of lines per perceptual group. E.g. simply entering ``5'' will put 5 lines in each
 perceptual group or you can enter c(5,6,5,4) to have disproportionate numbers of lines in each group.
 \item  \textbf{map.data} (required) - data table likely created by the create\_map\_table function applied to a spatial polygon data frame.
-\item  \textbf{map.link} (required) - a vector specifying which column from the stat table matches which column from the map table respectively (e.g. ``c(``StateAb'', ``ID''))''. The two columns must be of the same case.
+\item  \textbf{map.link} (required, but see section 7) - a vector specifying which column from the stat table matches which column from the map table respectively (e.g. ``c(``StateAb'', ``ID''))''. The two columns must be of the same case.
 \item \textbf{median.color} - if median.row is specified, then the user can specify the color for the median symbol, such as median.color="black".
 \item  \textbf{median.row} - specifies whether a median row should be included. If an odd number of data lines are supplied a data line itself will be used as the median; otherwise median entries will be calculated from the supplied data. Note that without a median row maps are forced into proper size. However, an artifact in \verb@ggplot2@ removes this feature when a median row is added and so a user must use the panel.width argument (and left.margin/right.margin panel attribute) for the map panel so that panel that does not have distorted coordinates. (The default setting is FALSE)
 \item \textbf{median.text.color} - the default is median.text.color='black'.  Other colors can be specified to change the color of the word Median plotted when median.row=TRUE.
@@ -396,7 +396,7 @@ median.row=TRUE. As with all defaults set to 1, any change from default will mag
 \item  \textbf{print.file} - the full file name (i.e. including extension) to save the resulting figure. The extension tells the mmplot function which type of printing function to run. Tiff, png ,jpeg, .jpg, .ps, or .eps are all recognized.
 \item  \textbf{print.res} - the resolution desired for the resulting file.
 \item  \textbf{rev.ord} - reverse the order for ranking the plot.
-\item  \textbf{stat.data} (required) - data table of statistic.
+\item  \textbf{stat.data} (required, but see section 7) - data table of statistic.
 \item  \textbf{vertical.align} - the default is vertical.align="top" specifying that the rows within a perceptual group are aligned at the top.  Specifying vertical.align="center" will center align the rows within a perceptual group, which is useful when perceptual groups do not contain the same number of rows, such as group=c(5,5,4,4,5,5)
 \item  \textbf{Attribute arguments applied to the panels:}
 \item  \textbf{panel.att} - is a list object (simply referred to as ``a'' throughout the function) which contains a sublist of
@@ -809,7 +809,7 @@ If we run the line of code:
 
 We can see a full list of attributes available for alteration/specification by a user. All of these attributes (e.g. axis labels, background color, grid lines, etc.) are applied to the graph through the \verb@assimilatePlot@ function so if we like how our graph looks and don't feel the need to give the user any more control on its features we can stop here. However, there might be some changes that users would like to make such as the width of the arrows and lengths of the arrow heads. In order to allow these changes by users we need to: a) create extra slots in our panel level of the attributes list and b) alter our code to recognize these options.
 
-Creating the extra slots in the attribute list is actually not a terribly difficult process. This is done for every graph that has already been built into the micromap library. What these built in graphs have that ours is still lacking is a personalized "attribute function". When the \verb@mmplot@ function sees a panel type of "arrow.plot", it's already looking for an attribute function called \verb@arrow.plot.att@ to supply the panel level list for our all encompassing attribute list that is being passed around, but we haven't created this yet; so it settles on a built in function called \verb@standard.att@. We'll use \verb@standard.att@ to build our new \verb@arrow.plot.att@ function.
+Creating the extra slots in the attribute list is actually not a terribly difficult process. This is done for every graph that has already been built into the \verb@micromap@ package. What these built in graphs have that ours is still lacking is a personalized "attribute function". When the \verb@mmplot@ function sees a panel type of "arrow.plot", it's already looking for an attribute function called \verb@arrow.plot.att@ to supply the panel level list for our all encompassing attribute list that is being passed around, but we haven't created this yet; so it settles on a built in function called \verb@standard.att@. We'll use \verb@standard.att@ to build our new \verb@arrow.plot.att@ function.
 
 In the code below we first start with \verb@standard.att@ to get our useful base list, and then we append on the new attributes we'd like to control. We'll call these new attributes "line.width" and "tip.length".
 
@@ -1146,6 +1146,75 @@ We can the refine that code to produce the finished version of a group-categoriz
 \includegraphics[width=1.0\textwidth]{fig10.jpeg}
   \caption{National Lake Assessment}
   \label{fig10} 
+\end{center} 
+\end{figure}
+
+\section{Using the sf package with micromap}
+
+The \verb@micromap@ package primarily uses the \verb@sp@ package to work with spatially referenced data. This approach was created with the assumption that \verb@micromap@ users must first combine their data with spatial polygons using the \verb@create_map_table@ function, i.e., data are often collected separately prior to linking with any spatial attributes. The \verb@sf@ (simple features) package is a newer and more popular approach in R for working with spatial data that combines both attribute and geometry (spatial) data in a single object. Using data in the simple features format with \verb@micromap@ may be preferred by users familiar with the package.  The approach may also be preferred if the attribute and spatial data are already together, e.g., in a shapefile with attributes.
+
+Using \verb@sf@ spatial objects with \verb@micromap@ follows a similar workflow as with \verb@sp@ objects, with the exception that the feature data does not need to be explicitly linked to the spatial data before plotting.  In other words, the \verb@create_map_table@ function does not need to be used before plotting.  The \verb@stat.data@ and \verb@map.link@ arguments in \verb@mmplot@ are also not required for a \verb@sf@ object.  
+
+Below shows a simple example using \verb@micromap@ with a \verb@sf@ spatial object. The \verb@nc@ dataset from the \verb@sf@ package is first loaded from disk. 
+
+\begin{Schunk}
+\begin{Sinput}
+> library(sf)
+> nc <- st_read(system.file("shape/nc.shp", package="sf"), quiet=T)
+> head(nc)
+\end{Sinput}
+\begin{Soutput}
+Simple feature collection with 6 features and 14 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -81.74107 ymin: 36.07282 xmax: -75.77316 ymax: 36.58965
+Geodetic CRS:  NAD27
+   AREA PERIMETER CNTY_ CNTY_ID        NAME  FIPS FIPSNO
+1 0.114     1.442  1825    1825        Ashe 37009  37009
+2 0.061     1.231  1827    1827   Alleghany 37005  37005
+3 0.143     1.630  1828    1828       Surry 37171  37171
+4 0.070     2.968  1831    1831   Currituck 37053  37053
+5 0.153     2.206  1832    1832 Northampton 37131  37131
+6 0.097     1.670  1833    1833    Hertford 37091  37091
+  CRESS_ID BIR74 SID74 NWBIR74 BIR79 SID79 NWBIR79
+1        5  1091     1      10  1364     0      19
+2        3   487     0      10   542     3      12
+3       86  3188     5     208  3616     6     260
+4       27   508     1     123   830     2     145
+5       66  1421     9    1066  1606     3    1197
+6       46  1452     7     954  1838     5    1237
+                        geometry
+1 MULTIPOLYGON (((-81.47276 3...
+2 MULTIPOLYGON (((-81.23989 3...
+3 MULTIPOLYGON (((-80.45634 3...
+4 MULTIPOLYGON (((-76.00897 3...
+5 MULTIPOLYGON (((-77.21767 3...
+6 MULTIPOLYGON (((-76.74506 3...
+\end{Soutput}
+\end{Schunk}
+
+The \verb@mmplot@ function is then used, where the primary difference is that the \verb@stat.data@ and \verb@map.link@ arguments are not needed for a \verb@sf@ object.  Instead, the complete \verb@nc@ data object is passed to the \verb@map.data@ argument.  All other arguments are used as before.  
+
+\begin{Schunk}
+\begin{Sinput}
+> mmplot(map.data=nc,
++        panel.types=c("labels", "dot","dot", "map"),
++        panel.data=list("NAME","SID74","SID79", NA),
++        ord.by="SID74", grouping=10,
++        median.row=F,
++        print.file="fig11.jpeg",
++        print.res=100, 
++        plot.height=9, 
++        plot.width=6, 
++        panel.att=list(list(1, text.size=0.6))
++ ) 
+\end{Sinput}
+\end{Schunk}
+\begin{figure}[!tbp] 
+\begin{center} 
+\includegraphics[width=1.0\textwidth]{fig11.jpeg}
+  \caption{A micromap plot created using a simple features object}
+  \label{fig11} 
 \end{center} 
 \end{figure}
 
