@@ -10,7 +10,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.10 is the stable version on CRAN and can be installed as
+Version 1.9.11 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
