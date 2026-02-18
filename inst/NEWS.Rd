@@ -11,6 +11,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item Fix to \code{mmplot} via \code{RankMaps} if \code{map.all = T} and median is included to not show maps for the median row
+      \item Replaced all instances of \code{size} argument with \code{linewidth} for internal calls to ggplot2 geoms for agreement with v3.4.0, added minimum ggplot2 requirement
     }
   }
 }

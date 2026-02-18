@@ -20,7 +20,7 @@ Depends:
     sp,
     sf
 Imports:
-    ggplot2 (>= 2.0.0),
+    ggplot2 (>= 3.4.0),
     grid
 Description: This group of functions simplifies the creation of linked micromap plots. Please
   see <https://www.jstatsoft.org/v63/i02/> for additional details.
