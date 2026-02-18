@@ -1,6 +1,21 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.11 (Released 2026-02-18)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Fix to \code{mmplot} via \code{RankMaps} if \code{map.all = T} and median is included to not show maps for the median row
+      \item Replaced all instances of \code{size} argument with \code{linewidth} for internal calls to ggplot2 geoms for agreement with v3.4.0, added minimum ggplot2 requirement
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.10 (Released 2024-10-30)}{
   \subsection{NEW FEATURES}{
     \itemize{

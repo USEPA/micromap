@@ -79,16 +79,21 @@ RankMaps <- function(pl, p, mapDF, att){
 	pl <- ggplot(mapDF, aes(x=coordsx, y=coordsy, group=IDpoly)) +
 	  coord_cartesian(default=TRUE)
 
-
 	#*** If we are displaying polygons without associated data we 
 	#***   do so first so they appear in the background
 	if(map.all==TRUE){
-		if(nrow(subset(mapDF.all, is.na(pGrp)))>0) for(g in nGroups[1]:nGroups[2]) pl <- pl + 
-			geom_polygon(fill=att[[p]]$nodata.fill, 
-				colour=att[[p]]$nodata.border.color, 
-				size=att[[p]]$nodata.border.size/2, 
-				data=transform(subset(mapDF.all, is.na(pGrp)), pGrp=g))
-	}
+		if(nrow(subset(mapDF.all, is.na(pGrp)))>0){
+			grps <- nGroups[1]:nGroups[2]
+			grps <- grps[!grps %in% att$m.pGrp]
+			for(g in grps){
+				pl <- pl + 
+					geom_polygon(fill=att[[p]]$nodata.fill, 
+					colour=att[[p]]$nodata.border.color, 
+					size=att[[p]]$nodata.border.size/2, 
+					data=transform(subset(mapDF.all, is.na(pGrp)), pGrp=g))
+				}
+			}
+		}
 
 
 	#*** Draw polygons from all previous perceptual groups by looping through

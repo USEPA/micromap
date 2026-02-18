@@ -218,24 +218,24 @@ dot_build <- function(pl, p, DF, att){
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
 										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
-										size=att[[p]]$add.line.size[j])
+										linewidth=att[[p]]$add.line.size[j])
 	  }
 
 	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), data = DF, 
 							colour = att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
-							size = att[[p]]$median.line.size)	
+							linewidth = att[[p]]$median.line.size)	
 
 	if(att[[p]]$connected.dots) pl <- pl + geom_segment(aes(x = tmp.data1, y = -pGrpOrd,
 								xend = tmp.data2, yend = -tmp.data3),
 							data = subset(DF, pGrpOrd>1), 
 			            			colour = att[[p]]$connected.col,
-							size = att[[p]]$connected.size, 
+							linewidth = att[[p]]$connected.size, 
 					            	linetype = att[[p]]$connected.typ)   
 
 	if(att[[p]]$point.border) pl <- pl + geom_point(aes(x=tmp.data, y=-pGrpOrd), 
 									colour='black',
-									size=att[[p]]$point.size*2.5, 
+									linewidth=att[[p]]$point.size*2.5, 
 									pch=att[[p]]$point.type)
 
 	pl <- pl + 
@@ -290,13 +290,13 @@ dot_cl_build <- function(pl, p, DF, att){
 
 	pl <- ggplot(DF) +
 		geom_segment(aes(x=tmp.data2, y=-pGrpOrd, xend=tmp.data3, yend=-pGrpOrd, 
-				colour=factor(color)), size=att[[p]]$line.width) 
+				colour=factor(color)), linewidth=att[[p]]$line.width) 
 
 
 	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), 
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
-							size = att[[p]]$median.line.size)
+							linewidth = att[[p]]$median.line.size)
 
 	if(!any(is.na(att[[p]]$add.line))){
 		if(length(att[[p]]$add.line.col)==1) att[[p]]$add.line.col <- rep(att[[p]]$add.line.col[1], length(att[[p]]$add.line))
@@ -306,7 +306,7 @@ dot_cl_build <- function(pl, p, DF, att){
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
 										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
-										size=att[[p]]$add.line.size[j])
+										linewidth=att[[p]]$add.line.size[j])
 	  }
 
 
@@ -314,7 +314,7 @@ dot_cl_build <- function(pl, p, DF, att){
 								xend = tmp.data4, yend = -tmp.data5),
 							data = subset(DF, pGrpOrd>1), 
 			            			colour = att[[p]]$connected.col,
-							size = att[[p]]$connected.size, 
+							linewidth = att[[p]]$connected.size, 
 					            	linetype = att[[p]]$connected.typ)   
    
   	if(att[[p]]$point.border) pl <- pl + geom_point(aes(x=tmp.data1, y=-pGrpOrd), 
@@ -379,7 +379,7 @@ bar_build <- function(pl, p, DF, att){
 	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)),
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
-							size = att[[p]]$median.line.size)
+							linewidth = att[[p]]$median.line.size)
 
 	if(!any(is.na(att[[p]]$add.line))){
 		if(length(att[[p]]$add.line.col)==1) att[[p]]$add.line.col <- rep(att[[p]]$add.line.col[1], length(att[[p]]$add.line))
@@ -389,7 +389,7 @@ bar_build <- function(pl, p, DF, att){
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
 										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
-										size=att[[p]]$add.line.size[j])
+										linewidth=att[[p]]$add.line.size[j])
 	  }
 
 
@@ -450,7 +450,7 @@ bar_cl_build <- function(pl, p, DF, att){
 	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)),
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
-							size = att[[p]]$median.line.size)
+							linewidth = att[[p]]$median.line.size)
 
 	if(!any(is.na(att[[p]]$add.line))){
 		if(length(att[[p]]$add.line.col)==1) att[[p]]$add.line.col <- rep(att[[p]]$add.line.col[1], length(att[[p]]$add.line))
@@ -460,7 +460,7 @@ bar_cl_build <- function(pl, p, DF, att){
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
 										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
-										size=att[[p]]$add.line.size[j])
+										linewidth=att[[p]]$add.line.size[j])
 	  }
 
 
@@ -534,7 +534,7 @@ box_summary_build <- function(pl, p, DF, att){
 	if(att[[p]]$median.line) pl <- pl + geom_vline(aes(xintercept = median(tmp.data)), data=DF, 
 							colour=att[[p]]$median.line.col, 
 							linetype = att[[p]]$median.line.typ, 
-							size = att[[p]]$median.line.size)
+							linewidth = att[[p]]$median.line.size)
 
 	if(!any(is.na(att[[p]]$add.line))){
 		if(length(att[[p]]$add.line.col)==1) att[[p]]$add.line.col <- rep(att[[p]]$add.line.col[1], length(att[[p]]$add.line))
@@ -544,7 +544,7 @@ box_summary_build <- function(pl, p, DF, att){
 		for(j in 1:length(att[[p]]$add.line)) pl <- pl + geom_vline(xintercept = att[[p]]$add.line[j], 
 										colour=att[[p]]$add.line.col[j], 
 										linetype=att[[p]]$add.line.typ[j],
-										size=att[[p]]$add.line.size[j])
+										linewidth=att[[p]]$add.line.size[j])
 	  }
 
 

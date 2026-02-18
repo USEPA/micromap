@@ -300,7 +300,7 @@ A final option that we can illustrate is that we can easily rearrange the panels
 \section{Preparing data for use with the package}
 \textbf{Example Steps for simplifying spatial polygons in a spatial data set for the mmplot function:}
 Users can download an example shapefile.  We will use level 3 ecoregions of Texas as an example (located here):\\
-\url{ftp://ftp.epa.gov/wed/ecoregions/tx/tx_eco_l3.zip}\\
+\url{https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-state}\\
 
 We will look at two approaches to simplifying spatial polygons for use in micromaps \textemdash one using GIS software such as ESRI ArcMap and the other entirely in R.\\
 Method for simplifying polygons using simplification in GIS software such as ArcMap:
@@ -326,7 +326,7 @@ Method two is to simplify polygons within \R, and this can be done using the \ve
 \textbf{Steps for simplifying very large spatial data:}
 For very large data you need to take extra steps to get manageable spatial data for use in linked micromaps. We will use level 3 ecoregions for the conterminous US as an example. Note that these are one example of steps that work, other combinations of steps could possibly work better for other data \textemdash the point is to get rid of very small features and simplify line work as much as possible.
 First we'll download level 3 ecoregions for the US (located here):\\
-\url{ftp://ftp.epa.gov/wed/ecoregions/us/Eco_Level_III_US.zip}\\
+\url{https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-continental-united-states}\\
 In ArcMap:
 \begin{itemize}
   \item To get rid of state boundaries, first open the Dissolve tool in the Generalization toolbox:
@@ -351,7 +351,7 @@ Simplification methods to try in R are available using the \verb@sf@ package, sp
   \begin{quote}> txecosimp <- as\_Spatial(txecosimp)\end{quote}
 \end{itemize}
 
-Other simplification approaches using  open source or free tools include the online tool MapShaper available here: \\ \url{http://www.mapshaper.org/}. Both polygon simplification as well as line smoothing (Bezier curves for instance)
+Other simplification approaches using  open source or free tools include the online tool MapShaper available here: \\ \url{https://mapshaper.org/}. Both polygon simplification as well as line smoothing (Bezier curves for instance)
 can be implemented as well in Quantum GIS via the 'Generalizer'  plugin, and in PostGIS the Douglas-Peucker algorithm is implemented with 'simplify'.
 
 For further reading on polygon simplification, we refer users to the following papers:
@@ -362,7 +362,7 @@ Harrower, M. and Bloch, M. (2006). MapShaper.org: A Map Generalization Web Servi
 
 Mansouryar, M. and Hedayati, A. (2012). Smoothing Via Iterative Averaging (SIA) A Basic Techniqu for Line Smoothing. International Journal of Computer and Electrical Engineering 4(3), 307-311.
 
-Technical paper, ESRI, "Automation of Map Generalization: The Cutting-Edge Technology," 1996. It can be found in the White Papers section of ArcOnline at this Internet address: \url{http://downloads.esri.com/support/whitepapers/ao_/mapgen.pdf}
+Technical paper, ESRI, "Automation of Map Generalization: The Cutting-Edge Technology," 1996. It can be found in the White Papers section of ArcOnline at this Internet address: \url{https://content.esri.com/support/whitepapers/ao_/mapgen.pdf}
 
 \section{Full List of Adjustable Attributes}
 \begin{itemize}
@@ -852,7 +852,7 @@ Simple enough. Now let's revisit our \verb@arrow.plot@ function and insert lines
 +   xend= data2, yend=-pGrpOrd,
 +   colour=factor(color)),
 +   arrow=arrow(length=unit(0.1*myTipLength,"cm")), 
-+   size=myLineWidth) +
++   linewidth=myLineWidth) +
 +   facet_grid(pGrp~., space="free", scales="free_y") +
 +   scale_colour_manual(values=myColors, guide="none")
 +   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
