@@ -10,7 +10,7 @@ guidelines in [CONTRIBUTING](CONTRIBUTING.md).
 
 ### Installing the package
 
-Version 1.9.11 is the stable version on CRAN and can be installed as
+Version 1.9.12 is the stable version on CRAN and can be installed as
 follows.
 
 ``` r
@@ -82,7 +82,7 @@ longer has responsibility to protect the integrity , confidentiality, or
 availability of the information. Any reference to specific commercial
 products, processes, or services by service mark, trademark,
 manufacturer, or otherwise, does not constitute or imply their
-endorsement, recomendation or favoring by EPA. The EPA seal and logo
+endorsement, recommendation or favoring by EPA. The EPA seal and logo
 shall not be used in any manner to imply endorsement of any commercial
 product or activity by EPA or the United States Government.
 
