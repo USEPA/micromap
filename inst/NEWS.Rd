@@ -1,6 +1,20 @@
 \name{NEWS}
 \title{micromap News}
 
+\section{CHANGES IN micromap VERSION 1.9.12 (Released 2026-02-23)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item None
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Missed some instances where \code{size} argument was used for internal calls to ggplot2 geoms, replaced with \code{linewidth} for agreement with v3.4.0
+    }
+  }
+}
+
 \section{CHANGES IN micromap VERSION 1.9.11 (Released 2026-02-18)}{
   \subsection{NEW FEATURES}{
     \itemize{

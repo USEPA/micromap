@@ -89,7 +89,7 @@ RankMaps <- function(pl, p, mapDF, att){
 				pl <- pl + 
 					geom_polygon(fill=att[[p]]$nodata.fill, 
 					colour=att[[p]]$nodata.border.color, 
-					size=att[[p]]$nodata.border.size/2, 
+					linewidth=att[[p]]$nodata.border.size/2, 
 					data=transform(subset(mapDF.all, is.na(pGrp)), pGrp=g))
 				}
 			}
@@ -109,13 +109,13 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lWith.data) pl <- pl + 
 			geom_polygon(fill=att[[p]]$withdata.fill, 
 				colour=att[[p]]$withdata.border.color, 
-				size=att[[p]]$withdata.border.size/2, 
+				linewidth=att[[p]]$withdata.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp>g,], pGrp=g))						
 
 		for(g in lWithout.data) pl <- pl + 
 			geom_polygon(fill=att[[p]]$inactive.fill, 
 				colour=att[[p]]$inactive.border.color,  
-				size=att[[p]]$inactive.border.size/2, 
+				linewidth=att[[p]]$inactive.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp<g,], pGrp=g)) 
 
 	 }
@@ -126,7 +126,7 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lGroups) pl <- pl + 
 			geom_polygon(fill=att[[p]]$withdata.fill, 
 				colour=att[[p]]$withdata.border.color,  
-				size=att[[p]]$withdata.border.size/2, 
+				linewidth=att[[p]]$withdata.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp>g,], pGrp=g)) 	
 
 		lGroups <- max(nGroups[1],2):floor(att$m.pGrp)
@@ -134,7 +134,7 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lGroups) pl <- pl + 
 			geom_polygon(fill=att[[p]]$inactive.fill, 
 				colour=att[[p]]$inactive.border.color,  
-				size=att[[p]]$inactive.border.size/2, 
+				linewidth=att[[p]]$inactive.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp<g,], pGrp=g)) 	
 
 		lGroups <- ceiling(att$m.pGrp):nGroups[2]
@@ -142,7 +142,7 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lGroups) pl <- pl + 
 			geom_polygon(fill=att[[p]]$withdata.fill, 
 				colour=att[[p]]$withdata.border.color,  
-				size=att[[p]]$withdata.border.size/2, 
+				linewidth=att[[p]]$withdata.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp<g,], pGrp=g)) 
 
 		lGroups <- ceiling(att$m.pGrp):(nGroups[2]-1)
@@ -150,7 +150,7 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lGroups) pl <- pl + 
 			geom_polygon(fill=att[[p]]$inactive.fill, 
 				colour=att[[p]]$inactive.border.color,  
-				size=att[[p]]$inactive.border.size/2, 
+				linewidth=att[[p]]$inactive.border.size/2, 
 				data=transform(mapDF[mapDF$pGrp>g,], pGrp=g)) 
 
 	 
@@ -163,7 +163,7 @@ RankMaps <- function(pl, p, mapDF, att){
 		for(g in lWith.data) pl <- pl + 
 			geom_polygon(fill=att[[p]]$withdata.fill, 
 				colour=att[[p]]$withdata.border.color,  
-				size=att[[p]]$withdata.border.size/2, 
+				linewidth=att[[p]]$withdata.border.size/2, 
 				data=transform(mapDF[!mapDF$pGrp==g,], pGrp=g)) 
 
 	 }
@@ -174,7 +174,7 @@ RankMaps <- function(pl, p, mapDF, att){
 	pl <- pl + 
 		geom_polygon(aes(fill=factor(fill.color)), 
 			colour=att[[p]]$active.border.color, 
-			size=att[[p]]$active.border.size/2, 
+			linewidth=att[[p]]$active.border.size/2, 
 			data=subset(mapDF, hole==0)) + 				
 		facet_grid(pGrp~., space="free", scales="free_y") +
 		scale_fill_manual(values=c(att$colors), guide='none') +
@@ -207,7 +207,7 @@ RankMaps <- function(pl, p, mapDF, att){
 
 	if(outer.hull==TRUE) for(g in nGroups[1]:nGroups[2]) pl <- pl + geom_polygon(fill=NA,	 
 													colour=att[[p]]$outer.hull.color, 
-													size=att[[p]]$outer.hull.size, 
+													linewidth=att[[p]]$outer.hull.size, 
 													data=data.frame(dHull, pGrp=g))
 
 

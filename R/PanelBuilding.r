@@ -235,7 +235,7 @@ dot_build <- function(pl, p, DF, att){
 
 	if(att[[p]]$point.border) pl <- pl + geom_point(aes(x=tmp.data, y=-pGrpOrd), 
 									colour='black',
-									linewidth=att[[p]]$point.size*2.5, 
+									size=att[[p]]$point.size*2.5, 
 									pch=att[[p]]$point.type)
 
 	pl <- pl + 

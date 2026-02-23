@@ -1,6 +1,6 @@
 ## Resubmission 
 
-This is a version update to v1.9.11.
+This is a version update to v1.9.12.
 
 ## Test environments
 * ubuntu 24.04.3 (on GitHub Actions), R release (4.5.2), devel, and old-release
